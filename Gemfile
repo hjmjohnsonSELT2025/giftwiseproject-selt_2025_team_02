@@ -39,6 +39,7 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
   # Use postgresql as the database for Active Record in development and test
   gem "sqlite3", ">= 1.4"
 
@@ -50,6 +51,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem 'rspec-rails'
+
 end
 
 group :development do
