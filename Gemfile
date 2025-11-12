@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.4.5"
+ruby "3.3.8"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.1"
@@ -54,6 +54,8 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "cucumber-rails", require: false
 
   gem "rspec-rails"
 end
