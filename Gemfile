@@ -52,10 +52,9 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'cucumber-rails', require: false
+  gem "cucumber-rails", require: false
 
-  gem 'rspec-rails'
-
+  gem "rspec-rails"
 end
 
 group :development do
@@ -72,4 +71,3 @@ group :production do
   # Use postgresql as the database for Active Record in production
   gem "pg", "~> 1.1"
 end
-
