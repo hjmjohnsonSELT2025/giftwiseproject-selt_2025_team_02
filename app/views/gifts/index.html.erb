@@ -1,2 +1,13 @@
-<h1>Gifts#index</h1>
+<h1>Gifts</h1>
 <p>Find me in app/views/gifts/index.html.erb</p>
+<div id="gifts">
+  <% @gifts.each do |gift| %>
+  <div>
+    <a href="/gifts/<%= gift.id%>">
+      <%=gift.name %>
+    </a>
+  </div>
+  <% end %>
+
+
+</div>
