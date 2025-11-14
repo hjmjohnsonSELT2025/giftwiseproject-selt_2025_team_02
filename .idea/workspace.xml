@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="376ca973-d4f2-4371-b13d-b5425e18c31a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/features/authentication/sign_in.feature" beforeDir="false" afterPath="$PROJECT_DIR$/features/authentication/sign_in.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/features/step_definitions/login_steps.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
