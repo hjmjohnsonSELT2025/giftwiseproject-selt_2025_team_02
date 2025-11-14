@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   before_save { self.email = email.downcase }
-  before_create :create_session_token
+  before_create :confirm_session_token
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -12,6 +12,12 @@ class User < ApplicationRecord
 
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+
+  def reset_session_token!
+    new_token = create_session_token
+    update_columns(session_token: new_token, updated_at: Time.current)
+    new_token
+  end
 
   private
   def confirm_session_token

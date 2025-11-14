@@ -13,7 +13,7 @@ Feature: User log in
     And I fill in "Password" with "lowkeybussin"
     And I press "Log in"
     Then I should be logged in
-    And I should see "Welcome back" within the flash
+    And I should see "Logged in!" within the flash
     And I should be on the home page
 
   @sad_path

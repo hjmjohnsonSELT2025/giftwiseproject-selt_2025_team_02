@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :set_current_user
-
+  skip_before_action :set_current_user, only: %i[new create]
   def new
   end
 
@@ -17,6 +16,6 @@ class SessionsController < ApplicationController
   def destroy
     current_user&.reset_session_token!
     session.delete(:session_token)
-    redirect_to sign_in_path, notice: "Signed out"
+    redirect_to login_path, notice: "Signed out"
   end
 end

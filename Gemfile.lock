@@ -132,6 +132,10 @@ GEM
       cucumber (>= 7, < 11)
       railties (>= 6.1, < 9)
     cucumber-tag-expressions (8.0.0)
+    database_cleaner-active_record (2.2.2)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0)
+    database_cleaner-core (2.0.1)
     date (3.5.0)
     debug (1.11.0)
       irb (~> 1.10)
@@ -445,6 +449,7 @@ DEPENDENCIES
   bundler-audit
   capybara
   cucumber-rails
+  database_cleaner-active_record
   debug
   image_processing (~> 1.2)
   importmap-rails

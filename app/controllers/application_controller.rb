@@ -10,10 +10,10 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   helper_method :current_user, :current_user?, :logged_in?
 
-  protected
+  private
   def set_current_user
-    @current_user ||= User.find_by_session_token(session[:session_token])
-    redirect_to_login_path unless @current_user
+    @current_user = User.find_by(session_token: session[:session_token])
+    redirect_to login_path unless @current_user
   end
 
   def current_user
