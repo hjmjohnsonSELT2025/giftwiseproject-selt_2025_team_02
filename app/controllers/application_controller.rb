@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_session_token(session[:session_token])
     redirect_to_login_path unless @current_user
   end
+
+  def current_user?(id)
+    @current_user.id.to_s == id
+  end
 end
