@@ -23,5 +23,5 @@ Feature: User log in
     And I fill in "Password" with "chopped"
     And I press "Log in"
     Then I should not be logged in
-    And I should see "Incorrect email and/or password" within the flash"
+    And I should see "Incorrect email and/or password" within the flash
     And I should be on the log in page
