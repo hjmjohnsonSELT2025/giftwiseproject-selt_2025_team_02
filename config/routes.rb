@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [ :new, :create, :destroy ]
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
@@ -20,5 +20,4 @@ Rails.application.routes.draw do
   get "/homepage", to: "home#show", as: :homepage
 
   root "sessions#new"
-
 end
