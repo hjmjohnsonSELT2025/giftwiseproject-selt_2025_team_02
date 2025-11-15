@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy", as: :logout
   get "/homepage", to: "home#show", as: :homepage
   resources :gifts
+  resources :gift_lists
 
   root "sessions#new"
 end
