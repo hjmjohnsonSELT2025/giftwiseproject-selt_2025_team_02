@@ -32,7 +32,14 @@ Then("{int} recipients should exist for the current user") do |count|
 end
 
 When('I follow {string}') do |link_text|
-  click_link link_text
+  if link_text == "Delete"
+    # Turbo's data-turbo-method needs JS; in tests we simulate the DELETE directly
+    link = find_link(link_text)
+    href = link[:href]
+    page.driver.submit :delete, href, {}
+  else
+    click_link link_text
+  end
 end
 
 When('I select {string} from {string}') do |option, field|
@@ -59,5 +66,16 @@ Given("the following recipients exist for this user:") do |table|
       likes: [],
       dislikes: []
     )
+  end
+end
+
+Then('I should not see {string}') do |text|
+  expect(page).not_to have_content(text)
+end
+
+Then('I should not see {string} in the recipients list') do |name|
+  # Limit the check to the recipients table (index view)
+  within('table') do
+    expect(page).not_to have_content(name)
   end
 end
