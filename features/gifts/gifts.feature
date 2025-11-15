@@ -46,5 +46,3 @@ Feature: Manage gifts
     And I follow "Cancel"
     Then I should be on the gifts page
     And 0 gifts should exist for the current user
-
-
