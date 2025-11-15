@@ -1,11 +1,12 @@
 <h1>Gifts</h1>
-<p>Find me in app/views/gifts/index.html.erb</p>
+<%= link_to "New Gift", new_gift_path %>
 <div id="gifts">
   <% @gifts.each do |gift| %>
   <div>
-    <a href="/gifts/<%= gift.id%>">
-      <%=gift.name %>
-    </a>
+
+    <%= link_to gift.name, gifts_path(gift.id)
+    %>
+
   </div>
   <% end %>
 
