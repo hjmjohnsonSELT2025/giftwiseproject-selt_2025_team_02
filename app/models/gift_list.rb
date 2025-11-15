@@ -3,4 +3,3 @@ class GiftList < ApplicationRecord
   belongs_to :recipient
   has_one :user, through: :recipient
 end
-

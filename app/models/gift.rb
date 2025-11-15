@@ -4,4 +4,3 @@ class Gift < ApplicationRecord
   has_one :recipient, through: :gift_list
   has_one :user, through: :recipient
 end
-
