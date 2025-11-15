@@ -34,7 +34,7 @@ RSpec.describe RecipientsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
-      let(:valid_params) { { name: 'Jane Doe', age: 25, gender: 'female', relation: 'sister', likes: ['Reading'], dislikes: [] } }
+      let(:valid_params) { { name: 'Jane Doe', age: 25, gender: 'female', relation: 'sister', likes: [ 'Reading' ], dislikes: [] } }
 
       it 'creates a new recipient' do
         expect {
