@@ -1,0 +1,40 @@
+<h1>Edit Recipient</h1>
+
+<%= form_with model: @recipient, local: true do |f| %>
+  <div>
+    <%= f.label :name, "Name" %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :age, "Age" %><br>
+    <%= f.number_field :age %>
+  </div>
+
+  <div>
+    <%= f.label :gender, "Gender" %><br>
+    <%= f.select :gender, [["Male", "male"], ["Female", "female"], ["Other", "other"]] %>
+  </div>
+
+  <div>
+    <%= f.label :relation, "Relation" %><br>
+    <%= f.text_field :relation %>
+  </div>
+
+  <div>
+    <%= f.label :likes, "Likes" %><br>
+    <%= f.collection_check_boxes :likes, Recipient::LIKES_OPTIONS, :to_s, :to_s %>
+  </div>
+
+  <div>
+    <%= f.label :dislikes, "Dislikes" %><br>
+    <%= f.collection_check_boxes :dislikes, Recipient::DISLIKES_OPTIONS, :to_s, :to_s %>
+  </div>
+
+  <div>
+    <%= f.submit "Update Recipient" %>
+  </div>
+<% end %>
+
+<%= link_to "Back to Recipients", recipients_path %>
+<%= link_to "Back to Home", homepage_path %>

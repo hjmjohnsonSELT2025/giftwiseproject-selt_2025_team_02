@@ -2,6 +2,41 @@
 
 <p>Welcome, <%= current_user.name.presence || current_user.email %></p>
 
+<div style="display: flex; gap: 2rem;">
+  <div style="flex: 1;">
+    <h2>Your Gift Recipients</h2>
+    <%= link_to "View All Recipients", recipients_path %>
+    <%= link_to "Add New Recipient", new_recipient_path %>
+
+    <% if current_user.recipients.any? %>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <thead>
+          <tr style="background-color: #f5f5f5;">
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Age</th>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Relation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% current_user.recipients.each do |recipient| %>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 8px;"><%= link_to recipient.name, recipient_path(recipient) %></td>
+              <td style="border: 1px solid #ddd; padding: 8px;"><%= recipient.age %></td>
+              <td style="border: 1px solid #ddd; padding: 8px;"><%= recipient.relation %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p style="margin-top: 1rem;">No recipients added yet.</p>
+    <% end %>
+  </div>
+
+  <div style="flex: 1;">
+    <!-- Space for future content -->
+  </div>
+</div>
+
 <%= link_to "Log out",
             logout_path,
             data: { turbo_method: :delete },
