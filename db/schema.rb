@@ -10,11 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_14_224439) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_15_030651) do
   create_table "gifts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_gifts_on_user_id"
   end
 
   create_table "recipients", force: :cascade do |t|
@@ -41,5 +43,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_14_224439) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "gifts", "users"
   add_foreign_key "recipients", "users"
 end

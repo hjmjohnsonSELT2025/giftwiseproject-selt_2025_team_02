@@ -1,4 +1,5 @@
 class GiftsController < ApplicationController
+
   def index
     @gifts = Gift.all
   end
@@ -13,6 +14,7 @@ class GiftsController < ApplicationController
 
   def create
     @gift = Gift.new(gift_params)
+    @gift.user_id = @current_user.id.to_s
     if @gift.save
       redirect_to @gift
     else
