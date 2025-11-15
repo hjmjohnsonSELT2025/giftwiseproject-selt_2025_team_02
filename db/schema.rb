@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_14_224439) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_15_050711) do
+  create_table "gift_lists", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.integer "recipient_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_gift_lists_on_recipient_id"
+  end
+
+  create_table "gifts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "gift_list_id"
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["gift_list_id"], name: "index_gifts_on_gift_list_id"
+  end
+
   create_table "recipients", force: :cascade do |t|
     t.integer "age"
     t.datetime "created_at", null: false
@@ -35,5 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_14_224439) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "gift_lists", "recipients"
+  add_foreign_key "gifts", "gift_lists"
   add_foreign_key "recipients", "users"
 end
