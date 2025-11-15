@@ -30,7 +30,7 @@ class Recipient < ApplicationRecord
 
   DISLIKES_OPTIONS = [
     "Spicy Food", "Loud Noises", "Crowds", "Heights", "Insects", "Cold Weather",
-    "Hot Weather", "Math", "Cleaning", "Driving", "Flying","Seafood", 
+    "Hot Weather", "Math", "Cleaning", "Driving", "Flying", "Seafood",
     "Perfume", "Strong Smells", "Bright Lights", "Darkness"
   ]
 end
