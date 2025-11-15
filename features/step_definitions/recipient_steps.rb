@@ -47,3 +47,17 @@ Then('I should see {string}') do |text|
   expect(page).to have_content(text)
 end
 
+Given("the following recipients exist for this user:") do |table|
+  raise "@user is not set; make sure you logged in first" unless @user
+
+  table.hashes.each do |row|
+    @user.recipients.create!(
+      name: row["name"],
+      age: row["age"],
+      gender: row["gender"],
+      relation: row["relation"],
+      likes: [],
+      dislikes: []
+    )
+  end
+end
