@@ -1,0 +1,2 @@
+class GiftList < ApplicationRecord
+end
