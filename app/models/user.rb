@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :recipients, dependent: :destroy
 
   before_save { self.email = email.downcase }
   before_create :confirm_session_token
