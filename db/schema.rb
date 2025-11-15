@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_15_041603) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_15_050711) do
   create_table "gift_lists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -21,10 +21,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_15_041603) do
 
   create_table "gifts", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "gift_list_id"
     t.string "name"
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_gifts_on_user_id"
+    t.index ["gift_list_id"], name: "index_gifts_on_gift_list_id"
   end
 
   create_table "recipients", force: :cascade do |t|
@@ -52,6 +52,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_15_041603) do
   end
 
   add_foreign_key "gift_lists", "recipients"
-  add_foreign_key "gifts", "users"
+  add_foreign_key "gifts", "gift_lists"
   add_foreign_key "recipients", "users"
 end

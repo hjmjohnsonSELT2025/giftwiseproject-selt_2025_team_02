@@ -1,5 +1,4 @@
 class GiftsController < ApplicationController
-
   def index
     @gifts = Gift.all
   end
@@ -24,6 +23,6 @@ class GiftsController < ApplicationController
 
   private
   def gift_params
-    params.expect(gift: [ :name])
+    params.expect(gift: [ :name ])
   end
 end
