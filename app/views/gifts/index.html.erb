@@ -4,7 +4,7 @@
   <% @gifts.each do |gift| %>
   <div>
 
-    <%= link_to gift.name, gifts_path(gift.id)
+    <%= link_to gift.name, gift_path(gift.id)
     %>
 
   </div>
