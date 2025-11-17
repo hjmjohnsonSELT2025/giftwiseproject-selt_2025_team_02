@@ -1,6 +1,6 @@
 <h1>New Gift</h1>
 
-<%= form_with model: @gift do |form| %>
+<%= form_with model: [@recipient, @gift_list, @gift] do |form| %>
   <div>
     <%= form.label :name %>
     <%= form.text_field :name %>
@@ -11,4 +11,15 @@
     <%= form.submit %>
   </div>
 <% end %>
-<%= link_to "Cancel", gifts_path %>
+<%= link_to "Cancel", recipient_gift_list_path(@recipient, @gift_list) %>
+
+<% if @gift.errors.any? %>
+  <div class="error-messages">
+    <h3><%= pluralize(@gift.errors.count, "error") %> prevented saving:</h3>
+    <ul>
+      <% @gift.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

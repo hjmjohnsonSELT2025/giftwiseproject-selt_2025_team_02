@@ -2,9 +2,11 @@
 
 <div id="gift_lists">
 
-  <% @gift_lists.each do |gift_list| %>
+  <% @recipient.gift_lists.each do |gift_list| %>
   <div>
-    <%= link_to gift_list.name, gift_list_path(gift_list.id) %>
+    <%= link_to gift_list.name, recipient_gift_list_path(@recipient.id, gift_list.id) %>
   </div>
   <%end %>
 </div>
+
+<%= link_to "add list", new_recipient_gift_list_path(@recipient) %>
