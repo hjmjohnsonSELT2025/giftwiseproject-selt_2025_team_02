@@ -5,8 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="376ca973-d4f2-4371-b13d-b5425e18c31a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/tasks/cucumber.rake" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tasks/cucumber.rake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/requests/home_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/requests/home_spec.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/features/delete_recipient.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/features/edit_recipient.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/features/recipients.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/features/step_definitions/recipient_steps.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/features/view_recipient.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/gift_lists_helper.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/gifts_helper.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/gift.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/gift_list.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/gifts/index.html.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/gifts/show.html.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20251114223137_create_gifts.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20251115030651_add_user_to_gifts.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20251115041046_create_gift_lists.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20251115041603_add_fields_to_gift_lists.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20251115050711_resolve_tree_dependencies.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/helpers/gift_lists_helper_spec.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/helpers/gifts_helper_spec.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/requests/gift_lists_spec.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/requests/gifts_spec.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/views/gift_lists/index.html.erb_spec.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/views/gifts/index.html.erb_spec.rb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,11 +46,43 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;user__sign__in&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Bookmarks" side_tool="true" />
+      <window_info id="Merge Requests" />
+      <window_info id="Backup and Sync History" />
+      <window_info id="Pull Requests" />
+      <window_info id="Learn" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32980278" />
+      <window_info id="Commit" order="1" weight="0.32980278" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="TypeScript" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="File Transfer" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.3300578" />
+      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.3300578" />
+      <window_info anchor="right" id="Coverage" side_tool="true" />
+      <window_info anchor="right" id="Notifications" order="0" weight="0.32980278" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+      <window_info anchor="right" id="Endpoints" order="5" />
+    </layout>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="RackRunConfigurationType" factoryName="Rack">
       <RACK_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="" />
