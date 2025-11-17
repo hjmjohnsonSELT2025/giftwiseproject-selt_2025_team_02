@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GiftList, type: :model do
-
   let(:recipient_double) { instance_double(User) }
-
   describe 'validations and associations' do
     it 'is valid with a name and a recipient' do
       gift_list = GiftList.new(name: "Birthday List", recipient: recipient_double)
