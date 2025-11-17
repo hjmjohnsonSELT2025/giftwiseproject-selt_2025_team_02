@@ -14,7 +14,6 @@ class GiftsController < ApplicationController
 
   def create
     @gift = @gift_list.gifts.new(gift_params)
-    #@gift.user_id = @current_user.id.to_s
     if @gift.save
       redirect_to recipient_gift_list_path(@recipient, @gift_list)
       # redirect_to recipient_gift_list_gift_path(@recipient, @gift_list, @gift)
