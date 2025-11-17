@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Gift, type: :model do
-
-
   let(:gift_list_double) { instance_double(GiftList) }
-
   describe 'validations and associations' do
     it 'is valid with a name and a gift_list' do
       gift = Gift.new(name: "Batman", gift_list: gift_list_double)
