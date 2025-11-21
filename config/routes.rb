@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy", as: :logout
   get "/signup", to: "users#new", as: :signup
   get "/homepage", to: "home#show", as: :homepage
+  get "/auth/google_oauth2/callback", to: "sessions#google_auth"
+  get "/auth/failure", to: redirect("/login")
 
   root "sessions#new"
 end

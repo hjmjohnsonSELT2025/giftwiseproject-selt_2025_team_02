@@ -59,6 +59,10 @@ group :development, :test do
   gem "cucumber-rails", require: false
 
   gem "rspec-rails"
+
+  gem "omniauth"
+  gem "omniauth-rails_csrf_protection"
+  gem "omniauth-google-oauth2"
 end
 
 group :development do

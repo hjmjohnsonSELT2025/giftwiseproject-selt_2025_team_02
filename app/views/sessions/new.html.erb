@@ -16,5 +16,10 @@
     <%= f.submit "Log in" %>
   </div>
 <% end %>
+
+<div>
+  <p>Or log in with <%= link_to "Google", "/auth/google_oauth2" %> </p>
 </div>
+
+
 <%= link_to "Sign Up", new_user_path  %>
