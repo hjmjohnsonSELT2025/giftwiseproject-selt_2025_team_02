@@ -15,21 +15,21 @@ class SessionsController < ApplicationController
   end
 
   def google_auth
-    #get user information
-    auth_info = request.env['omniauth.auth']
+    # get user information
+    auth_info = request.env["omniauth.auth"]
     email = auth_info.dig("info", "email")
     name = auth_info.dig("info", "name") || email
 
     user = User.find_by(email: email)
 
-    #if not already in use, create new user
+    # if not already in use, create new user
     unless user
-      #won't actually be used, user will have to log-in via google
+      # won't actually be used, user will have to log-in via google
       fake_password = SecureRandom.hex(12)
       user = User.new(
-        name: name, 
-        email:email.downcase, 
-        password: fake_password, 
+        name: name,
+        email: email.downcase,
+        password: fake_password,
         password_confirmation: fake_password)
       unless user.save
         flash[:warning] = "Could not create an account from your Google credentials"
@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
     end
 
     session[:session_token] = user.reset_session_token!
-    redirect_to homepage_path, notice:"Logged in via Google"
+    redirect_to homepage_path, notice: "Logged in via Google"
   end
 
   def destroy

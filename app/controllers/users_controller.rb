@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if(user_params[:password] != user_params[:password_confirmation])
+    if user_params[:password] != user_params[:password_confirmation]
       flash[:warning] = "Password did not match."
       render :new, status: :unprocessable_entity
     elsif @user.save
