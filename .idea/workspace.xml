@@ -5,35 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="376ca973-d4f2-4371-b13d-b5425e18c31a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/features/delete_recipient.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/features/edit_recipient.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/features/recipients.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/features/step_definitions/recipient_steps.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/features/view_recipient.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/gift_lists_helper.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/gifts_helper.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/gift.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/gift_list.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/gifts/index.html.erb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/gifts/show.html.erb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20251114223137_create_gifts.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20251115030651_add_user_to_gifts.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20251115041046_create_gift_lists.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20251115041603_add_fields_to_gift_lists.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20251115050711_resolve_tree_dependencies.rb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/helpers/gift_lists_helper_spec.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/helpers/gifts_helper_spec.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/requests/gift_lists_spec.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/requests/gifts_spec.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/views/gift_lists/index.html.erb_spec.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/views/gifts/index.html.erb_spec.rb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

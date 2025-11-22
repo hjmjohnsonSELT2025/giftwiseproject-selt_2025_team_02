@@ -35,3 +35,5 @@ log
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Ignore personal workspace settings
+.idea/
