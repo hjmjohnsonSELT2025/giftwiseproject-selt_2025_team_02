@@ -6,10 +6,6 @@
         <%= f.text_field :name, required: true %>
     </div>
     <div>
-        <%= f.label :email, "Email(create new account to change)"%>
-        <%= f.text_field :email, required: true, type: "email", readonly: true %>
-    </div>
-    <div>
         <%= f.label :password, "New Password (leave blank to keep current)" %>
         <%= f.password_field :password %>
     </div>

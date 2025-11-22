@@ -1,10 +1,10 @@
 <h2>Your Profile</h4>
 
 <div>
-    <strong>Name:</strong> <%= @user.name %>
+    <h3>Name: <%= @user.name %></h3>
 </div>
 <div>
-    <strong>Email:</strong> <%= @user.email %>
+    <h3>Email: <%= @user.email %></h3>
 </div>
 <div>
     <%= link_to "Edit Profile Information", edit_user_path(@user) %>
@@ -18,6 +18,7 @@
                 <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
                 <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Age</th>
                 <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Relation</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,10 @@
                     <td style="border: 1px solid #ddd; padding: 8px;"><%= link_to recipient.name, recipient_path(recipient) %></td>
                     <td style="border: 1px solid #ddd; padding: 8px;"><%= recipient.age %></td>
                     <td style="border: 1px solid #ddd; padding: 8px;"><%= recipient.relation %></td>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><%= link_to "Edit", edit_recipient_path(recipient) %>
+                    <div></div>
+                    <%= link_to "Delete", recipient_path(recipient), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> </td>
+                    
                 </tr>
             <% end %>
         </tbody>
