@@ -13,12 +13,18 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :sessions, only: [ :new, :create, :destroy ]
-  resources :recipients
+  resources :recipients do
+    resources :gift_lists do
+      resources :gifts
+    end
+  end
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: :logout
   get "/homepage", to: "home#show", as: :homepage
+
+
 
   root "sessions#new"
 end

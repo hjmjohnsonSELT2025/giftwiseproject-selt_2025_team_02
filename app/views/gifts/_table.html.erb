@@ -1,0 +1,17 @@
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+<!--    <th></th>-->
+  </tr>
+  </thead>
+  <tbody>
+  <% gifts.each do |gift| %>
+    <tr>
+      <td><%= gift.name %></td>
+<!--      <td><%#= link_to "Show", gift_path(gift) %></td>-->
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

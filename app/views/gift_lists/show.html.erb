@@ -1,0 +1,9 @@
+<h1><%= @gift_list.name %></h1>
+<h2> Gift list for: <%= Recipient.find(@gift_list.recipient_id).name %></h2>
+
+<h2> Gift list quick view</h2>
+
+<%= render "gifts/table", gifts: @gift_list.gifts %>
+
+<%= link_to "New Gift", new_recipient_gift_list_gift_path(@recipient, @gift_list) %>
+<%= link_to "Back", recipient_path(@recipient) %>

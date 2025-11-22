@@ -1,0 +1,14 @@
+<h1>New Gift List</h1>
+
+<%= form_with model: [@recipient, @gift_list] do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<%= link_to "Cancel", recipient_gift_lists_path(@recipient) %>
