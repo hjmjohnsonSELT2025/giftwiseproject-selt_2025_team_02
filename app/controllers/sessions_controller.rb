@@ -40,7 +40,6 @@ class SessionsController < ApplicationController
     session[:session_token] = user.reset_session_token!
     redirect_to homepage_path, notice: "Logged in via Google"
   end
-  
   def destroy
     current_user&.reset_session_token!
     session.delete(:session_token)
