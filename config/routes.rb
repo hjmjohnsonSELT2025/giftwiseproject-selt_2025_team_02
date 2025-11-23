@@ -19,11 +19,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users, only: [ :new, :create, :destroy ]
+
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: :logout
   get "/homepage", to: "home#show", as: :homepage
-
+  get "/signup", to: "users#new", as: :signup
+  get "/auth/google_oauth2/callback", to: "sessions#google_auth"
+  get "/auth/failure", to: redirect("/login")
 
 
   root "sessions#new"
