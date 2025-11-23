@@ -13,8 +13,13 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :sessions, only: [ :new, :create, :destroy ]
-  resources :recipients
   resources :users, only: [ :new, :create, :destroy ]
+
+  resources :recipients do
+    resources :gift_lists do
+      resources :gifts
+    end
+  end
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
