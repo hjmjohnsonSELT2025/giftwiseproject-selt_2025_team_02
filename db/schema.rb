@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_23_200912) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_23_201850) do
   create_table "event_recipient_budgets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_23_200912) do
 
   create_table "recipients", force: :cascade do |t|
     t.integer "age"
+    t.date "birthday"
     t.datetime "created_at", null: false
     t.text "dislikes"
     t.integer "gender"
