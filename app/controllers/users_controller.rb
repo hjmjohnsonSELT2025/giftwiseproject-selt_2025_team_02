@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :set_current_user, only: %i[show edit update destroy]
 
   skip_before_action :set_current_user, only: %i[new create]
 
@@ -29,5 +28,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
-  
+
 end
