@@ -20,6 +20,29 @@ class UsersController < ApplicationController
     @user = @current_user
     unless current_user?(params[:id])
       flash[:warning] = "Can only show profile of logged in user!"
+      redirect_to homepage_path
+    end
+  end
+
+  def edit
+    @user = @current_user
+    unless current_user?(params[:id])
+      flash[:warning] = "Can only edit profile of logged in user!"
+      redirect_to homepage_path
+    end
+  end
+
+  def update
+    @user = @current_user
+    unless current_user?(params[:id])
+      flash[:warning] = "Can only update profile of logged in user!"
+      redirect_to homepage_path
+      return
+    end
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: "Profile updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
