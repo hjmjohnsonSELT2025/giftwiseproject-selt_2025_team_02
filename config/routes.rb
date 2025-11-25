@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get "/auth/google_oauth2/callback", to: "sessions#google_auth"
   get "/auth/failure", to: redirect("/login")
 
+  resources :event_recipient_budgets
 
   root "sessions#new"
 end
