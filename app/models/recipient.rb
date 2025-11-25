@@ -2,6 +2,8 @@ class Recipient < ApplicationRecord
   belongs_to :user
   has_many :gift_lists
   has_many :gifts, through: :gift_lists
+  has_many :event_recipients, dependent: :destroy
+  has_many :events, through: :event_recipients
   enum :gender, { male: 0, female: 1, other: 2 }
 
   validates :name, presence: true
