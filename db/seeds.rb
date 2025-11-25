@@ -8,8 +8,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.find_or_create_by!(email: "chad_bro_chill@fakemail.com") do |u|
+user = User.find_or_create_by!(email: "chad_bro_chill@fakemail.com") do |u|
   u.name  = "Chad"
   u.password = "lowkeybussin"
   u.password_confirmation = "lowkeybussin"
+end
+
+user.events.find_or_create_by!(name: "Christmas") do |event|
+  event.total_budget = 200
+end
+
+user.events.find_or_create_by!(name: "Thanksgiving") do |event|
+  event.total_budget = 200
 end
