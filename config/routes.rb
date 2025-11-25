@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [ :new, :create, :destroy ]
+  resources :events
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
