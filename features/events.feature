@@ -8,7 +8,7 @@ Feature: Manage events for gift planning
     Given a user "Chad" exists
     And the user "Chad" has no events
 
-  @wip
+  @implemented
   Scenario: Create an event with details
     When the user "Chad" creates an event called "Beer oclock" with:
       | event_date | 4 days from now |
@@ -22,7 +22,7 @@ Feature: Manage events for gift planning
       | location   | Downtown        |
       | budget     | 50              |
 
-  @wip
+  @implemented
   Scenario: Associate recipients with an event
     Given the user "Chad" has a recipient named "Thad"
     And the user "Chad" has a recipient named "Brad"
