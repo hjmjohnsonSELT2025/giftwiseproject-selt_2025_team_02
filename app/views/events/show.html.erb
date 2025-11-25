@@ -1,0 +1,19 @@
+<h1><%= @event.name %></h1>
+
+<ul>
+  <li><strong>Date:</strong> <%= @event.event_date %></li>
+  <li><strong>Time:</strong>
+    <%= @event.event_time.present? ? @event.event_time.strftime("%l:%M %p") : "Not set" %>
+  </li>
+  <li><strong>Location:</strong> <%= @event.location.presence || "Not set" %></li>
+  <li><strong>Budget:</strong> <%= @event.budget.present? ? number_to_currency(@event.budget) : "Not set" %></li>
+</ul>
+
+<p>
+  <%= link_to "Edit Event", edit_event_path(@event) %> |
+  <%= link_to "Delete Event",
+              event_path(@event),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> |
+  <%= link_to "View All Events", events_path %> |
+  <%= link_to "Back to Home", homepage_path %>
+</p>
