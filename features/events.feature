@@ -64,6 +64,43 @@ Feature: Manage events for gift planning
     And I should not see "Beer oclock" in the events list
 
   @happy_path
+  Scenario: Add recipient to an event
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And the following recipients exist for this user:
+      | name | age | gender | relation |
+      | Thad | 25  | male   | Bro      |
+      | Brad | 26  | male   | Bro      |
+    And the following events exist for this user:
+      | name        | event_date | event_time | location  | budget |
+      | Beer oclock | 2025-11-28 | 22:00      | Downtown | 50     |
+    And I am on the events page
+    When I follow "Beer oclock"
+    And I select "Thad" from "Choose a recipient"
+    And I press "Add to Event"
+    Then I should see "Recipient 'Thad' successfully added to 'Beer oclock'." within the flash
+    And I should see "Thad" in the recipients section
+
+  @happy_path
+  Scenario: Remove recipient from an event
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And the following recipients exist for this user:
+      | name | age | gender | relation |
+      | Thad | 25  | male   | Bro      |
+      | Brad | 26  | male   | Bro      |
+    And the following events exist for this user:
+      | name        | event_date | event_time | location  | budget |
+      | Beer oclock | 2025-11-28 | 22:00      | Downtown | 50     |
+    And I am on the events page
+    When I follow "Beer oclock"
+    And I select "Thad" from "Choose a recipient"
+    And I press "Add to Event"
+    And I follow "Remove" within the "Thad" row
+    Then I should see "Recipient 'Thad' successfully removed from 'Beer oclock'." within the flash
+    And I should not see "Thad" in the recipients section
+
+  @happy_path
   Scenario: Associate recipients with an event
     Given the user "Chad" has a recipient named "Thad"
     And the user "Chad" has a recipient named "Brad"
