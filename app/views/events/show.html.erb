@@ -28,10 +28,10 @@
   <p>You don’t have any recipients assigned to this event yet.</p>
 <% end %>
 
-<h3>Add an existing recipient</h3>
+<h3>Add a recipient</h3>
 <% if @available_recipients.any? %>
   <%= form_with url: add_recipient_event_path(@event), method: :post, local: true do |f| %>
-    <%= f.label :recipient_id, "Choose a recipient" %>
+    <%= f.label :recipient_id, "Choose an existing recipient" %>
     <%= f.collection_select :recipient_id,
                             @available_recipients,
                             :id, :name,
@@ -41,6 +41,8 @@
 <% else %>
   <p>All of your recipients are already assigned to this event.</p>
 <% end %>
+<%= link_to "Create recipient to add to event",
+            new_recipient_path(from_event: true, event_id: @event&.id) %>
 
 <p>
   <%= link_to "Edit Event", edit_event_path(@event) %> |
