@@ -15,13 +15,16 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [ :new, :create, :destroy ]
   resources :recipients do
+    member do
+      post :generate_gift
+    end
     resources :gift_lists do
       resources :gifts
     end
   end
 
   resources :users, only: [ :new, :create, :destroy ]
-  resources :ai_suggestions, only: [:index, :create]
+  #resources :ai_suggestions, only: [:index, :create]
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"

@@ -28,6 +28,12 @@ class RecipientsController < ApplicationController
     @recipient = current_user.recipients.find(params[:id])
   end
 
+  def generate_gift
+    @recipient = current_user.recipients.find(params[:id])
+    @suggestions = AiGiftService.new(@recipient).suggest_gift
+    render :show
+  end
+
   def destroy
     @recipient = current_user.recipients.find(params[:id])
     @recipient.destroy

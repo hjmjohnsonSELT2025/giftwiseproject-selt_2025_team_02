@@ -1,3 +1,4 @@
+# THIS FILE IS CURRENTLY NOT BEING USED
 class AiSuggestionsController < ApplicationController
   def index
   end

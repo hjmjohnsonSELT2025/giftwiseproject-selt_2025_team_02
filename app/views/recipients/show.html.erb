@@ -33,5 +33,24 @@
 <br>
 <%= link_to "Edit", edit_recipient_path(@recipient) %>
 <%= link_to "Delete", recipient_path(@recipient), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+
+<br>
+<br>
+
+<%= button_to "Ask Giftwise AI Assistant for Gift Ideas ",
+              generate_gift_recipient_path(@recipient),
+              method: :post,
+              data: { turbo: false, disable_with: "thinking..." } %>
+<br>
+<br>
+
+<% if @suggestions %>
+  <div class="ai-results">
+    <h3> Gift Ideas Based on user profile  </h3>
+    <%= simple_format @suggestions %>
+  </div>
+<% end %>
+<br>
+<br>
 <%= link_to "Back to Recipients", recipients_path %>
 <%= link_to "Back to Home", homepage_path %>
