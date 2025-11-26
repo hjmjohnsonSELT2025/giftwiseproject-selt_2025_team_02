@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [ :new, :create, :destroy ]
-  #resources :ai_suggestions, only: [:index, :create]
+  # resources :ai_suggestions, only: [:index, :create]
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"

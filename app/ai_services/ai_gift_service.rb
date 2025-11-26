@@ -66,5 +66,4 @@ class AiGiftService
     # returns true if key exists, which implies that suggestions have been cached
     Rails.cache.exist?(cache_key)
   end
-
 end

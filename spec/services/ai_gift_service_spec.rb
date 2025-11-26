@@ -2,15 +2,13 @@ require 'rails_helper'
 require 'ostruct'
 
 RSpec.describe AiGiftService do
-
   let(:user) { User.create(email: "test@example.com", password: "password") }
-  let(:recipient) { Recipient.create(name: "Dad", relation: "father", age: 60, likes: "fishing", dislikes:"war", user: user) }
+  let(:recipient) { Recipient.create(name: "Dad", relation: "father", age: 60, likes: "fishing", dislikes: "war", user: user) }
   subject { described_class.new(recipient) }
 
   describe '#suggest_gift' do
     let(:openai_client) { instance_double(OpenAI::Client) }
-
-    let(:json)do
+    let(:json) do
       <<~JSON
         ```json
         {
@@ -33,7 +31,7 @@ RSpec.describe AiGiftService do
     end
 
     before do
-      #seam
+      # seam
       allow(OpenAI::Client).to receive(:new).and_return(openai_client)
 
       allow(openai_client).to receive_message_chain(:chat, :completions, :create).and_return(fake_response)
