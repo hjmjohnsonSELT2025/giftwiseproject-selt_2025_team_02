@@ -37,11 +37,24 @@
 <br>
 <br>
 
-<%= button_to "Ask Giftwise AI Assistant for Gift Ideas ",
-              generate_gift_recipient_path(@recipient),
-              method: :post,
-              data: { turbo: false, disable_with: "thinking..." } %>
 <br>
+<div class="d-flex gap-2">
+
+  <% if @suggestions_exist %>
+  <%= button_to "Generate new gift ideas",
+                generate_gift_recipient_path(@recipient),
+                method: :post,
+                params: { refresh: true },
+                data: { turbo: false, disable_with: "Thinking of new gift ideas..." }  %>
+  <% else %>
+
+    <%= button_to "Ask Giftwise AI Assistant for Gift Ideas ",
+                  generate_gift_recipient_path(@recipient),
+                  method: :post,
+                  data: { turbo: false, disable_with: "thinking..." } %>
+
+  <%end %>
+</div>
 <br>
 
 <% if @suggestions %>

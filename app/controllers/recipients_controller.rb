@@ -26,11 +26,20 @@ class RecipientsController < ApplicationController
 
   def show
     @recipient = current_user.recipients.find(params[:id])
+    ai_output = AiGiftService.new(@recipient)
+    # if the AI has cached suggestions, then show them automatically
+    @suggestions_exist = ai_output.has_cached_suggestions?
+    if :suggestions_exist?
+      @suggestions = ai_output.suggest_gift
+    end
   end
 
   def generate_gift
     @recipient = current_user.recipients.find(params[:id])
-    @suggestions = AiGiftService.new(@recipient).suggest_gift
+    # if the user clicked on the "Generate new ideas" button then generate new ones instead of showing the cached ones
+    should_refresh = params[:refresh] == "true"
+    @suggestions = AiGiftService.new(@recipient, force_refresh: should_refresh).suggest_gift
+    @suggestions_exist = true
     render :show
   end
 
