@@ -1,5 +1,5 @@
 module ApplicationHelper
-  #Note from Nancy - I used Gemini to write this method - it formats the output of the LLM into proper markdown
+  # Note from Nancy - I used Gemini to write this method - it formats the output of the LLM into proper markdown
   def markdown(text)
     return "" unless text.present?
 

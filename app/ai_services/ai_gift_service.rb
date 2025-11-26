@@ -51,30 +51,20 @@ class AiGiftService
       content = response.choices[0].message.content
 
       begin
-        clean_content = content.gsub('```json', '').gsub('```', '').strip
+        clean_content = content.gsub("```json", "").gsub("```", "").strip
         JSON.parse(clean_content)
       rescue JSON::ParserError
         { "Error" => "Could not generate gifts. Please try again." }
       end
     end
-
   end
 
   # Function to check if the AI for a recipient has cached suggestions, to determine
   # whether we should show a "Generate (refresh) new ideas" button, or "Generate ideas"
   def has_cached_suggestions?
     cache_key = "recipient_gifts/#{@recipient.id}/#{@recipient.updated_at}"
-    #returns true if key exists, which implies that suggestions have been cached
+    # returns true if key exists, which implies that suggestions have been cached
     Rails.cache.exist?(cache_key)
-
   end
 
 end
-
-
-
-##
-#
-#         I need a structured output from you. Please give it to me in the form of a JSON output, where the key
-#         for each gift is the name of the gift idea (keep it minimal), and the value is as verbose of a description as
-#         you want.
