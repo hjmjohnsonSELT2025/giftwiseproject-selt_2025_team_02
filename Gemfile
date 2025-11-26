@@ -66,6 +66,7 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "dotenv-rails"
+  gem 'redcarpet'
 end
 
 group :development do

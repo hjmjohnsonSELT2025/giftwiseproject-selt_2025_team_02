@@ -47,7 +47,7 @@
 <% if @suggestions %>
   <div class="ai-results">
     <h3> Gift Ideas Based on user profile  </h3>
-    <%= simple_format @suggestions %>
+    <%= markdown(@suggestions) %>
   </div>
 <% end %>
 <br>
