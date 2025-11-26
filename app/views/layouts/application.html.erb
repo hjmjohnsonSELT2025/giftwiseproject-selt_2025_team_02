@@ -31,6 +31,15 @@
       <div class="flash alert"><%= flash[:alert] || flash[:warning] %></div>
     <% end %>
 
+    <nav class="navbar">
+      <%= link_to "Home", homepage_path %>
+      <%= link_to "Recipients", recipients_path %>
+      <%= link_to "Gift Lists", root_path %>
+      <%= link_to "Gifts", "#" %>
+      <%= link_to "Logout", logout_path %>
+    </nav>
+
+
     <%= yield %>
   </body>
 </html>
