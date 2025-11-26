@@ -159,3 +159,27 @@ Then('I should not see {string} in the events list') do |event_name|
     true
   end
 end
+
+Then('I should see {string} in the recipients section') do |recipient_name|
+  within(:xpath, "//h2[contains(., 'Recipients for this event')]/following-sibling::ul[1]") do
+    expect(page).to have_content(recipient_name)
+  end
+end
+
+Then('I should not see {string} in the recipients section') do |recipient_name|
+  recipients_xpath = "//h2[contains(., 'Recipients for this event')]/following-sibling::ul[1]"
+
+  if page.has_xpath?(recipients_xpath)
+    within(:xpath, recipients_xpath) do
+      expect(page).not_to have_content(recipient_name)
+    end
+  end
+end
+
+When('I follow {string} within the {string} row') do |link_text, recipient_name|
+  within(:xpath, "//h2[contains(., 'Recipients for this event')]/following-sibling::ul[1]//li[contains(., '#{recipient_name}')]") do
+    link = find_link(link_text, exact: true)
+    href = link[:href]
+    page.driver.submit :delete, href, {}
+  end
+end
