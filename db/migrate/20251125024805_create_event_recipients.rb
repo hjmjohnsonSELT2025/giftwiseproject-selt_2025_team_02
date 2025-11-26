@@ -6,6 +6,6 @@ class CreateEventRecipients < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :event_recipients, [:event_id, :recipient_id], unique: true # don't add same recipient twice
+    add_index :event_recipients, [ :event_id, :recipient_id ], unique: true # don't add same recipient twice
   end
 end

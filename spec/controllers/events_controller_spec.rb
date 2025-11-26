@@ -33,7 +33,7 @@ RSpec.describe EventsController, type: :controller do
 
       get :index
 
-      expect(assigns(:events)).to match_array([event, another_event])
+      expect(assigns(:events)).to match_array([ event, another_event ])
       expect(response).to render_template(:index)
     end
   end

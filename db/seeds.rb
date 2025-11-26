@@ -41,4 +41,3 @@ end
 [ recipient1, recipient2 ].each do |rec|
   event.recipients << rec unless event.recipients.exists?(rec.id)
 end
-

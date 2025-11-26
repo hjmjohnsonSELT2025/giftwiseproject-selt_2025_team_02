@@ -117,7 +117,7 @@ end
 
 When('the recipients {string} and {string} are added to the event {string}') do |recipient_name1, recipient_name2, event_name|
   event = Event.find_by!(name: event_name)
-  names = [recipient_name1, recipient_name2]
+  names = [ recipient_name1, recipient_name2 ]
 
   @recipients_by_name ||= {}
 
@@ -159,4 +159,3 @@ Then('I should not see {string} in the events list') do |event_name|
     true
   end
 end
-
