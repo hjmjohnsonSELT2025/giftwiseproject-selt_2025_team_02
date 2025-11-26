@@ -22,7 +22,7 @@
           <%= link_to event.name, event_path(event) %>
         </td>
         <td style="border: 1px solid #ddd; padding: 8px;"><%= event.event_date %></td>
-        <td style="border: 1px solid #ddd; padding: 8px;"><%= event.event_time.present? ? event.event_time.strftime("%I:%M %p") : "" %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= event.event_time.present? ? event.event_time.strftime("%l:%M %p") : "" %></td>
         <td style="border: 1px solid #ddd; padding: 8px;"><%= event.location %></td>
         <td style="border: 1px solid #ddd; padding: 8px;">
           <%= link_to "Edit Event", edit_event_path(event) %> |
