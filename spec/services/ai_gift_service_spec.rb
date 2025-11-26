@@ -10,12 +10,23 @@ RSpec.describe AiGiftService do
   describe '#suggest_gift' do
     let(:openai_client) { instance_double(OpenAI::Client) }
 
+    let(:json)do
+      <<~JSON
+        ```json
+        {
+          "fishing rod": "fishh.",
+          "dr. pepper": "docta peppa."
+        }
+        ```
+      JSON
+    end
+
     # fake response structure that acts like openai's real JSON
     let(:fake_response) do
       OpenStruct.new(
         choices: [
           OpenStruct.new(
-            message: OpenStruct.new(content: "1. fishing rod \n 2. dr. pepper")
+            message: OpenStruct.new(content: json)
           )
         ]
       )
@@ -30,8 +41,9 @@ RSpec.describe AiGiftService do
 
     it 'calls OpenAI and returns the suggestions content' do
       result = subject.suggest_gift
-
-      expect(result).to eq("1. fishing rod \n 2. dr. pepper")
+      expect(result).to be_a(Hash)
+      expect(result).to have_key("fishing rod")
+      expect(result["dr. pepper"]).to eq("docta peppa.")
     end
   end
 end
