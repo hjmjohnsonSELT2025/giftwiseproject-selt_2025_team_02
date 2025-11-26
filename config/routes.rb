@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :recipients do
     member do
       post :generate_gift
+      get :generate_gift, to: "recipients#show"
     end
     resources :gift_lists do
       resources :gifts
