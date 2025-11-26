@@ -38,15 +38,28 @@ class AiGiftService
         They like #{@recipient.likes} and they dislike #{@recipient.dislikes}.
         Please suggest a short list of gift ideas, and for each idea please give a short explanation
         on why they might like it based on their profile. Keep the tone friendly, casual, and helpful.
+
+        I need a structured output from you. Please give it to me in the form of a JSON output, where the key
+        for each gift is the name of the gift idea (keep it minimal), and the value is as verbose of a description as
+        you want.
       PROMPT
 
       response = @client.chat.completions.create(
         messages: [{ role: "user", content: prompt }],
-        model: "gpt-5.1"
+        model: "gpt-4o",
+        response_format: {type: "json_object"}
       )
       # get only text, not entire JSON output
-      response.choices[0].message.content
+      content = response.choices[0].message.content
+
+      begin
+        clean_content = content.gsub('```json', '').gsub('```', '').strip
+        JSON.parse(clean_content)
+      rescue JSON::ParserError
+        { "Error" => "Could not generate gifts. Please try again." }
+      end
     end
+
   end
 
   # Function to check if the AI for a recipient has cached suggestions, to determine
@@ -59,3 +72,11 @@ class AiGiftService
   end
 
 end
+
+
+
+##
+#
+#         I need a structured output from you. Please give it to me in the form of a JSON output, where the key
+#         for each gift is the name of the gift idea (keep it minimal), and the value is as verbose of a description as
+#         you want.

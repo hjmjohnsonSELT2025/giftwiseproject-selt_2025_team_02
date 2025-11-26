@@ -60,7 +60,22 @@
 <% if @suggestions %>
   <div class="ai-results">
     <h3> Gift Ideas Based on user profile  </h3>
-    <%= markdown(@suggestions) %>
+    <%#= markdown(@suggestions) %>
+
+    <% if @suggestions.is_a?(Hash) %>
+      <div class="gift-grid">
+        <% @suggestions.each do |gift_name, description| %>
+          <h4>
+            <%=gift_name %>
+          </h4>
+
+          <p>
+            <%=description %>
+          </p>
+        <% end %>
+
+      </div>
+    <% end %>
   </div>
 <% end %>
 <br>
