@@ -1,3 +1,9 @@
+<% flash.each do |type, message| %>
+<!--  I had AI style this for me-->
+<div class="alert alert-<%= type == 'notice' ? 'success' : 'danger' %>" style="padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; color: #721c24; background-color: #f8d7da; border-color: #f5c6cb;">
+  <%= message %>
+</div>
+<% end %>
 <h1><%= @recipient.name %></h1>
 
 <p><strong>Age:</strong> <%= @recipient.age %></p>
@@ -33,5 +39,52 @@
 <br>
 <%= link_to "Edit", edit_recipient_path(@recipient) %>
 <%= link_to "Delete", recipient_path(@recipient), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+
+<br>
+<br>
+
+<br>
+<div class="d-flex gap-2">
+
+  <% if @suggestions_exist %>
+  <%= button_to "Generate new gift ideas",
+                generate_gift_recipient_path(@recipient),
+                method: :post,
+                params: { refresh: true },
+                data: { turbo: false, disable_with: "Thinking of new gift ideas..." }  %>
+  <% else %>
+
+    <%= button_to "Ask Giftwise AI Assistant for Gift Ideas",
+                  generate_gift_recipient_path(@recipient),
+                  method: :post,
+                  data: { turbo: false, disable_with: "thinking..." } %>
+
+  <%end %>
+</div>
+<br>
+
+<% if @suggestions %>
+  <div class="ai-results">
+    <h3> Gift Ideas Based on user profile  </h3>
+    <%#= markdown(@suggestions) %>
+
+    <% if @suggestions.is_a?(Hash) %>
+      <div class="gift-grid">
+        <% @suggestions.each do |gift_name, description| %>
+          <h4>
+            <%=gift_name %>
+          </h4>
+
+          <p>
+            <%=description %>
+          </p>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<br>
+<br>
 <%= link_to "Back to Recipients", recipients_path %>
 <%= link_to "Back to Home", homepage_path %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "ai_suggestions/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -14,6 +15,10 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [ :new, :create, :destroy ]
   resources :recipients do
+    member do
+      post :generate_gift
+      get :generate_gift, to: "recipients#show"
+    end
     resources :gift_lists do
       resources :gifts
     end

@@ -31,6 +31,8 @@ gem "solid_queue"
 gem "solid_cable"
 gem "rails-controller-testing"
 
+gem "openai", "~> 0.36.1"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -63,6 +65,8 @@ group :development, :test do
   gem "cucumber-rails", require: false
 
   gem "rspec-rails"
+  gem "dotenv-rails"
+  gem "redcarpet"
 end
 
 group :development do

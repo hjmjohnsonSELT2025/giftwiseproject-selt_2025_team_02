@@ -1,0 +1,2 @@
+module AiSuggestionsHelper
+end
