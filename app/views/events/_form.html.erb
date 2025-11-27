@@ -1,0 +1,50 @@
+<%# Shared form for new/edit %>
+
+<%# Error summary box for validation errors %>
+<% if @event.errors.any? %>
+  <div style="border: 3px solid red; padding: 0.5rem; margin-bottom: 1rem;">
+    <h3><%= pluralize(@event.errors.count, "error") %> prevented this event from being saved:</h3>
+    <ul>
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%# Form details for new and edit event %>
+
+<%= form_with model: @event, local: true do |f| %>
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :name, "Event name" %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :event_date, "Event date" %><br>
+    <%= f.date_field :event_date, min: Date.current %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :event_time, "Event time" %><br>
+    <%= f.time_field :event_time %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :location, "Location" %><br>
+    <%= f.text_field :location %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :budget, "Budget" %><br>
+    <%= f.number_field :budget,
+                       step: 0.01,
+                       min: 0,
+                       max: 1_000_000,
+                       value: number_with_precision(@event.budget, precision: 2) %>
+  </div>
+
+  <div style="margin-top: 1rem;">
+    <%= f.submit %>
+  </div>
+<% end %>

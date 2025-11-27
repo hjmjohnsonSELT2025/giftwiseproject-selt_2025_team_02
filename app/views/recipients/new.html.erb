@@ -1,6 +1,12 @@
 <h1>Add Gift Recipient</h1>
 
 <%= form_with model: @recipient, url: recipients_path, method: :post, local: true do |f| %>
+  <%# preserve context when coming from an event %>
+  <% if @from_event && @event_id.present? %>
+    <%= hidden_field_tag :from_event, "true" %>
+    <%= hidden_field_tag :event_id, @event_id %>
+  <% end %>
+
   <div>
     <%= f.label :name, "Name" %><br>
     <%= f.text_field :name %>
@@ -32,7 +38,11 @@
   </div>
 
   <div style="margin-top: 0.75rem;">
-    <%= f.submit "Add Recipient" %>
+    <% if @from_event && @event_id.present? %>
+      <%= f.submit "Save recipient and continue" %>
+    <% else %>
+      <%= f.submit "Add Recipient" %>
+    <% end %>
   </div>
 <% end %>
 

@@ -1,12 +1,3 @@
-Given("I am logged in as {string} with password {string}") do |email, password|
-  step %(a user exists with email "#{email}" and password "#{password}")
-  step "I go to the log in page"
-  step %(I fill in "Email" with "#{email}")
-  step %(I fill in "Password" with "#{password}")
-  step %(I press "Log in")
-  step "I should be logged in"
-end
-
 Given("there are no recipients for this user") do
   raise "@user is not set; make sure you logged in first" unless @user
   @user.recipients.destroy_all
@@ -31,27 +22,12 @@ Then("{int} recipients should exist for the current user") do |count|
   expect(@user.recipients.count).to eq(count)
 end
 
-When('I follow {string}') do |link_text|
-  if link_text == "Delete"
-    # Turbo's data-turbo-method needs JS; in tests we simulate the DELETE directly
-    link = find_link(link_text)
-    href = link[:href]
-    page.driver.submit :delete, href, {}
-  else
-    click_link link_text
-  end
-end
-
 When('I select {string} from {string}') do |option, field|
   select option, from: field
 end
 
 When('I check {string}') do |label|
   check label
-end
-
-Then('I should see {string}') do |text|
-  expect(page).to have_content(text)
 end
 
 Given("the following recipients exist for this user:") do |table|
@@ -67,10 +43,6 @@ Given("the following recipients exist for this user:") do |table|
       dislikes: []
     )
   end
-end
-
-Then('I should not see {string}') do |text|
-  expect(page).not_to have_content(text)
 end
 
 Then('I should not see {string} in the recipients list') do |name|
