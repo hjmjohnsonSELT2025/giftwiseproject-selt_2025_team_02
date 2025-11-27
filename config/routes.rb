@@ -32,5 +32,5 @@ Rails.application.routes.draw do
 
   root "sessions#new"
   # catch all for wrong indexes
-  match '*path', to: 'application#handle_routing_error', via: :all
+  match "*path", to: "application#handle_routing_error", via: :all
 end
