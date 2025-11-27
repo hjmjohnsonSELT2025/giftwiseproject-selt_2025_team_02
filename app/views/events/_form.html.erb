@@ -37,7 +37,11 @@
 
   <div style="margin-top: 0.75rem;">
     <%= f.label :budget, "Budget" %><br>
-    <%= f.number_field :budget, step: 0.01, value: number_with_precision(@event.budget, precision: 2) %>
+    <%= f.number_field :budget,
+                       step: 0.01,
+                       min: 0,
+                       max: 1_000_000,
+                       value: number_with_precision(@event.budget, precision: 2) %>
   </div>
 
   <div style="margin-top: 1rem;">
