@@ -22,7 +22,7 @@
 
   <div style="margin-top: 0.75rem;">
     <%= f.label :event_date, "Event date" %><br>
-    <%= f.date_field :event_date %>
+    <%= f.date_field :event_date, min: Date.current %>
   </div>
 
   <div style="margin-top: 0.75rem;">
