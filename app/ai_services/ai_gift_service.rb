@@ -6,7 +6,12 @@ class AiGiftService
     @recipient = recipient
     # force refresh flag for generating new AI suggestions, instead of relying on cached ones
     @force_refresh = force_refresh
-    @client = OpenAI::Client.new(api_key: ENV.fetch("OPENAI_API_KEY"))
+    api_key = ENV["OPENAI_API_KEY"]
+    if api_key.present?
+    @client = OpenAI::Client.new(api_key: api_key)
+    else
+      @client = nil
+    end
   end
 
   def chat(prompt)
@@ -19,6 +24,8 @@ class AiGiftService
   end
 
   def suggest_gift
+    # Ensure API key for OPenAI is present
+    return { "Error" => "OpenAI API Key is missing. Check your .env file." } if @client.nil?
     # create a unique cache key
     # if you change the recipient's likes and dislikes, the cache will
     # automatically expire and force new ideas
