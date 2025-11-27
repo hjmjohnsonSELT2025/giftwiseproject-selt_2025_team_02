@@ -54,7 +54,7 @@
                 data: { turbo: false, disable_with: "Thinking of new gift ideas..." }  %>
   <% else %>
 
-    <%= button_to "Ask Giftwise AI Assistant for Gift Ideas ",
+    <%= button_to "Ask Giftwise AI Assistant for Gift Ideas",
                   generate_gift_recipient_path(@recipient),
                   method: :post,
                   data: { turbo: false, disable_with: "thinking..." } %>
