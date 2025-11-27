@@ -25,7 +25,12 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [ :new, :create, :destroy ]
-  # resources :ai_suggestions, only: [:index, :create]
+  resources :events do
+    member do
+      post :add_recipient
+      delete "remove_recipient/:recipient_id", action: :remove_recipient, as: :remove_recipient
+    end
+  end
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
@@ -37,4 +42,6 @@ Rails.application.routes.draw do
 
 
   root "sessions#new"
+  # catch all for wrong indexes
+  match "*path", to: "application#handle_routing_error", via: :all
 end
