@@ -1,5 +1,6 @@
 Given("I am logged in as {string} with password {string}") do |email, password|
   step %(a user exists with email "#{email}" and password "#{password}")
+  @user = User.find_by(email: email)
   step "I go to the log in page"
   step %(I fill in "Email" with "#{email}")
   step %(I fill in "Password" with "#{password}")
@@ -83,4 +84,21 @@ Then("I should not see {string} in the recipients list") do |name|
   within("table") do
     expect(page).not_to have_content(name)
   end
+end
+
+Given("the AI service will return {string}") do |gift_name|
+  fake_suggestions = {
+    gift_name => "Because she likes knitting"
+  }
+  # use allow_any_instance_of because the controller creates a new instance
+  allow_any_instance_of(AiGiftService).to receive(:suggest_gift).and_return(fake_suggestions)
+
+  # also need to mock this so controller knows to show the results
+  allow_any_instance_of(AiGiftService).to receive(:has_cached_suggestions?).and_return(true)
+end
+
+Given(/^the OpenAI service is currently down$/) do
+  allow_any_instance_of(AiGiftService).to receive(:suggest_gift).and_raise(StandardError, "API Timeout")
+  # make sure controller ignores cached data, so it tries to fetch
+  allow_any_instance_of(AiGiftService).to receive(:has_cached_suggestions?).and_return(false)
 end
