@@ -31,7 +31,7 @@ Then("{int} recipients should exist for the current user") do |count|
   expect(@user.recipients.count).to eq(count)
 end
 
-When('I follow {string}') do |link_text|
+When("I follow {string}") do |link_text|
   if link_text == "Delete"
     # Turbo's data-turbo-method needs JS; in tests we simulate the DELETE directly
     link = find_link(link_text)
@@ -42,15 +42,20 @@ When('I follow {string}') do |link_text|
   end
 end
 
-When('I select {string} from {string}') do |option, field|
+When("I select {string} from {string}") do |option, field|
   select option, from: field
 end
 
-When('I check {string}') do |label|
+When("I check {string}") do |label|
   check label
 end
 
-Then('I should see {string}') do |text|
+When(/^I click "([^"]+)"$/) do |text|
+  click_button text
+end
+
+
+Then("I should see {string}") do |text|
   expect(page).to have_content(text)
 end
 
@@ -69,13 +74,13 @@ Given("the following recipients exist for this user:") do |table|
   end
 end
 
-Then('I should not see {string}') do |text|
+Then("I should not see {string}") do |text|
   expect(page).not_to have_content(text)
 end
 
-Then('I should not see {string} in the recipients list') do |name|
+Then("I should not see {string} in the recipients list") do |name|
   # Limit the check to the recipients table (index view)
-  within('table') do
+  within("table") do
     expect(page).not_to have_content(name)
   end
 end
