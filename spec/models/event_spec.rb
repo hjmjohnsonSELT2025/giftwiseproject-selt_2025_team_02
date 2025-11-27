@@ -58,7 +58,7 @@ RSpec.describe Event, type: :model do
   describe "budget validation" do
     # Helper for budget-related errors: builds an otherwise-valid event so the only thing that can fail is the budget field.
     def budget_errors_for(value)
-      event = described_class.new(
+      event = Event.new(
         name:       "Test event",
         event_date: Date.today,
         user:       user,
@@ -124,6 +124,48 @@ RSpec.describe Event, type: :model do
       it "still rejects scientific notation even if the value is in range" do
         expect(budget_errors_for("1e3")).to include(scientific_msg)
       end
+    end
+  end
+
+  describe "event_date validation" do
+    # Helper to build an event with a specific date and otherwise valid attributes
+    def event_with_date(date)
+      Event.new(
+        name: "Date test",
+        event_date: date,
+        user: user
+      )
+    end
+
+    it "allows today's date" do
+      event = event_with_date(Date.current)
+      expect(event).to be_valid
+    end
+
+    it "allows a future date" do
+      event = event_with_date(Date.current + 7)
+      expect(event).to be_valid
+    end
+
+    it "rejects a past date" do
+      event = event_with_date(Date.current - 1)
+
+      expect(event).not_to be_valid
+      expect(event.errors[:event_date]).to include("cannot be in the past")
+    end
+
+    it "rejects a date whose year has more than four digits" do
+      event = event_with_date(Date.new(111_111, 1, 10))
+
+      expect(event).not_to be_valid
+      expect(event.errors[:event_date]).to include("year must have exactly four digits")
+    end
+
+    it "rejects a date whose year has fewer than four digits" do
+      event = event_with_date(Date.new(999, 1, 1))
+
+      event.valid?
+      expect(event.errors[:event_date]).to include("year must have exactly four digits")
     end
   end
 end
