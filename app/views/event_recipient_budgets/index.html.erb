@@ -1,0 +1,45 @@
+<h1>Event Recipient Budgets</h1>
+
+<h2>Select Event</h2>
+<ul>
+    <% @events.each do |event| %>
+        <% if @selected_event && event.id == @selected_event.id %>
+            <li><%= event.name %></li>
+        <% else %>
+            <li><%= link_to event.name, event_recipient_budgets_path(event_id: event.id) %></li>
+        <% end %>
+    <% end %>
+</ul>
+
+<% if @selected_event %>
+<h2>Recipients for <%= @selected_event.name %></h2>
+<table>
+    <thead>
+        <tr>
+            <th>Recipient Name</th>
+            <th>Total Budget</th>
+            <th>Spent Budget</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @recipients.each do |recipient| %>
+            <tr>
+                <td><%= recipient.name %></td>
+                <% budget = @budgets_by_recipient[recipient.id] %>
+                <% if budget %>
+                    <td><%= number_to_currency(budget.total_budget) %></td>
+                    <td><%= number_to_currency(budget.spent_budget) %></td>
+                    <td><%= link_to 'Edit Budget', edit_event_recipient_budget_path(budget) %></td>
+                <% else %>
+                    <td colspan="2">No budget set</td>
+                    <td><%= link_to 'Add Budget', new_event_recipient_budget_path(event_id: @selected_event.id, recipient_id: recipient.id) %></td>
+            <% end %>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<% else %>
+    <p>No event selected.</p>
+<% end %>
+<%= link_to "Back to Home", homepage_path %>
