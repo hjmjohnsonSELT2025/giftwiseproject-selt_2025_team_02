@@ -20,7 +20,9 @@ Rails.application.routes.draw do
       get :generate_gift, to: "recipients#show"
     end
     resources :gift_lists do
-      resources :gifts
+      resources :gifts do
+        resources :gift_offers, only: [:new, :create]
+      end
     end
   end
 
