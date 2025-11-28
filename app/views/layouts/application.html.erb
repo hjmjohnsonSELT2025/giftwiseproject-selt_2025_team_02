@@ -23,6 +23,18 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+  <% unless @hide_navbar %>
+    <nav class="navbar">
+      <%= link_to "Home", homepage_path %>
+      <%= link_to "Recipients", recipients_path %>
+      <%= link_to "Gift Lists", root_path %>
+      <%= link_to "Gifts", "#" %>
+      <%= link_to "Log out",
+                  logout_path,
+                  data: { turbo_method: :delete },
+                  "data-test": "logout" %>
+    </nav>
+  <% end %>
     <% if flash[:notice].present? %>
       <div class="flash notice"><%= flash[:notice] %></div>
     <% end %>
@@ -31,13 +43,6 @@
       <div class="flash alert"><%= flash[:alert] || flash[:warning] %></div>
     <% end %>
 
-    <nav class="navbar">
-      <%= link_to "Home", homepage_path %>
-      <%= link_to "Recipients", recipients_path %>
-      <%= link_to "Gift Lists", root_path %>
-      <%= link_to "Gifts", "#" %>
-      <%= link_to "Logout", logout_path %>
-    </nav>
 
 
     <%= yield %>

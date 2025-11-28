@@ -1,5 +1,5 @@
 .navbar {
-    background-color: var(--primary);
+    background-color: var(--bg);
     padding: 1rem;
     display: flex;
     gap: 1.5rem;

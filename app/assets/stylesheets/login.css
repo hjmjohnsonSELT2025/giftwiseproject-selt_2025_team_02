@@ -1,0 +1,64 @@
+
+
+.login-entry {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.login-entry label {
+    min-width: 80px;
+}
+
+.login-entry input {
+    font-size: inherit;
+    padding: 0.5rem;
+    flex: 1;
+}
+
+.login-forgot-password {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: right;
+    align-items: center;
+}
+.login-forgot-password a{
+    color: var(--text-faded);
+}
+
+.login-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.3rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+.login-btn {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+.btn {
+    all: unset;
+    display: inline-block;
+    width:100%;
+    padding: 0.5rem 1rem;
+    background-color: #007bff; /* blue like Bootstrap */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    /* For submit inputs */
+    appearance: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+

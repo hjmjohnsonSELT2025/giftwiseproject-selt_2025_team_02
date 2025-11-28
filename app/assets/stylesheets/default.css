@@ -2,9 +2,9 @@ html, body {
   margin: 0;
   padding: 0;
   background: White;
-  color: DarkSlateGrey;
   font-family: Tahoma, Verdana, sans-serif;
-  font-size: 10pt;
+  font-size: 15pt;
+  color: var(--text);
 }
 div#main {
   margin: 0;
@@ -14,15 +14,15 @@ a {
   background: transparent;
   color: var(--text);
   text-decoration: underline;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 h1 {
   color: var(--header_text);
   font-size: 150%;
-  font-style: italic;
+  /*font-style: italic;*/
   display: block;
   width: 100%;
-  border-bottom: 1px solid DarkSlateGrey;
+  /*border-bottom: 1px solid DarkSlateGrey;*/
 }
 h3 {
   color: var(--header_text);
