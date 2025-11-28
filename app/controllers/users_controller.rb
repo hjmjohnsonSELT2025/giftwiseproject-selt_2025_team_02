@@ -23,7 +23,6 @@ class UsersController < ApplicationController
       redirect_to homepage_path
     end
   end
-  
   def edit
     @user = @current_user
     unless current_user?(params[:id])
@@ -54,5 +53,4 @@ class UsersController < ApplicationController
   def update_user_params
     params.require(:user).permit(:name, :password, :password_confirmation)
   end
-
 end
