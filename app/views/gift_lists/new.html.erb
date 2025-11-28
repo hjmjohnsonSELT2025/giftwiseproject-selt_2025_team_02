@@ -6,7 +6,14 @@
     <%= form.text_field :name %>
 
   </div>
-
+  <div>
+    <%= form.label :recipient_id, "Assign to Recipient" %>
+    <%= form.collection_select :recipient_id,
+                               @recipients,
+                               :id,
+                               :name,
+                               prompt: "Select a recipient" %>
+  </div>
   <div>
     <%= form.submit %>
   </div>

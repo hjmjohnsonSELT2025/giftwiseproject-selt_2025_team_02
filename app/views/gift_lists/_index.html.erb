@@ -1,0 +1,10 @@
+<div id="gift_lists">
+  <% gift_lists = @recipient ? @recipient.gift_lists : current_user.gift_lists %>
+
+  <% gift_lists.each do |gift_list| %>
+    <div>
+      <%= link_to gift_list.name, recipient_gift_list_path(gift_list.recipient.id, gift_list.id), data: { turbo: false } %>
+    </div>
+  <%end %>
+</div>
+<%= link_to "add list", new_recipient_gift_list_path(@recipient), data: {turbo: false} %>
