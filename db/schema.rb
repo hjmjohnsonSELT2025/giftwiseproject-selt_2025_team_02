@@ -11,6 +11,19 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
+  create_table "event_recipient_budgets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "event_id", null: false
+    t.integer "recipient_id", null: false
+    t.integer "spent_budget", default: 0, null: false
+    t.integer "total_budget", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["event_id"], name: "index_event_recipient_budgets_on_event_id"
+    t.index ["recipient_id"], name: "index_event_recipient_budgets_on_recipient_id"
+    t.index ["user_id"], name: "index_event_recipient_budgets_on_user_id"
+  end
+
   create_table "event_recipients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
@@ -22,15 +35,13 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.decimal "budget", precision: 10, scale: 2
     t.datetime "created_at", null: false
-    t.date "event_date", null: false
-    t.time "event_time"
-    t.string "location"
+    t.date "date"
     t.string "name", null: false
+    t.integer "spent_budget", default: 0, null: false
+    t.integer "total_budget", default: 0, null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.index ["user_id", "event_date"], name: "index_events_on_user_id_and_event_date"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -52,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
 
   create_table "recipients", force: :cascade do |t|
     t.integer "age"
+    t.date "birthday"
     t.datetime "created_at", null: false
     t.text "dislikes"
     t.integer "gender"
@@ -85,6 +97,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "event_recipient_budgets", "events"
+  add_foreign_key "event_recipient_budgets", "recipients"
+  add_foreign_key "event_recipient_budgets", "users"
   add_foreign_key "event_recipients", "events"
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"
