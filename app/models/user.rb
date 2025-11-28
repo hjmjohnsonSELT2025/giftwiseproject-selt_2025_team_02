@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :recipients, dependent: :destroy
   has_many :gift_lists, through: :recipients
   has_many :gifts, through: :gift_lists
+  has_many :events, dependent: :destroy
 
   before_save { self.email = email.downcase }
   before_create :confirm_session_token
