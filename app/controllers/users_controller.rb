@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(create_user_params)
     if @user.save
       session[:session_token] = @user.reset_session_token!
       redirect_to homepage_path, notice: "Account created successfully."
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
       redirect_to homepage_path
       return
     end
-    if @user.update(user_params)
+    if @user.update(update_user_params)
       redirect_to user_path(@user), notice: "Profile updated successfully."
     else
       render :edit, status: :unprocessable_entity
@@ -47,7 +47,11 @@ class UsersController < ApplicationController
   end
 
   private
-  def user_params
+  def create_user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def update_user_params
+    params.require(:user).permit(:name, :password, :password_confirmation)
   end
 end
