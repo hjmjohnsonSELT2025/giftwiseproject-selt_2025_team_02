@@ -83,6 +83,42 @@
   <%= link_to "Add New Budget", new_event_recipient_budget_path %>
 </p>
 
+<% if @budgets.any? %>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+    <thead>
+    <tr style="background-color: #f5f5f5;">
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Event</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Recipient</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Budget</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Spent</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @budgets.each do |budget| %>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">
+          <%= link_to budget.event.name, event_recipient_budgets_path(event_id: budget.event.id) %>
+        </td>
+        <td style="border: 1px solid #ddd; padding: 8px;">
+          <%= link_to budget.recipient.name, recipient_path(budget.recipient) %>
+        </td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= number_to_currency(budget.budget) %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= number_to_currency(budget.spent) %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;">
+          <%= link_to "Edit", edit_event_recipient_budget_path(budget) %> |
+          <%= link_to "Delete",
+                      event_recipient_budget_path(budget),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You don't have any budgets set up yet.</p>
+<% end %>
+
 <%= link_to "Log out",
             logout_path,
             data: { turbo_method: :delete },

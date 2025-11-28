@@ -12,6 +12,14 @@
 </ul>
 
 <% if @selected_event %>
+<h2>Budget Summary for <%= @selected_event.name %></h2>
+<div>
+    <p><strong>Total Event Budget:</strong> <%= number_to_currency(@event_total_budget) %></p>
+    <p><strong>Planned Budget (Recipients):</strong> <%= number_to_currency(@event_planned_budget) %></p>
+    <p><strong>Spent Budget:</strong> <%= number_to_currency(@event_spent_budget) %></p>
+    <p><strong>Remaining Budget:</strong> <%= number_to_currency(@event_remaining_budget) %></p>
+</div>
+
 <h2>Recipients for <%= @selected_event.name %></h2>
 <table>
     <thead>

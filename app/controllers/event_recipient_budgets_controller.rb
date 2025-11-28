@@ -13,14 +13,21 @@ class EventRecipientBudgetsController < ApplicationController
                     .where(event_recipients: { event_id: @selected_event.id })
                     .includes(:recipient)
                     .index_by { |b| b.recipient.id }
+
+                @event_total_budget = @selected_event.budget || 0
+                @event_planned_budget = @budgets_by_recipient.values.sum(&:budget)
+                @event_spent_budget = @budgets_by_recipient.values.sum(&:spent)
+                @event_remaining_budget = @event_total_budget - @event_planned_budget
             else
                 @recipients = []
                 @budgets_by_recipient = {}
+                @event_total_budget = @event_planned_budget = @event_spent_budget = @event_remaining_budget = 0
             end
         else
         @selected_event = nil
         @recipients = []
         @budgets_by_recipient = {}
+        @event_total_budget = @event_planned_budget = @event_spent_budget = @event_remaining_budget = 0
         end
     end
 
