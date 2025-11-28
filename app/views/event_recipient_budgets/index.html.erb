@@ -28,8 +28,8 @@
                 <td><%= recipient.name %></td>
                 <% budget = @budgets_by_recipient[recipient.id] %>
                 <% if budget %>
-                    <td><%= number_to_currency(budget.total_budget) %></td>
-                    <td><%= number_to_currency(budget.spent_budget) %></td>
+                    <td><%= number_to_currency(budget.budget) %></td>
+                    <td><%= number_to_currency(budget.spent) %></td>
                     <td><%= link_to 'Edit Budget', edit_event_recipient_budget_path(budget) %></td>
                 <% else %>
                     <td colspan="2">No budget set</td>
