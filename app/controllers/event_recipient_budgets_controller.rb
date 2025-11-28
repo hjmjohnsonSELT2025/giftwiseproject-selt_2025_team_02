@@ -119,6 +119,6 @@ class EventRecipientBudgetsController < ApplicationController
         event = Event.where(user_id: current_user.id).find_by(id: event_id)
         recipient = current_user.recipients.find_by(id: recipient_id)
 
-        [event, recipient]
+        [ event, recipient ]
   end
 end
