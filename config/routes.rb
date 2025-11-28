@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :event_recipient_budgets
+
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: :logout
