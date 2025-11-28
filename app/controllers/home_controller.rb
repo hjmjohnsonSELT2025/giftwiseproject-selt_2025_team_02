@@ -6,6 +6,6 @@ class HomeController < ApplicationController
       .joins(:event_recipient)
       .where(event_recipients: { event_id: current_user.events.pluck(:id) })
       .includes(:event_recipient, :event, :recipient)
-      .order('events.event_date')
+      .order("events.event_date")
   end
 end
