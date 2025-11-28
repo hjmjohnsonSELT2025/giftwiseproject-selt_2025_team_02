@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_28_154708) do
+  create_table "event_recipient_budgets", force: :cascade do |t|
+    t.decimal "budget", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.integer "event_recipient_id", null: false
+    t.decimal "spent", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_recipient_id"], name: "index_event_recipient_budgets_on_event_recipient_id"
+  end
+
   create_table "event_recipients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
@@ -52,6 +61,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
 
   create_table "recipients", force: :cascade do |t|
     t.integer "age"
+    t.date "birthday"
     t.datetime "created_at", null: false
     t.text "dislikes"
     t.integer "gender"
@@ -85,6 +95,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_061942) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "event_recipient_budgets", "event_recipients"
   add_foreign_key "event_recipients", "events"
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"
