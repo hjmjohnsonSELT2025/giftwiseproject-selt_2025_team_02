@@ -10,6 +10,7 @@ class Recipient < ApplicationRecord
   validates :age, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 120 }
   validates :gender, presence: true
   validates :relation, presence: true
+  validates :birthday, presence: true
 
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON

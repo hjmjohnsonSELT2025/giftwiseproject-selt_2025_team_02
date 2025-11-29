@@ -23,6 +23,7 @@ class UsersController < ApplicationController
       redirect_to homepage_path
     end
   end
+
   def edit
     @user = @current_user
     unless current_user?(params[:id])
