@@ -1,0 +1,35 @@
+<div class="table-section">
+
+  <h2>Your Gift Lists</h2>
+
+  <% if current_user.gift_lists.any? %>
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+
+      </tr>
+      </thead>
+
+      <tbody>
+      <% current_user.gift_lists.each do |gift_list| %>
+        <tr>
+          <td>
+            <%= link_to gift_list.name,
+                          recipient_gift_list_path(gift_list.recipient.id, gift_list.id),
+                          data: { turbo: false },
+                          class: "pretty-link" %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-table">No gift lists added yet.</p>
+  <% end %>
+
+  <div class="table-actions">
+    <%= link_to "Add new gift list", new_gift_list_path , data: {turbo: false}, class: "pretty-btn" %>
+  </div>
+</div>
+

@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [ :new, :create, :show, :edit, :update, :destroy ]
+  resources :gifts
+  resources :gift_lists do
+    resources :gifts
+  end
   resources :events do
     member do
       post :add_recipient

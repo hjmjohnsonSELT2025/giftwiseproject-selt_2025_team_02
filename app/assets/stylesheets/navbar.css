@@ -1,0 +1,27 @@
+.navbar {
+    background-color: var(--bg);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-left,
+.nav-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-right {
+    margin-left: auto;
+}
+
+.navbar a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,41 @@
+<div class="table-section">
+  <h2> Your events</h2>
+
+
+<% if @events.any? %>
+  <table class="data-table">
+    <thead>
+    <tr style="background-color: #f5f5f5;">
+      <th>Name</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Location</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td >
+          <%= link_to event.name, event_path(event) , data: {turbo: false}, class: "pretty-link" %>
+        </td>
+        <td><%= event.event_date %></td>
+        <td><%= event.event_time.present? ? event.event_time.strftime("%l:%M %p") : "" %></td>
+        <td><%= event.location %></td>
+        <td>
+          <%= link_to "Edit Event", edit_event_path(event) , data: {turbo: false} %> |
+          <%= link_to "Delete Event",
+                      event_path(event),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You don’t have any events yet.</p>
+<% end %>
+  <div class="table-actions">
+    <%= link_to "Add New Event", new_event_path , data: {turbo: false}, class: "pretty-btn" %>
+  </div>
+</div>
