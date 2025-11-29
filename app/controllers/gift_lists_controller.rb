@@ -29,5 +29,4 @@ class GiftListsController < ApplicationController
   def gift_list_params
     params.require(:gift_list).permit(:name, :recipient_id)
   end
-
 end
