@@ -1,29 +1,28 @@
+<div class="table-section">
+  <h2> Your events</h2>
 
-<p>
-  <%= link_to "Add New Event", new_event_path , data: {turbo: false} %>
-</p>
 
 <% if @events.any? %>
-  <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+  <table class="data-table">
     <thead>
     <tr style="background-color: #f5f5f5;">
-      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
-      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Date</th>
-      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Time</th>
-      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Location</th>
-      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Actions</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Location</th>
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td style="border: 1px solid #ddd; padding: 8px;">
-          <%= link_to event.name, event_path(event) , data: {turbo: false} %>
+        <td >
+          <%= link_to event.name, event_path(event) , data: {turbo: false}, class: "pretty-link" %>
         </td>
-        <td style="border: 1px solid #ddd; padding: 8px;"><%= event.event_date %></td>
-        <td style="border: 1px solid #ddd; padding: 8px;"><%= event.event_time.present? ? event.event_time.strftime("%l:%M %p") : "" %></td>
-        <td style="border: 1px solid #ddd; padding: 8px;"><%= event.location %></td>
-        <td style="border: 1px solid #ddd; padding: 8px;">
+        <td><%= event.event_date %></td>
+        <td><%= event.event_time.present? ? event.event_time.strftime("%l:%M %p") : "" %></td>
+        <td><%= event.location %></td>
+        <td>
           <%= link_to "Edit Event", edit_event_path(event) , data: {turbo: false} %> |
           <%= link_to "Delete Event",
                       event_path(event),
@@ -36,4 +35,7 @@
 <% else %>
   <p>You don’t have any events yet.</p>
 <% end %>
-<%= link_to "Back to Home", homepage_path , data: {turbo: false} %>
+  <div class="table-actions">
+    <%= link_to "Add New Event", new_event_path , data: {turbo: false}, class: "pretty-btn" %>
+  </div>
+</div>
