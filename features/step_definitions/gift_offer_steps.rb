@@ -4,6 +4,10 @@ Given('there are no gift lists') do
   GiftList.destroy_all
 end
 
+Given('there are no purchase options') do
+  GiftOffer.destroy_all
+end
+
 Given('a recipient {string} exists for this user') do |name|
   raise 'Missing @user; make sure a user is created first' unless @user
 

@@ -9,6 +9,7 @@ Feature: Manage purchase options for gifts
     And there are no recipients for this user
     And there are no gift lists
     And there are no gifts
+    And there are no purchase options
     And a recipient "Thad" exists for this user
     And a gift list "Birthday Wishlist" exists for "Thad"
     And a gift "Nike socks" exists on the "Birthday Wishlist" gift list
@@ -26,4 +27,13 @@ Feature: Manage purchase options for gifts
     Then I should be on the gift detail page for "Nike socks"
     And I should see "Target"
     And I should see "$12.99"
+    And 2 purchase option should exist for the gift "Nike socks"
+
+  @auto_offers
+  Scenario: Automatically see purchase options for a known gift
+    When I view the gift "Nike socks" from the "Birthday Wishlist" gift list
+    Then I should be on the gift detail page for "Nike socks"
+    And I should see "Amazon"
+    And I should see "$11.99"
     And 1 purchase option should exist for the gift "Nike socks"
+

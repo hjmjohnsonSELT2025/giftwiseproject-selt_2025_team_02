@@ -6,6 +6,9 @@ class GiftsController < ApplicationController
 
   def show
     @gift = @gift_list.gifts.find(params[:id])
+
+    # NEW: automatically seed purchase options if we know this gift
+    GiftOfferLookupService.new(@gift).ensure_offers!
   end
 
   def new
