@@ -105,5 +105,29 @@ RSpec.describe GiftOffer, type: :model do
       expect(offer).not_to be_valid
       expect(offer.errors[:rating]).to be_present
     end
+
+    it "is invalid without a url" do
+      offer = GiftOffer.new(
+        gift:       gift,
+        store_name: "Target",
+        price:      12.99,
+        currency:   "USD",
+        url:        nil
+      )
+      expect(offer).not_to be_valid
+      expect(offer.errors[:url]).to be_present
+    end
+
+    it "is invalid with a non-http(s) url" do
+      offer = GiftOffer.new(
+        gift:       gift,
+        store_name: "Target",
+        price:      12.99,
+        currency:   "USD",
+        url:        "javascript:alert('xss')"
+      )
+      expect(offer).not_to be_valid
+      expect(offer.errors[:url]).to be_present
+    end
   end
 end
