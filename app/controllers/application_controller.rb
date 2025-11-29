@@ -14,19 +14,26 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :handle_missing_record
   def handle_routing_error
     flash[:alert] = "The page you are looking for does not exist."
-    redirect_to root_path
+    redirect_to homepage_path
   end
 
   private
   def set_current_user
     @current_user = User.find_by(session_token: session[:session_token])
-    redirect_to login_path unless @current_user
+    if current_user
+      @user_recipients = current_user.recipients
+      @user_gift_lists = current_user.gift_lists
+      @user_gifts = current_user.gifts
+    else
+      redirect_to login_path
+    end
   end
 
   # Calls this when someone deletes a record (gift or recipient) and they try to retrieve that route again (back button)
   def handle_missing_record
-    flash[:alert] = "The page or record you are looking for doesn't exist"
-    redirect_to root_path
+    attempted_url = request.original_url
+    flash[:alert] = "The page or record you are looking for doesn't exist: #{attempted_url}"
+    redirect_to homepage_path
   end
 
   def current_user

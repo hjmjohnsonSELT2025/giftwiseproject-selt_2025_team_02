@@ -1,5 +1,5 @@
 class GiftsController < ApplicationController
-  before_action :init
+  # before_action :init
   def index
     @gifts = Gift.all
   end
@@ -13,7 +13,7 @@ class GiftsController < ApplicationController
   end
 
   def create
-    @gift = @gift_list.gifts.new(gift_params)
+    @gift = @gifts.new(gift_params)
     if @gift.save
       redirect_to recipient_gift_list_path(@recipient, @gift_list)
       # redirect_to recipient_gift_list_gift_path(@recipient, @gift_list, @gift)
@@ -23,10 +23,10 @@ class GiftsController < ApplicationController
   end
 
   private
-  def init
-    @gift_list = GiftList.find(params[:gift_list_id])
-    @recipient = Recipient.find(params[:recipient_id])
-  end
+  # def init
+  #   @gift_lists = GiftList.find(params[:gift_list_id])
+  #   @recipients = Recipient.find(params[:recipient_id])
+  # end
   def gift_params
     params.expect(gift: [ :name ])
   end

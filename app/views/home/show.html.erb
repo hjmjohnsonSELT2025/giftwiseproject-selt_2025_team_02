@@ -1,24 +1,50 @@
-<h1>Homepage</h1>
+<div class="homepage">
 
-<p>Welcome, <%= current_user.name.presence || current_user.email %></p>
+<!--  <h1>Homepage</h1>-->
 
-<div class="tabs">
-  <%= link_to "Overview", homepage_path(tab: "overview"), data: {turbo_action: "advance", turbo_frame: "tab_content" }, class: "tab" %>
-  <%= link_to "Gift Recipients", homepage_path(tab: "recipients"), data: {turbo_action: "advance", turbo_frame: "tab_content" }, class: "tab" %>
-  <%= link_to "Gift Lists", homepage_path(tab: "lists"), data: {turbo_action: "advance", turbo_frame: "tab_content" }, class: "tab" %>
-  <%= link_to "Events", homepage_path(tab: "events"), data: {turbo_action: "advance", turbo_frame: "tab_content" }, class: "tab" %>
+<!--<p>Welcome, <%#= current_user.name.presence || current_user.email %></p>-->
+
+
+  <turbo-frame id="tab_content" >
+    <div class="tabs-bar">
+      <div class="tab-wrapper"><div class="tab-clip">
+        <%= link_to "Overview",
+                    homepage_path(tab: "overview"),
+                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
+                    class: "tab-selector #{'active' if @tab == 'overview'}" %>
+      </div></div>
+      <div class="tab-wrapper"><div class="tab-clip">
+        <%= link_to "Gift Recipients",
+                    homepage_path(tab: "recipients"),
+                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
+                    class: "tab-selector #{'active' if @tab == 'recipients'}" %>
+      </div></div>
+      <div class="tab-wrapper"><div class="tab-clip">
+        <%= link_to "Gift Lists",
+                    homepage_path(tab: "lists"),
+                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
+                    class: "tab-selector #{'active' if @tab == 'lists'}" %>
+      </div></div>
+      <div class="tab-wrapper"><div class="tab-clip">
+        <%= link_to "Events",
+                    homepage_path(tab: "events"),
+                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
+                    class: "tab-selector #{'active' if @tab == 'events'}" %>
+      </div></div>
+    </div>
+
+    <div class="homepage-content">
+      <%= render "home/tabs/#{@tab}" %>
+    </div>
+  </turbo-frame>
+
+
+    <div style="flex: 1;">
+      <!-- Space for future content -->
+    </div>
+
+
+
+  <br>
+  <%#= link_to "Gifts", gifts_path %>
 </div>
-
-<turbo-frame id="tab_content">
-  <%= render "home/tabs/#{@tab}" %>
-</turbo-frame>
-
-
-  <div style="flex: 1;">
-    <!-- Space for future content -->
-  </div>
-
-
-
-<br>
-<%#= link_to "Gifts", gifts_path %>

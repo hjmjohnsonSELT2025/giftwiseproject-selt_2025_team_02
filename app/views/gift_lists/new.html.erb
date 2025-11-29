@@ -9,7 +9,7 @@
   <div>
     <%= form.label :recipient_id, "Assign to Recipient" %>
     <%= form.collection_select :recipient_id,
-                               @recipients,
+                               @user_recipients,
                                :id,
                                :name,
                                prompt: "Select a recipient" %>
@@ -18,4 +18,4 @@
     <%= form.submit %>
   </div>
 <% end %>
-<%= link_to "Cancel", recipient_gift_lists_path(@recipient) %>
+<%= link_to "Cancel", :back %>

@@ -23,7 +23,8 @@ Rails.application.routes.draw do
       resources :gifts
     end
   end
-
+  resources :gifts
+  resources :gift_lists
   resources :users, only: [ :new, :create, :destroy ]
   resources :events do
     member do

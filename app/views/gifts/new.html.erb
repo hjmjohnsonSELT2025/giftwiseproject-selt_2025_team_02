@@ -1,17 +1,26 @@
 <h1>New Gift</h1>
 
-<%= form_with model: [@recipient, @gift_list, @gift] do |form| %>
+<%= form_with model: [@gift] do |form| %>
   <div>
     <%= form.label :name %>
     <%= form.text_field :name %>
-
+    <%= form.collection_select :recipient_id,
+                               @user_recipients,
+                               :id,
+                               :name,
+                               prompt: "Select a recipient" %>
+    <%= form.collection_select :gift_list_id,
+                               @user_gift_lists,
+                               :id,
+                               :name,
+                               prompt: "Select a gift list" %>
   </div>
 
   <div>
     <%= form.submit %>
   </div>
 <% end %>
-<%= link_to "Cancel", recipient_gift_list_path(@recipient, @gift_list) %>
+<%= link_to "Cancel", :back %>
 
 <% if @gift.errors.any? %>
   <div class="error-messages">
