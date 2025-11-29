@@ -1,0 +1,41 @@
+<%= form_with(model: [@recipient, @gift_list, @gift, @gift_offer]) do |f| %>
+  <% if @gift_offer.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(@gift_offer.errors.count, "error") %> prevented this purchase option from being saved:</h3>
+      <ul>
+        <% @gift_offer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :store_name, "Store name" %><br>
+    <%= f.text_field :store_name %>
+  </p>
+
+  <p>
+    <%= f.label :price, "Price" %><br>
+    <%= f.number_field :price, step: 0.01 %>
+  </p>
+
+  <p>
+    <%= f.label :currency, "Currency" %><br>
+    <%= f.text_field :currency, value: (@gift_offer.currency || "USD") %>
+  </p>
+
+  <p>
+    <%= f.label :url, "URL" %><br>
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <%= f.label :rating, "Rating" %><br>
+    <%= f.number_field :rating, step: 0.1 %>
+  </p>
+
+  <p>
+    <%= f.submit "Create Purchase Option" %>
+  </p>
+<% end %>

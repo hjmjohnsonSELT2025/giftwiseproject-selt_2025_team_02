@@ -20,18 +20,25 @@ Rails.application.routes.draw do
       get :generate_gift, to: "recipients#show"
     end
     resources :gift_lists do
-      resources :gifts
+      resources :gifts do
+        resources :gift_offers, only: [ :new, :create ]
+      end
     end
   end
+
+  resources :users, only: [ :new, :create, :show, :edit, :update, :destroy ]
   resources :gifts
-  resources :gift_lists
-  resources :users, only: [ :new, :create, :destroy ]
+  resources :gift_lists do
+    resources :gifts
+  end
   resources :events do
     member do
       post :add_recipient
       delete "remove_recipient/:recipient_id", action: :remove_recipient, as: :remove_recipient
     end
   end
+
+  resources :event_recipient_budgets
 
   get    "/login",  to: "sessions#new",     as: :login
   post   "/login",  to: "sessions#create"

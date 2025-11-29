@@ -25,15 +25,23 @@
   <body>
   <% unless @hide_navbar %>
     <nav class="navbar">
-      <%= link_to "Home", homepage_path %>
-      <%= link_to "Recipients", recipients_path %>
-      <%#= link_to "Gift Lists", root_path %>
-      <%#= link_to "Gifts", "#" %>
-      <%= link_to "Log out",
-                  logout_path,
-                  data: { turbo_method: :delete },
-                  "data-test": "logout" %>
+
+      <div class="nav-left">
+        <%= link_to "Home", homepage_path %>
+        <%= link_to "Recipients", recipients_path %>
+      </div>
+
+      <div class="nav-right">
+        <%= link_to "View Profile", user_path(current_user) %>
+        <%= link_to "Edit Profile", edit_user_path(current_user) %>
+        <%= link_to "Log out",
+                    logout_path,
+                    data: { turbo_method: :delete },
+                    "data-test": "logout" %>
+      </div>
+
     </nav>
+
   <% end %>
     <% if flash[:notice].present? %>
       <div class="flash notice"><%= flash[:notice] %></div>

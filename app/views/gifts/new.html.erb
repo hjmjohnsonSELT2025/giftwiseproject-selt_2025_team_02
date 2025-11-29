@@ -1,6 +1,6 @@
-<h1>New Gift</h1>
+<h1>New Gift in <%= @gift_list.name  %></h1>
 
-<%= form_with model: [@gift] do |form| %>
+<%= form_with model: [@gift_list, @gift] do |form| %>
   <div>
     <%= form.label :name %>
     <%= form.text_field :name %>
@@ -9,11 +9,7 @@
                                :id,
                                :name,
                                prompt: "Select a recipient" %>
-    <%= form.collection_select :gift_list_id,
-                               @user_gift_lists,
-                               :id,
-                               :name,
-                               prompt: "Select a gift list" %>
+
   </div>
 
   <div>
@@ -32,3 +28,5 @@
     </ul>
   </div>
 <% end %>
+
+
