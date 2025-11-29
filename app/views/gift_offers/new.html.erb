@@ -1,0 +1,13 @@
+<h1>Add a purchase option for "<%= @gift.name %>"</h1>
+
+<p>
+  Recipient: <%= @recipient.name %><br>
+  Gift list: <%= @gift_list.name %>
+</p>
+
+<%= render 'form', gift_offer: @gift_offer %>
+
+<p>
+  <%= link_to "Back to gift",
+              recipient_gift_list_gift_path(@recipient, @gift_list, @gift) %>
+</p>

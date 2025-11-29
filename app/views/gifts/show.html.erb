@@ -1,0 +1,48 @@
+<h1><%= @gift.name %></h1>
+
+<p>
+  Recipient: <%= @recipient.name %><br>
+  Gift list: <%= @gift_list.name %>
+</p>
+
+<p>
+  <%= link_to "Add Purchase Option",
+              new_recipient_gift_list_gift_gift_offer_path(@recipient, @gift_list, @gift) %>
+</p>
+
+<% if @gift.gift_offers.any? %>
+  <h2>Purchase options</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Store</th>
+      <th>Price</th>
+      <th>Rating</th>
+      <th>Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @gift.gift_offers.each do |offer| %>
+      <tr>
+        <td><%= offer.store_name %></td>
+        <td><%= number_to_currency(offer.price) %></td>
+        <td><%= offer.rating || "-" %></td>
+        <td>
+          <% if offer.url.present? %>
+          <td><%= link_to "View", safe_offer_url(offer), target: "_blank", rel: "noopener" %></td>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No purchase options have been added yet.</p>
+<% end %>
+
+<p>
+  <%= link_to "Back to gift list",
+              recipient_gift_list_path(@recipient, @gift_list) %>
+</p>
