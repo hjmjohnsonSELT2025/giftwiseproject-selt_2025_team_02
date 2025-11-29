@@ -8,8 +8,10 @@
   <tbody>
   <% gifts.each do |gift| %>
     <tr>
-      <td><%= gift.name %></td>
-<!--      <td><%#= link_to "Show", gift_path(gift) %></td>-->
+      <td>
+        <%= link_to gift.name,
+                    recipient_gift_list_gift_path(@recipient, @gift_list, gift) %>
+      </td>
     </tr>
   <% end %>
   </tbody>

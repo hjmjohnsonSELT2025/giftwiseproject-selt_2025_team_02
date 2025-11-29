@@ -51,6 +51,19 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_28_154708) do
     t.index ["recipient_id"], name: "index_gift_lists_on_recipient_id"
   end
 
+  create_table "gift_offers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "currency", default: "USD", null: false
+    t.integer "gift_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.decimal "rating", precision: 3, scale: 2
+    t.string "store_name", null: false
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.index ["gift_id", "store_name"], name: "index_gift_offers_on_gift_id_and_store_name"
+    t.index ["gift_id"], name: "index_gift_offers_on_gift_id"
+  end
+
   create_table "gifts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "gift_list_id"
@@ -100,6 +113,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_28_154708) do
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"
   add_foreign_key "gift_lists", "recipients"
+  add_foreign_key "gift_offers", "gifts"
   add_foreign_key "gifts", "gift_lists"
   add_foreign_key "recipients", "users"
 end

@@ -38,3 +38,8 @@ log
 # Ignore personal workspace settings
 .idea/
 .idea
+
+# Ignore RubyMine RBS collections
+.gem_rbs_collection/
+rbs_collection/
+**/rbs_collection/
