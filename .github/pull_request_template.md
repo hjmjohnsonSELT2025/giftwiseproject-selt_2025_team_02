@@ -1,8 +1,7 @@
 <!--
 Thanks for contributing to GiftWise!
 
-Please fill out each section below. Instructions like this
-won't show up in the rendered PR because they are inside HTML comments.
+Please fill out each section below.
 -->
 
 ## Summary
