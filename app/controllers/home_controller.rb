@@ -19,8 +19,4 @@ class HomeController < ApplicationController
       .includes(:event_recipient, :event, :recipient)
       .order("events.event_date")
   end
-
-
-
-
 end
