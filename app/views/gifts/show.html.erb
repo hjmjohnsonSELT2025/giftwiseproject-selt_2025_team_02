@@ -29,7 +29,7 @@
         <td><%= offer.rating || "-" %></td>
         <td>
           <% if offer.url.present? %>
-            <%= link_to "View", offer.url, target: "_blank", rel: "noopener" %>
+          <td><%= link_to "View", safe_offer_url(offer), target: "_blank", rel: "noopener" %></td>
           <% else %>
             N/A
           <% end %>
