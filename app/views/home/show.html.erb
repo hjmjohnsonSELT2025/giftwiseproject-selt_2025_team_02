@@ -1,7 +1,6 @@
 <h1>Homepage</h1>
 
 <p>Welcome, <%= current_user.name.presence || current_user.email %></p>
-<<<<<<< HEAD
 <%= link_to "View Profile", user_path(current_user) %> |
 <%= link_to "Edit Profile", edit_user_path(current_user) %>
 <h2>Your Gift Recipients</h2>
@@ -33,16 +32,6 @@
 <% else %>
   <p style="margin-top: 1rem;">No recipients added yet.</p>
 <% end %>
-=======
-
-<h2>Actions</h2>
-<ul>
-  <li><%= link_to "View Profile", user_path(current_user) %></li>
-  <li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
-  <li><%= link_to "View All Recipients", recipients_path %></li>
-  <li><%= link_to "Add New Recipient", new_recipient_path %></li>
-</ul>
->>>>>>> main
 
 <h2 style="margin-top: 2rem;">Your Events</h2>
 
