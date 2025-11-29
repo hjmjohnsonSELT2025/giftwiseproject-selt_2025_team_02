@@ -29,7 +29,6 @@ class GiftsController < ApplicationController
 
 
   def set_nested_resources
-
     @gift_list = GiftList.find(params[:gift_list_id])
     @recipient = @gift_list.recipient
   end

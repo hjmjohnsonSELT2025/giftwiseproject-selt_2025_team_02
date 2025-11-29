@@ -1,7 +1,6 @@
 class GiftListsController < ApplicationController
   # before_action :set_recipient
   def index
-
   end
 
   def new
@@ -30,6 +29,5 @@ class GiftListsController < ApplicationController
   def gift_list_params
     params.require(:gift_list).permit(:name, :recipient_id)
   end
-
 
 end
