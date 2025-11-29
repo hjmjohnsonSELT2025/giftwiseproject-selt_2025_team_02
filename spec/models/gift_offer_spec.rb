@@ -107,4 +107,3 @@ RSpec.describe GiftOffer, type: :model do
     end
   end
 end
-

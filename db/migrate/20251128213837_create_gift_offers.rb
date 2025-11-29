@@ -11,6 +11,6 @@ class CreateGiftOffers < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :gift_offers, [:gift_id, :store_name]
+    add_index :gift_offers, [ :gift_id, :store_name ]
   end
 end

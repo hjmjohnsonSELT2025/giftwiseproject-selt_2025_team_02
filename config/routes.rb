@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
     resources :gift_lists do
       resources :gifts do
-        resources :gift_offers, only: [:new, :create]
+        resources :gift_offers, only: [ :new, :create ]
       end
     end
   end
