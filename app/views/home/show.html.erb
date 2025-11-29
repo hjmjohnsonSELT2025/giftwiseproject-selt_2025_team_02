@@ -31,6 +31,12 @@
                     data: {turbo_action: "advance", turbo_frame: "tab_content" },
                     class: "tab-selector #{'active' if @tab == 'events'}" %>
       </div></div>
+      <div class="tab-wrapper"><div class="tab-clip">
+        <%= link_to "Budgets",
+                    homepage_path(tab: "budgets"),
+                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
+                    class: "tab-selector #{'active' if @tab == 'budgets'}" %>
+      </div></div>
     </div>
 
     <div class="homepage-content">
