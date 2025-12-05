@@ -53,6 +53,7 @@ class RecipientsController < ApplicationController
     if @suggestions_exist
       @suggestions = ai_output.suggest_gift
     end
+    @recipient_gift_lists = @recipient.gifts.group_by(&:status)
   end
 
   def generate_gift
@@ -75,6 +76,7 @@ class RecipientsController < ApplicationController
       @suggestions = nil
       @suggestions_exist = false
     end
+    @recipient_gift_lists = @recipient.gifts.group_by(&:status)
     render :show
   end
 

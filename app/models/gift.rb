@@ -5,4 +5,13 @@ class Gift < ApplicationRecord
   has_one :user, through: :recipient
 
   has_many :gift_offers, dependent: :destroy
+
+  enum :status, {
+    idea: 0,
+    planned: 1,
+    ordered: 2,
+    received_or_finished: 3,
+    wrapped: 4,
+    given: 5
+  }
 end

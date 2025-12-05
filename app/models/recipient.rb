@@ -11,10 +11,14 @@ class Recipient < ApplicationRecord
   validates :gender, presence: true
   validates :relation, presence: true
   validates :birthday, presence: true
+  after_create :create_default_gift_list
 
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON
 
+  def general_list
+    gift_lists.find_by(Title: "General ideas")
+  end
 
   private
 
@@ -23,6 +27,9 @@ class Recipient < ApplicationRecord
     self.dislikes = dislikes.reject(&:empty?) if dislikes.present?
   end
 
+  def create_default_list
+    gift_lists.create!(title: "General ideas")
+  end
 
   LIKES_OPTIONS = [
     "Reading", "Sports", "Music", "Cooking", "Traveling", "Art", "Technology",
