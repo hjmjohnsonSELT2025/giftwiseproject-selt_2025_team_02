@@ -30,8 +30,9 @@ class Recipient < ApplicationRecord
 
   def correct_age_range
     return if min_age.blank? && max_age.blank?
-    if max_age.present? && (!min_age.present?)
+    if max_age.present? && !(min_age.present?)
       errors.add(:recipient, "Set min age first")
+      return
     end
 
     if max_age.present? && min_age > max_age
@@ -42,7 +43,9 @@ class Recipient < ApplicationRecord
 
   def calculate_age
     # allows for changing from pre-set age to now min/max age
-    if birthday.blank?
+    if birthday.blank? && age.present?
+      self.min_age = age
+      self.max_age = nil
       self.age = nil
       return
     end
