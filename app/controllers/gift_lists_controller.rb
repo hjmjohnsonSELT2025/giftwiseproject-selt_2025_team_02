@@ -8,12 +8,14 @@ class GiftListsController < ApplicationController
   end
   def show
     @gift_list = GiftList.find(params[:id])
+    # makes recipient available to show view
+    @recipient = @gift_list.recipient
   end
 
   def create
     @gift_list = current_user.gift_lists.new(gift_list_params)
     if @gift_list.save
-      redirect_to gift_lists_path
+      redirect_to recipient_path(@gift_list.recipient), notice: "List created successfully!"
     else
       flash[:error] = "Could not create gift list"
       # if gift list creation fails then reload events

@@ -108,5 +108,41 @@
 <% end %>
 <br>
 <br>
+
+<!--AI assisted in the styling-->
+<h3>Create New List</h3>
+<%= render partial: "gift_lists/form",
+           locals: { gift_list: GiftList.new, recipient: @recipient, events: @recipient.events } %>
+
+<hr>
+
+<% @recipient.gift_lists.each do |list| %>
+
+  <div class="gift-list-section" style="margin-bottom: 40px; border-top: 2px solid #333; padding-top: 10px;">
+
+    <div style="display: flex; justify-content: space-between;">
+      <h2><%= list.title %> <small><%= list.name || "General" %></small></h2>
+
+      <%= link_to "+ Add Gift to this list", new_gift_list_gift_path(list)%>
+    </div>
+
+    <div style="display: flex; gap: 20px;">
+      <% Gift.statuses.keys.each do |status| %>
+        <div style="border: 1px solid #ccc; padding: 10px; flex: 1;">
+          <h3><%= status.humanize %></h3>
+          <ul>
+            <% list.gifts.select { |g| g.status == status }.each do |gift| %>
+              <li>
+                <%= link_to gift.name, gift_list_gift_path(list, gift) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>
+
 <%= link_to "Back to Recipients", recipients_path %>
 <%= link_to "Back to Home", homepage_path %>
