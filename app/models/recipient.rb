@@ -7,16 +7,37 @@ class Recipient < ApplicationRecord
   enum :gender, { male: 0, female: 1, other: 2 }
 
   validates :name, presence: true
-  validates :age, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 120 }
+  validates :age, numericality: { only_integer: true, greater_than: 0, less_than: 120 }, allow_nil: true
   validates :gender, presence: true
   validates :relation, presence: true
-  validates :birthday, presence: true
+  
+  validate :birthday_or_age_present
 
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON
 
+  before_save :calculate_age, if: -> {birthday.present?}
+  before_update :calculate_age, if: -> {birthday.present?}
 
   private
+
+  def birthday_or_age_present
+    if birthday.blank? && age.blank?
+      errors.add(:recipient, "Please provide either a birthday or an age.")
+    end
+  end
+
+  def calculate_age
+    return if birthday.blank?
+
+    today = Date.current
+    years = today.year - birthday.year
+
+    years -= 1 if birthday.change(year: today.year) > today
+    self.age = years
+  end
+
+
 
   def clean_arrays
     self.likes = likes.reject(&:empty?) if likes.present?

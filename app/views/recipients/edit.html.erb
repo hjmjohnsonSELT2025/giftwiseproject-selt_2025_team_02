@@ -7,13 +7,13 @@
   </div>
 
   <div>
-    <%= f.label :birthday, "Birthday" %><br>
+    <%= f.label :birthday, "Birthday (if known)" %><br>
     <%= f.date_field :birthday %>
   </div>
 
   <div>
-    <%= f.label :age, "Age" %><br>
-    <%= f.number_field :age %>
+    <%= f.label :age, "Age (if birthday unknown)" %><br>
+    <%= f.number_field :age, disabled: @recipient.birthday.present? %>
   </div>
 
   <div>
