@@ -10,16 +10,17 @@
     <%= f.label :birthday, "Birthday (if known)" %><br>
     <%= f.date_field :birthday %>
   </div>
+  <% if @recipient.birthday.blank? %>
+    <div style="margin-top: 0.75rem;">
+      <%= f.label :min_age, "Age Range (min) (if birthday unknown)" %><br>
+      <%= f.number_field :min_age, disabled: @recipient.birthday.present? %>
+    </div>
 
-  <div style="margin-top: 0.75rem;">
-    <%= f.label :min_age, "Age Range (min) (if birthday unknown)" %><br>
-    <%= f.number_field :min_age, disabled: @recipient.birthday.present? %>
-  </div>
-
-  <div style="margin-top: 0.75rem;">
-    <%= f.label :max_age, "Age Range (max) (if birthday unknown)" %><br>
-    <%= f.number_field :max_age, disabled: @recipient.birthday.present? %>
-  </div>
+    <div style="margin-top: 0.75rem;">
+      <%= f.label :max_age, "Age Range (max) (if birthday unknown)" %><br>
+      <%= f.number_field :max_age, disabled: @recipient.birthday.present? %>
+    </div>
+    <% end %>
 
   <div>
     <%= f.label :gender, "Gender" %><br>

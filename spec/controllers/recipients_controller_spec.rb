@@ -23,7 +23,10 @@ RSpec.describe RecipientsController, type: :controller do
       gender: "male",
       relation: "Bro",
       likes: [ "Reading", "Sports" ],
-      dislikes: [ "Math" ]
+      dislikes: [ "Math" ],
+      occupation: "Software Engineer",             
+      hobbies: "Coding and basketball",            
+      extra_info: "Hates animals"
     }
   end
 

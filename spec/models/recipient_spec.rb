@@ -19,6 +19,9 @@ RSpec.describe Recipient, type: :model do
         min_age: 20,
         max_age: 20,
         relation: "Brother",
+        occupation: "Software Engineer",
+        hobbies: "Coding, Technology, Reading",
+        extra_info: "Allergic to peanuts",
         likes: %w[Reading],
         dislikes: %w[Math]
       }.merge(attrs)
@@ -134,6 +137,34 @@ RSpec.describe Recipient, type: :model do
 
       expect(event.recipients).to include(recipient)
       expect(recipient.events).to include(event)
+    end
+  end
+
+  describe "additional detail fields" do
+    it "allows occupation, hobbies, and extra_info to be set and persisted" do
+      recipient = build_recipient(
+        occupation: "Nurse",
+        hobbies: "Running\nPainting\nBoard games",
+        extra_info: "Prefers experiences over physical gifts"
+      )
+
+      expect(recipient).to be_valid
+      recipient.save!
+      recipient.reload
+
+      expect(recipient.occupation).to eq("Nurse")
+      expect(recipient.hobbies).to include("Painting")
+      expect(recipient.extra_info).to eq("Prefers experiences over physical gifts")
+    end
+
+    it "treats occupation, hobbies, and extra_info as optional" do
+      recipient = build_recipient(
+        occupation: nil,
+        hobbies: nil,
+        extra_info: nil
+      )
+
+      expect(recipient).to be_valid
     end
   end
 end
