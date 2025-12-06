@@ -91,6 +91,6 @@ class RecipientsController < ApplicationController
   private
 
   def recipient_params
-    params.require(:recipient).permit(:name, :age, :birthday, :gender, :relation, likes: [], dislikes: [])
+    params.require(:recipient).permit(:name, :age, :min_age, :max_age, :birthday, :gender, :relation, likes: [], dislikes: [])
   end
 end

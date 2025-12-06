@@ -5,7 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Birthday</th>
-      <th>Age</th>
+      <th>Age / Age Range</th>
       <th>Gender</th>
       <th>Relation</th>
       <th>Likes</th>
@@ -18,7 +18,7 @@
       <tr>
         <td><%= link_to recipient.name, recipient_path(recipient) %></td>
         <td><%= recipient.birthday %></td>
-        <td><%= recipient.age %></td>
+        <td><%= display_age(recipient) %></td>
         <td><%= recipient.gender %></td>
         <td><%= recipient.relation %></td>
         <td>

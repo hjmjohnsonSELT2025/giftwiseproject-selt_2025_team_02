@@ -7,7 +7,7 @@
 <h1><%= @recipient.name %></h1>
 
 <p><strong>Birthday:</strong> <%= @recipient.birthday %></p>
-<p><strong>Age:</strong> <%= @recipient.age %></p>
+<p><strong>Age/Age Range:</strong> <%= display_age(@recipient) %></p>
 <p><strong>Gender:</strong> <%= @recipient.gender %></p>
 <p><strong>Relation:</strong> <%= @recipient.relation %></p>
 <p><strong>Likes:</strong></p>
