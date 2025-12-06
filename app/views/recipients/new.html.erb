@@ -38,12 +38,27 @@
   </div>
 
   <div style="margin-top: 0.75rem;">
-    <%= f.label :likes, "Likes" %><br>
+    <%= f.label :occupation, "Occupation (optional)" %><br>
+    <%= f.text_field :occupation %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :hobbies, "Hobbies (optional)" %><br>
+    <%= f.text_area :hobbies, rows: 3 %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :extra_info, "Extra Information (optional)" %><br>
+    <%= f.text_area :extra_info, rows: 4 %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :likes, "Likes (optional)" %><br>
     <%= f.collection_check_boxes :likes,["Reading", "Sports", "Music", "Cooking", "Traveling", "Art", "Technology","Gardening", "Photography", "Dancing", "Movies", "Video Games", "Pets","Fashion", "Fitness", "Writing", "Puzzles", "Board Games", "Hiking","Swimming", "Cycling", "Yoga", "Meditation", "Volunteering", "Theater","Concerts", "Camping", "Fishing", "Golf", "Tennis", "Basketball", "Soccer"], :to_s, :to_s %>
   </div>
 
   <div style="margin-top: 0.75rem;">
-    <%= f.label :dislikes, "Dislikes" %><br>
+    <%= f.label :dislikes, "Dislikes (optional)" %><br>
     <%= f.collection_check_boxes :dislikes, ["Spicy Food", "Loud Noises", "Crowds", "Heights", "Insects", "Cold Weather","Hot Weather", "Math", "Cleaning", "Driving", "Flying","Seafood", "Perfume", "Strong Smells", "Bright Lights", "Darkness"], :to_s, :to_s %>
   </div>
 

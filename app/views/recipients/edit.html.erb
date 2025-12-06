@@ -32,6 +32,21 @@
   </div>
 
   <div>
+    <%= f.label :occupation, "Occupation (optional)" %><br>
+    <%= f.text_field :occupation %>
+  </div>
+
+  <div>
+    <%= f.label :hobbies, "Hobbies (optional)" %><br>
+    <%= f.text_area :hobbies, rows: 3 %>
+  </div>
+
+  <div>
+    <%= f.label :extra_info, "Extra Information (optional)" %><br>
+    <%= f.text_area :extra_info, rows: 4 %>
+  </div>
+
+  <div>
     <%= f.label :likes, "Likes" %><br>
     <%= f.collection_check_boxes :likes, Recipient::LIKES_OPTIONS, :to_s, :to_s %>
   </div>

@@ -8,6 +8,8 @@
       <th>Age / Age Range</th>
       <th>Gender</th>
       <th>Relation</th>
+      <th>Occupation</th>
+      <th>Hobbies</th>
       <th>Likes</th>
       <th>Dislikes</th>
       <th>Actions</th>
@@ -21,6 +23,8 @@
         <td><%= display_age(recipient) %></td>
         <td><%= recipient.gender %></td>
         <td><%= recipient.relation %></td>
+        <td><%= recipient.occupation.presence || "-" %></td>
+        <td><%= recipient.hobbies.presence || "-" %></td>
         <td>
           <% if recipient.likes.present? %>
             <ul style="margin: 0; padding-left: 1rem;">

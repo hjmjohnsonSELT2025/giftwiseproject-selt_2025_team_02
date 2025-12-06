@@ -11,6 +11,10 @@ class Recipient < ApplicationRecord
   validates :relation, presence: true
   validates :age, :min_age, :max_age, numericality: { only_integer: true, greater_than: 0, less_than: 120 }, allow_nil: true
 
+  validates :occupation, length: { maximum: 255 }, allow_blank: true
+  validates :hobbies, length: { maximum: 2000 }, allow_blank: true
+  validates :extra_info, length: { maximum: 4000 }, allow_blank: true
+  
   validate :birthday_or_age_present
   validate :correct_age_range
 
