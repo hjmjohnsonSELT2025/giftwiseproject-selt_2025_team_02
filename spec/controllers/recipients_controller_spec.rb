@@ -24,8 +24,8 @@ RSpec.describe RecipientsController, type: :controller do
       relation: "Bro",
       likes: [ "Reading", "Sports" ],
       dislikes: [ "Math" ],
-      occupation: "Software Engineer",             
-      hobbies: "Coding and basketball",            
+      occupation: "Software Engineer",
+      hobbies: "Coding and basketball",
       extra_info: "Hates animals"
     }
   end

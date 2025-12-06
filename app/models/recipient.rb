@@ -14,7 +14,7 @@ class Recipient < ApplicationRecord
   validates :occupation, length: { maximum: 255 }, allow_blank: true
   validates :hobbies, length: { maximum: 2000 }, allow_blank: true
   validates :extra_info, length: { maximum: 4000 }, allow_blank: true
-  
+
   validate :birthday_or_age_present
   validate :correct_age_range
 
