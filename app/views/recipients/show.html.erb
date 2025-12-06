@@ -42,29 +42,26 @@
 
 <br>
 <br>
+<!--<h3>Gift List</h3>-->
+<!--<div style="display: flex; gap: 20px;">-->
+  <%# Gift.statuses.keys.each do |status| %>
+<!--    <div style="border: 1px solid black; padding: 10px; flex: 1;">-->
 
-<br>
-
-<h3>Gift List</h3>
-<div style="display: flex; gap: 20px;">
-  <% Gift.statuses.keys.each do |status| %>
-    <div style="border: 1px solid black; padding: 10px; flex: 1;">
-
-      <h3><%= status %></h3>
-      <ul>
-        <% if @recipient_gift_lists[status] %>
-          <% @recipient_gift_lists[status].each do |gift| %>
-            <li>
-              <%= link_to gift.name, gift_list_gift_path(gift.gift_list, gift) %>
+<!--      <h3><%#= status %></h3>-->
+<!--      <ul>-->
+        <%# if @recipient_gift_lists[status] %>
+          <%# @recipient_gift_lists[status].each do |gift| %>
+<!--            <li>-->
+              <%#= link_to gift.name, gift_list_gift_path(gift.gift_list, gift) %>
 <!--              (<%#= number_to_currency(gift.price) %>)-->
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
+<!--            </li>-->
+          <%# end %>
+        <%# end %>
+<!--      </ul>-->
 
-    </div>
-  <% end %>
-</div>
+<!--    </div>-->
+  <%# end %>
+<!--</div>-->
 <div class="d-flex gap-2">
 
   <% if @suggestions_exist %>
@@ -110,6 +107,7 @@
 
 <!--AI assisted in the styling-->
 <h3>Create New List</h3>
+<!--lets partial build a form, passing in local variables -->
 <%= render partial: "gift_lists/form",
            locals: { gift_list: GiftList.new, recipient: @recipient, events: @recipient.events } %>
 
