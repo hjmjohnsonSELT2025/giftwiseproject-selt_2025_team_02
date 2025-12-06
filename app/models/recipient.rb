@@ -11,7 +11,7 @@ class Recipient < ApplicationRecord
   validates :gender, presence: true
   validates :relation, presence: true
   validates :birthday, presence: true
-  after_create :create_default_gift_list
+  after_create :create_default_list
 
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON
