@@ -17,7 +17,7 @@ class Recipient < ApplicationRecord
   serialize :dislikes, coder: JSON
 
   def general_list
-    gift_lists.find_by(Title: "General ideas")
+    gift_lists.find_by(name: "General ideas")
   end
 
   private
@@ -28,7 +28,7 @@ class Recipient < ApplicationRecord
   end
 
   def create_default_list
-    gift_lists.create!(title: "General ideas")
+    gift_lists.create!(name: "General ideas")
   end
 
   LIKES_OPTIONS = [
