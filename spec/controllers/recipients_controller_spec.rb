@@ -109,27 +109,28 @@ RSpec.describe RecipientsController, type: :controller do
         expect(flash[:notice]).to eq("Recipient created and added to event.")
       end
       context "with invalid params" do
-      let(:invalid_params) do
-        {
-          name: "",
-          gender: "",
-          relation: "",
-          age: nil,
-          min_age: nil,
-          birthday: nil
-        }
-      end
+        let(:invalid_params) do
+          {
+            name: "",
+            gender: "",
+            relation: "",
+            age: nil,
+            min_age: nil,
+            birthday: nil
+          }
+        end
 
-      it "does not create a new recipient" do
-        expect do
+        it "does not create a new recipient" do
+          expect do
+            post :create, params: { recipient: invalid_params }
+          end.not_to change(Recipient, :count)
+        end
+
+        it "re-renders the new template" do
           post :create, params: { recipient: invalid_params }
-        end.not_to change(Recipient, :count)
-      end
 
-      it "re-renders the new template" do
-        post :create, params: { recipient: invalid_params }
-
-        expect(response).to render_template(:new)
+          expect(response).to render_template(:new)
+        end
       end
     end
   end
@@ -160,7 +161,7 @@ RSpec.describe RecipientsController, type: :controller do
       end
     end
   end
-  
+
 
   describe 'PATCH #update' do
     let!(:recipient) { user.recipients.create!(valid_params) }

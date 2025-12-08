@@ -7,25 +7,25 @@ class Recipient < ApplicationRecord
   enum :gender, { male: 0, female: 1, other: 2 }
 
   AGE_RANGES = {
-    "0-4 years"   => [0, 4],
-    "5-9 years"   => [5, 9],
-    "10-14 years" => [10, 14],
-    "15-17 years" => [15, 17],
-    "18-24 years" => [18, 24],
-    "25-34 years" => [25, 34],
-    "35-44 years" => [35, 44],
-    "45-54 years" => [45, 54],
-    "55-64 years" => [55, 64],
-    "65-74 years" => [65, 74],
-    "75-84 years" => [75, 84],
-    "85-94 years" => [85, 94],
-    "95+ years"   => [95, 120]  # or [95, nil] if you want open-ended
+    "0-4 years"   => [ 0, 4 ],
+    "5-9 years"   => [ 5, 9 ],
+    "10-14 years" => [ 10, 14 ],
+    "15-17 years" => [ 15, 17 ],
+    "18-24 years" => [ 18, 24 ],
+    "25-34 years" => [ 25, 34 ],
+    "35-44 years" => [ 35, 44 ],
+    "45-54 years" => [ 45, 54 ],
+    "55-64 years" => [ 55, 64 ],
+    "65-74 years" => [ 65, 74 ],
+    "75-84 years" => [ 75, 84 ],
+    "85-94 years" => [ 85, 94 ],
+    "95+ years"   => [ 95, 120 ]  # or [95, nil] if you want open-ended
   }.freeze
 
   attr_writer :age_range
 
   def age_range
-    @age_range || AGE_RANGES.key([min_age,max_age])
+    @age_range || AGE_RANGES.key([ min_age, max_age ])
   end
 
   validates :name, presence: true
@@ -69,7 +69,7 @@ class Recipient < ApplicationRecord
 
   def apply_age_range
     return if @age_range.blank?
-    
+
     range = AGE_RANGES[@age_range]
     return if range.nil?
 
