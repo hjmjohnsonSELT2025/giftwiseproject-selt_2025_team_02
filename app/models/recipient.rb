@@ -6,6 +6,28 @@ class Recipient < ApplicationRecord
   has_many :events, through: :event_recipients
   enum :gender, { male: 0, female: 1, other: 2 }
 
+  AGE_RANGES = {
+    "0-4 years"   => [0, 4],
+    "5-9 years"   => [5, 9],
+    "10-14 years" => [10, 14],
+    "15-17 years" => [15, 17],
+    "18-24 years" => [18, 24],
+    "25-34 years" => [25, 34],
+    "35-44 years" => [35, 44],
+    "45-54 years" => [45, 54],
+    "55-64 years" => [55, 64],
+    "65-74 years" => [65, 74],
+    "75-84 years" => [75, 84],
+    "85-94 years" => [85, 94],
+    "95+ years"   => [95, 120]  # or [95, nil] if you want open-ended
+  }.freeze
+
+  attr_writer :age_range
+
+  def age_range
+    @age_range || AGE_RANGES.key([min_age,max_age])
+  end
+
   validates :name, presence: true
   validates :gender, presence: true
   validates :relation, presence: true
@@ -21,13 +43,14 @@ class Recipient < ApplicationRecord
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON
 
+  before_validation :apply_age_range
   before_save :calculate_age, if: -> { birthday.present? }
   before_update :calculate_age, if: -> { birthday.present? || age.present? }
 
   private
 
   def birthday_or_age_present
-    if birthday.blank? && age.blank? && min_age.blank?
+    if birthday.blank? && age.blank? && @age_range.blank?
       errors.add(:recipient, "Please provide either a birthday or an age.")
     end
   end
@@ -44,6 +67,14 @@ class Recipient < ApplicationRecord
     end
   end
 
+  def apply_age_range
+    return if @age_range.blank?
+    
+    range = AGE_RANGES[@age_range]
+    return if range.nil?
+
+    self.min_age, self.max_age = range
+  end
 
   def calculate_age
     # allows for changing from pre-set age to now min/max age
