@@ -40,7 +40,7 @@ class Recipient < ApplicationRecord
     end
 
     if max_age.present? && min_age > max_age
-      errors.add(:recipient, "Minimum age can not be greater than maximum")
+      errors.add(:recipient, "Minimum age cannot be greater than maximum")
     end
   end
 

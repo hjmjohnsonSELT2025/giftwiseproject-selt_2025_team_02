@@ -66,7 +66,7 @@ RSpec.describe RecipientsController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'without event contxt' do
+    context 'without event context' do
       it "creates a new recipient for the current user" do
         expect do
           post :create, params: { recipient: valid_params }
@@ -160,7 +160,7 @@ RSpec.describe RecipientsController, type: :controller do
       end
     end
   end
-  end
+  
 
   describe 'PATCH #update' do
     let!(:recipient) { user.recipients.create!(valid_params) }
@@ -229,9 +229,6 @@ RSpec.describe RecipientsController, type: :controller do
       end
     end
   end
-
-
-
 
   describe 'DELETE #destroy' do
     let!(:recipient) { user.recipients.create!(valid_params) }

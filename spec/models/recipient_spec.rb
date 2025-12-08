@@ -110,7 +110,7 @@ RSpec.describe Recipient, type: :model do
       recipient = build_recipient(age: nil, birthday: birthday)
       recipient.save!
       recipient.reload
-      expect(recipient.age). to eq(25)
+      expect(recipient.age).to eq(25)
     end
 
     it "clears age if min age set" do
