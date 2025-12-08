@@ -1,5 +1,16 @@
 <h1>Add Gift Recipient</h1>
 
+<% if @recipient.errors.any? %>
+  <div class="error-messages" style="border: 1px solid #f00; padding: 0.75rem; margin-bottom: 1rem;">
+    <h2><%= pluralize(@recipient.errors.count, "error") %> prevented this recipient from being saved:</h2>
+    <ul>
+      <% @recipient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_with model: @recipient, url: recipients_path, method: :post, local: true do |f| %>
   <%# preserve context when coming from an event %>
   <% if @from_event && @event_id.present? %>
