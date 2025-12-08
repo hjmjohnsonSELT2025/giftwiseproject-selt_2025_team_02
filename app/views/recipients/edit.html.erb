@@ -1,5 +1,16 @@
 <h1>Edit Recipient</h1>
 
+<% if @recipient.errors.any? %>
+  <div class="error-messages" style="border: 1px solid #f00; padding: 0.75rem; margin-bottom: 1rem;">
+    <h2><%= pluralize(@recipient.errors.count, "error") %> prevented this recipient from being saved:</h2>
+    <ul>
+      <% @recipient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_with model: @recipient, local: true do |f| %>
   <div>
     <%= f.label :name, "Name" %><br>
@@ -10,16 +21,14 @@
     <%= f.label :birthday, "Birthday (if known)" %><br>
     <%= f.date_field :birthday %>
   </div>
-
+  
   <div style="margin-top: 0.75rem;">
-    <%= f.label :min_age, "Age Range (min) (if birthday unknown)" %><br>
-    <%= f.number_field :min_age, disabled: @recipient.birthday.present? %>
+    <%= f.label :age_range, "Select Age Group" %><br>
+    <%= f.select :age_range,
+      options_for_select(Recipient::AGE_RANGES.keys, @recipient.age_range),
+      include_blank: "Select Age Group" %>
   </div>
-
-  <div style="margin-top: 0.75rem;">
-    <%= f.label :max_age, "Age Range (max) (if birthday unknown)" %><br>
-    <%= f.number_field :max_age, disabled: @recipient.birthday.present? %>
-  </div>
+  
 
   <div>
     <%= f.label :gender, "Gender" %><br>
@@ -29,6 +38,21 @@
   <div>
     <%= f.label :relation, "Relation" %><br>
     <%= f.text_field :relation %>
+  </div>
+
+  <div>
+    <%= f.label :occupation, "Occupation (optional)" %><br>
+    <%= f.text_field :occupation %>
+  </div>
+
+  <div>
+    <%= f.label :hobbies, "Hobbies (optional)" %><br>
+    <%= f.text_area :hobbies, rows: 3 %>
+  </div>
+
+  <div>
+    <%= f.label :extra_info, "Extra Information (optional)" %><br>
+    <%= f.text_area :extra_info, rows: 4 %>
   </div>
 
   <div>
