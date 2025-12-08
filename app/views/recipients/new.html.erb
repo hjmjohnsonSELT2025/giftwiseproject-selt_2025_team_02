@@ -13,13 +13,18 @@
   </div>
 
   <div>
-    <%= f.label :birthday, "Birthday" %><br>
-    <%= f.date_field :birthday %>
+    <%= f.label :birthday, "Birthday (if known)" %><br>
+    <%= f.date_field :birthday %><br>
   </div>
 
   <div style="margin-top: 0.75rem;">
-    <%= f.label :age, "Age" %><br>
-    <%= f.number_field :age %>
+    <%= f.label :min_age, "Age Range (min) (if birthday unknown)" %><br>
+    <%= f.number_field :min_age, disabled: @recipient.birthday.present? %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :max_age, "Age Range (max) (if birthday unknown)" %><br>
+    <%= f.number_field :max_age, disabled: @recipient.birthday.present? %>
   </div>
 
   <div style="margin-top: 0.75rem;">

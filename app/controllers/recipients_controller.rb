@@ -40,9 +40,12 @@ class RecipientsController < ApplicationController
 
   def update
     @recipient = current_user.recipients.find(params[:id])
-    @recipient.update!(recipient_params)
-    flash[:notice] = "#{@recipient.name} was successfully updated."
-    redirect_to recipient_path(@recipient)
+    if @recipient.update(recipient_params)
+      flash[:notice] = "#{@recipient.name} was successfully updated."
+      redirect_to recipient_path(@recipient)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -88,6 +91,6 @@ class RecipientsController < ApplicationController
   private
 
   def recipient_params
-    params.require(:recipient).permit(:name, :age, :birthday, :gender, :relation, likes: [], dislikes: [])
+    params.require(:recipient).permit(:name, :age, :min_age, :max_age, :birthday, :gender, :relation, likes: [], dislikes: [])
   end
 end

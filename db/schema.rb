@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_05_043633) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_06_194134) do
   create_table "event_recipient_budgets", force: :cascade do |t|
     t.decimal "budget", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
@@ -85,6 +85,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_05_043633) do
     t.text "dislikes"
     t.integer "gender"
     t.text "likes"
+    t.integer "max_age"
+    t.integer "min_age"
     t.string "name"
     t.string "relation"
     t.datetime "updated_at", null: false
