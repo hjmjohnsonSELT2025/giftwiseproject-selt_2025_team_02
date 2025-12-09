@@ -39,9 +39,8 @@ Feature: Manage events for gift planning
       | name        | event_date | event_time | location | budget |
       | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
-    When I click the event edit link
-
-    And I fill in "Event date" with "2030-12-01"
+    When I edit the event "Beer oclock"
+    And I fill in the event date with "2030-12-01"
     And I fill in "Location" with "Rooftop Bar"
     And I press "Update Event"
     Then I should see "Event 'Beer oclock' successfully updated." within the flash
