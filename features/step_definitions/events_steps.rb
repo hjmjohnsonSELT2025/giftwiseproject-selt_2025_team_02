@@ -43,8 +43,13 @@ Given('I am on the events page') do
   visit respond_to?(:events_path) ? events_path : "/events"
 end
 
-When('I click {string}') do |label|
-  click_link_or_button(label)
+# conflicts with recipient steps
+# When('I click {string}') do |label|
+#   click_link_or_button(label)
+# end
+
+When('I click the event edit link') do
+  first(:link, "Edit").click
 end
 
 Given('the following events exist for this user:') do |table|
@@ -57,6 +62,7 @@ Given('the following events exist for this user:') do |table|
     attrs[:event_time] = Time.zone.parse(row["event_time"]) if row["event_time"].present?
     attrs[:location]   = row["location"] if row["location"].present?
     attrs[:budget]     = BigDecimal(row["budget"]) if row["budget"].present?
+    attrs[:extra_info] = row["extra_info"] if row["extra_info"].present?
 
     user.events.create!(attrs)
   end
@@ -182,4 +188,23 @@ When('I follow {string} within the {string} row') do |link_text, recipient_name|
     href = link[:href]
     page.driver.submit :delete, href, {}
   end
+end
+
+Then('the event {string} should have extra info {string}') do |event_name, event_info|
+  event = Event.find_by!(name: event_name)
+  expect(event.extra_info).to eq(event_info)
+end
+
+Then('the event {string} should have no extra info') do |event_name|
+  event = Event.find_by!(name: event_name)
+  expect(event.extra_info).to be_blank
+end
+
+Then('I should see the additional event info {string}') do |event_info|
+  expect(page).to have_content('Additional Event Info')
+  expect(page).to have_content(event_info)
+end
+
+Then('I should not see the additional event info section') do
+  expect(page).not_to have_content('Additional Event Info')
 end
