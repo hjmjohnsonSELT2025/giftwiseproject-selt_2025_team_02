@@ -39,7 +39,8 @@ Feature: Manage events for gift planning
       | name        | event_date | event_time | location | budget |
       | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
-    When I click "Edit"
+    When I click the event edit link
+
     And I fill in "Event date" with "2030-12-01"
     And I fill in "Location" with "Rooftop Bar"
     And I press "Update Event"
@@ -153,7 +154,8 @@ Feature: Manage events for gift planning
       | name                    | event_date  | event_time | location    | budget |
       | Christmas with the bros | 2030-12-25  | 18:00      | Chad's pad  | 200    |
     And I am on the events page
-    When I click "Edit"
+    When I click the event edit link
+
     And I fill in "Additional Event Information (optional)" with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
     And I press "Update Event"
     Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
@@ -168,7 +170,8 @@ Feature: Manage events for gift planning
       | name                    | event_date  | event_time | location    | budget | extra_info                                                                 |
       | Christmas with the bros | 2030-12-25  | 18:00      | Chad's pad  | 200    | Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha. |
     And I am on the events page
-    When I click "Edit"
+    When I click the event edit link
+
     And I fill in "Additional Event Information (optional)" with ""
     And I press "Update Event"
     Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
