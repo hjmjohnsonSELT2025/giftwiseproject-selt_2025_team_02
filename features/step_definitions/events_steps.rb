@@ -208,3 +208,15 @@ end
 Then('I should not see the additional event info section') do
   expect(page).not_to have_content('Additional Event Info')
 end
+
+When('I fill in the event date with {string}') do |value|
+  field = find('#event_event_date', visible: :all)
+  field.set(value)
+end
+
+When('I edit the event {string}') do |event_name|
+  user  = current_scenario_user
+  event = user.events.find_by!(name: event_name)
+
+  visit edit_event_path(event)
+end
