@@ -44,30 +44,4 @@
     </div>
   </turbo-frame>
 
-
-  <div style="display: flex; gap: 20px;">
-    <% Gift.statuses.keys.each do |status| %>
-      <div style="border: 1px solid black; padding: 10px; flex: 1;">
-
-        <h3 style="text-transform: uppercase;"><%= status %></h3>
-
-        <ul>
-          <% if @global_gifts_status[status] %>
-            <% @global_gifts_status[status].each do |gift| %>
-              <li style="margin-bottom: 10px;">
-                <strong><%= gift.name %></strong><br>
-                <small>For: <%= gift.recipient.name %></small><br>
-                <%= link_to "Edit", edit_gift_path(gift) %>
-              </li>
-            <% end %>
-          <% else %>
-            <li><em>No gifts in this stage</em></li>
-          <% end %>
-        </ul>
-
-      </div>
-    <% end %>
-  </div>
-
-
 </div>
