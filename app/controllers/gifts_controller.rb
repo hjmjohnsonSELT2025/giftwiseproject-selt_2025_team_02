@@ -1,7 +1,14 @@
 class GiftsController < ApplicationController
   before_action :set_nested_resources
+  before_action :set_gift, only: [:update]
+
   def index
     @gifts = Gift.all
+  end
+
+  def set_gift
+    # @gift = @gifts.gifts.find(params[:id])
+    @gift = @gift_list.gifts.find(params[:id])
   end
 
   def show
@@ -14,6 +21,22 @@ class GiftsController < ApplicationController
   def new
     # do this to know the parent list of gift
     @gift = @gift_list.gifts.new
+  end
+
+  # save changes to the database about gift status
+  def update
+    if @gift.update(gift_params)
+      # respond to can handle different requests - HTML or JSON
+      respond_to do |format|
+        format.html { redirect_to @gift_list, notice: "Gift status successfully updated" }
+        format.json { render json: { status: "success", gift: @gift } }
+      end
+    else
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { status: "error", errors: @gift.errors.full_messages }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def create
