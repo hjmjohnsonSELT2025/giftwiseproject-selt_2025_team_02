@@ -112,6 +112,69 @@ Feature: Manage events for gift planning
     And the recipient "Thad" should be associated with the event "Beer oclock"
     And the recipient "Brad" should be associated with the event "Beer oclock"
 
+  @happy_path
+  Scenario: Create an event with extra info
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And I am on the events page
+    When I follow "Add New Event"
+    And I fill in "Event name" with "Christmas with the bros"
+    And I fill in "Event date" with "2025-12-25"
+    And I fill in "Event time" with "18:00"
+    And I fill in "Location" with "Chad's pad"
+    And I fill in "Budget" with "200"
+    And I fill in "Additional Event Information (optional)" with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And I press "Create Event"
+    Then I should see "Event 'Christmas with the bros' successfully created." within the flash
+    And I should see the additional event info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And the event "Christmas with the bros" should have extra info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+
+  @happy_path
+  Scenario: Create an event without extra info (section stays hidden)
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And I am on the events page
+    When I follow "Add New Event"
+    And I fill in "Event name" with "Christmas with the bros"
+    And I fill in "Event date" with "2025-12-25"
+    And I fill in "Event time" with "18:00"
+    And I fill in "Location" with "Chad's pad"
+    And I fill in "Budget" with "200"
+    And I press "Create Event"
+    Then I should see "Event 'Christmas with the bros' successfully created." within the flash
+    And I should not see the additional event info section
+    And the event "Christmas with the bros" should have no extra info
+
+  @happy_path
+  Scenario: Edit an event to add extra info
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And the following events exist for this user:
+      | name                    | event_date  | event_time | location    | budget |
+      | Christmas with the bros | 2025-12-25  | 18:00      | Chad's pad  | 200    |
+    And I am on the events page
+    When I click "Edit"
+    And I fill in "Additional Event Information (optional)" with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And I press "Update Event"
+    Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
+    And I should see the additional event info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And the event "Christmas with the bros" should have extra info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+
+  @happy_path
+  Scenario: Edit an event to clear extra info (hide section again)
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And the following events exist for this user:
+      | name                    | event_date  | event_time | location    | budget | extra_info                                                                 |
+      | Christmas with the bros | 2025-12-25  | 18:00      | Chad's pad  | 200    | Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha. |
+    And I am on the events page
+    When I click "Edit"
+    And I fill in "Additional Event Information (optional)" with ""
+    And I press "Update Event"
+    Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
+    And I should not see the additional event info section
+    And the event "Christmas with the bros" should have no extra info
+
   @wip
   Scenario: View upcoming events for this week
     Given today is a Monday in the current week
