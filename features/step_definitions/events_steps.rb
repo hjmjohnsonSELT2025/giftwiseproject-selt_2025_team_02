@@ -49,7 +49,7 @@ end
 # end
 
 When('I click the event edit link') do
-  first(:link, "Edit").click
+  click_link('Edit', exact: true, match: :first)
 end
 
 Given('the following events exist for this user:') do |table|
@@ -219,4 +219,9 @@ When('I edit the event {string}') do |event_name|
   event = user.events.find_by!(name: event_name)
 
   visit edit_event_path(event)
+end
+
+When('I fill in the additional event info with {string}') do |value|
+  field = find('#event_extra_info', visible: :all)
+  field.set(value)
 end
