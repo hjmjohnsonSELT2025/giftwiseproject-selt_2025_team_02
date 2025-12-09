@@ -5,6 +5,7 @@ class Event < ApplicationRecord
   validates :name, presence: true
   validates :event_date, presence: true
   validates :budget, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1_000_000, allow_nil: true }
+  validates :extra_info, length: { maximum: 4000 }, allow_blank: true
 
   validate :budget_not_scientific_notation
   validate :event_date_cannot_be_in_the_past
