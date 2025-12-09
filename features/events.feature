@@ -76,7 +76,7 @@ Feature: Manage events for gift planning
       | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
     When I follow "Beer oclock"
-    And I select "Thad" from "Choose a recipient"
+    And I select "Thad" from "Choose an existing recipient"
     And I press "Add to Event"
     Then I should see "Recipient 'Thad' successfully added to 'Beer oclock'." within the flash
     And I should see "Thad" in the recipients section
@@ -94,7 +94,7 @@ Feature: Manage events for gift planning
       | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
     When I follow "Beer oclock"
-    And I select "Thad" from "Choose a recipient"
+    And I select "Thad" from "Choose an existing recipient"
     And I press "Add to Event"
     And I follow "Remove" within the "Thad" row
     Then I should see "Recipient 'Thad' successfully removed from 'Beer oclock'." within the flash
@@ -123,7 +123,7 @@ Feature: Manage events for gift planning
     And I fill in "Event time" with "18:00"
     And I fill in "Location" with "Chad's pad"
     And I fill in "Budget" with "200"
-    And I fill in "Additional Event Information (optional)" with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And I fill in the additional event info with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
     And I press "Create Event"
     Then I should see "Event 'Christmas with the bros' successfully created." within the flash
     And I should see the additional event info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
@@ -153,9 +153,8 @@ Feature: Manage events for gift planning
       | name                    | event_date  | event_time | location    | budget |
       | Christmas with the bros | 2030-12-25  | 18:00      | Chad's pad  | 200    |
     And I am on the events page
-    When I click the event edit link
-
-    And I fill in "Additional Event Information (optional)" with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    When I edit the event "Christmas with the bros"
+    And I fill in the additional event info with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
     And I press "Update Event"
     Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
     And I should see the additional event info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
@@ -169,9 +168,8 @@ Feature: Manage events for gift planning
       | name                    | event_date  | event_time | location    | budget | extra_info                                                                 |
       | Christmas with the bros | 2030-12-25  | 18:00      | Chad's pad  | 200    | Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha. |
     And I am on the events page
-    When I click the event edit link
-
-    And I fill in "Additional Event Information (optional)" with ""
+    When I edit the event "Christmas with the bros"
+    And I fill in the additional event info with ""
     And I press "Update Event"
     Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
     And I should not see the additional event info section
