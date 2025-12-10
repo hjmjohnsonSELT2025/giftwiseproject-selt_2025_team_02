@@ -28,7 +28,13 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
     end
   end
+  helper_method :show_navbar?
+  
 
+  def show_navbar?
+    !(controller_name == "users" && action_name == "new") &&
+      !(controller_name == "sessions" && %w[new create].include?(action_name))
+  end
   # Calls this when someone deletes a record (gift or recipient) and they try to retrieve that route again (back button)
   def handle_missing_record
     attempted_url = request.original_url
