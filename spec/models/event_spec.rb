@@ -168,4 +168,47 @@ RSpec.describe Event, type: :model do
       expect(event.errors[:event_date]).to include("year must have exactly four digits")
     end
   end
+
+  describe 'extra_info event attribute' do
+    it 'is optional (event is valid without extra_info)' do
+      event = Event.new(
+        name:       'Event with no extra info',
+        event_date: Date.today + 1,
+        user:       user,
+        extra_info: nil
+      )
+
+      expect(event).to be_valid
+    end
+
+    it 'can store multi-line text that saves and reloads correctly' do
+      event_deets = [
+        "Bro gift exchange",
+        "Matching jammies",
+        "Mariah Carey tunes, peppermint mocha"
+      ].join("\n")
+
+      event = Event.create!(
+        name:       'Christmas with the bros',
+        event_date: Date.today + 10,
+        user:       user,
+        extra_info: event_deets
+      )
+
+      expect(event.reload.extra_info).to eq(event_deets)
+    end
+
+    it 'can be cleared by setting it to an empty string' do
+      event = Event.create!(
+        name:       'Clearing extra info test',
+        event_date: Date.today + 5,
+        user:       user,
+        extra_info: 'Temp extra info'
+      )
+
+      event.update!(extra_info: '')
+
+      expect(event.reload.extra_info).to be_blank
+    end
+  end
 end
