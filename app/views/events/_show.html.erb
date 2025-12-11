@@ -9,6 +9,13 @@
   <li><strong>Budget:</strong> <%= @event.budget.present? ? number_to_currency(@event.budget) : "Not set" %></li>
 </ul>
 
+<% if @event.extra_info.present? %>
+  <p style="margin-top: 1rem;">
+    <strong>Additional Event Info:</strong><br>
+    <%= simple_format(@event.extra_info) %>
+  </p>
+<% end %>
+
 <h2>Recipients for this event</h2>
 
 <% if @event.recipients.any? %>
