@@ -43,7 +43,15 @@ export default class extends Controller {
             })
         })
 
-        setTimeout(() => event.target.innerText = "Saved changes!", 2000)
+        // show a saved message in the button, then go back to original after 2 seconds
+        const button = event.target;
+        const originalText = button.innerText;
+        button.innerText = "Saved changes!";
+        button.disabled = true;
+        setTimeout(() => {
+            button.innerText = originalText;
+            button.disabled = false;
+        }, 2000)
     }
 
     // helper function that sends the AJAX request to Rails to update gift status
