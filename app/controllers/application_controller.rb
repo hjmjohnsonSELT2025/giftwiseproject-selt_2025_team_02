@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def show_navbar?
-    !(controller_name == "users" && action_name == "new") &&
+    !(controller_name == "users" && %w[new create].include?(action_name)) &&
       !(controller_name == "sessions" && %w[new create].include?(action_name))
   end
   # Calls this when someone deletes a record (gift or recipient) and they try to retrieve that route again (back button)
