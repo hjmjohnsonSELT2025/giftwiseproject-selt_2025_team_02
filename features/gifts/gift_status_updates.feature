@@ -9,7 +9,9 @@ Feature: Update gift statuses on a gift list
     And there are no recipients for this user
     And there are no gift lists
     And there are no gifts
-    And a recipient "Nancy" exists for this user
+    And the following recipients exist for this user:
+      | name        | age | gender | relation    | birthday
+      | Nancy       | 20  | female | friend      | 01/22/2005
     And a gift list "General ideas" exists for "Nancy"
     And a gift "Book" exists on the "General ideas" gift list
     And I am on the "General ideas" gift list page
@@ -20,5 +22,3 @@ Feature: Update gift statuses on a gift list
     And I should see "Idea"
     And I should see "Planned"
 
-  # Note: Drag-and-drop interaction is handled by Stimulus/JS and covered by request/view specs.
-  # Here we only validate that the page exposes the UI necessary to make updates.

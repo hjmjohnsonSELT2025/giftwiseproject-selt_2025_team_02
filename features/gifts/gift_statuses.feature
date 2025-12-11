@@ -9,7 +9,9 @@ Feature: View gift statuses on a gift list
     And there are no recipients for this user
     And there are no gift lists
     And there are no gifts
-    And a recipient "Nancy" exists for this user
+    And the following recipients exist for this user:
+      | name        | age | gender | relation    | birthday
+      | Nancy       | 20  | female | friend      | 01/22/2005
     And a gift list "General ideas" exists for "Nancy"
     And I am on the "General ideas" gift list page
 
