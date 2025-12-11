@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       delete "remove_recipient/:recipient_id", action: :remove_recipient, as: :remove_recipient
     end
   end
-  
+
   resources :event_recipient_budgets
 
   get    "/login",  to: "sessions#new",     as: :login
