@@ -48,6 +48,22 @@
 <% else %>
   <p>All of your recipients are already assigned to this event.</p>
 <% end %>
+<h3>Collaborators</h3>
+<ul>
+  <% @event.collaborators.each do |u| %>
+    <li><%= u.name || u.email %></li>
+  <% end %>
+</ul>
+<h4>Add collaborator</h4>
+
+<%= form_with url: add_collaborator_event_path(@event),
+              method: :post,
+              data: { turbo: false } do %>
+  <%= label_tag :email, "User email" %>
+  <%= text_field_tag :email, nil, required: true %>
+  <%= submit_tag "Add" %>
+<% end %>
+
 <%= link_to "Create recipient to add to event",
             new_recipient_path(from_event: true, event_id: @event&.id) %>
 

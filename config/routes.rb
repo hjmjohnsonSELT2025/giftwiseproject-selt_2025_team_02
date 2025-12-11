@@ -25,6 +25,9 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :events do
+    post :add_collaborator, on: :member
+  end
 
   resources :users, only: [ :new, :create, :show, :edit, :update, :destroy ]
   resources :gifts

@@ -54,6 +54,29 @@ class EventsController < ApplicationController
                 notice: "Recipient '#{recipient.name}' successfully removed from '#{@event.name}'."
   end
 
+  def add_collaborator
+    @event = Event.find(params[:id])
+
+    # Optional safety check
+    unless @event.user == current_user
+      flash[:warning] = "Only the event owner can add collaborators."
+      return redirect_to @event
+    end
+
+    user = User.find_by(email: params[:email])
+
+    if user.nil?
+      flash[:warning] = "No user found with that email."
+    elsif @event.collaborators.include?(user)
+      flash[:notice] = "That user is already a collaborator."
+    else
+      @event.collaborators << user
+      flash[:notice] = "#{user.email} added as collaborator."
+    end
+
+    redirect_to @event
+  end
+
   private
 
   def set_event
