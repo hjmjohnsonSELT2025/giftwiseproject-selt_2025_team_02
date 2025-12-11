@@ -1,6 +1,7 @@
 <h1><%= @gift_list.name %></h1>
 <h2> Gift list for: <%=link_to Recipient.find(@gift_list.recipient_id).name, recipient_path(@gift_list.recipient_id) %></h2>
 
+<%= render "gift_lists/gift_statuses", list: @gift_list %>
 
 <%= render "gifts/table", gifts: @gift_list.gifts %>
 <br><br>
