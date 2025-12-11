@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   def active_gifts_grouping
     # get all gifts that aren't archived
-    gifts.joins(:gift_list).where(gift_lists: {archived: false}).group_by(&:status)
+    gifts.joins(:gift_list).where(gift_lists: { archived: false }).group_by(&:status)
   end
   private
   def confirm_session_token

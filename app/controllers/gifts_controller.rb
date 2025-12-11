@@ -1,6 +1,6 @@
 class GiftsController < ApplicationController
   before_action :set_nested_resources
-  before_action :set_gift, only: [:update]
+  before_action :set_gift, only: [ :update ]
 
   def index
     @gifts = Gift.all
