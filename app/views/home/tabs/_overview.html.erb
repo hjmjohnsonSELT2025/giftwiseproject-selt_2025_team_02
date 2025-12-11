@@ -12,7 +12,9 @@
             <li style="margin-bottom: 10px;">
               <strong><%= gift.name %></strong><br>
               <small>For: <%= gift.recipient.name %></small><br>
-              <%= link_to "Edit", edit_gift_path(gift) %>
+              <%= link_to "Edit", recipient_gift_list_path(gift.recipient, gift.gift_list),
+                          data: { turbo: false }
+              %>
             </li>
           <% end %>
         <% else %>
