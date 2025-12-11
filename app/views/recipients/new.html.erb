@@ -1,5 +1,16 @@
 <h1>Add Gift Recipient</h1>
 
+<% if @recipient.errors.any? %>
+  <div class="error-messages" style="border: 1px solid #f00; padding: 0.75rem; margin-bottom: 1rem;">
+    <h2><%= pluralize(@recipient.errors.count, "error") %> prevented this recipient from being saved:</h2>
+    <ul>
+      <% @recipient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_with model: @recipient, url: recipients_path, method: :post, local: true do |f| %>
   <%# preserve context when coming from an event %>
   <% if @from_event && @event_id.present? %>
@@ -13,14 +24,16 @@
   </div>
 
   <div>
-    <%= f.label :birthday, "Birthday" %><br>
-    <%= f.date_field :birthday %>
+    <%= f.label :birthday, "Birthday (if known)" %><br>
+    <%= f.date_field :birthday %><br>
+  </div>
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :age_range, "Select Age Group" %><br>
+    <%= f.select :age_range,
+      options_for_select(Recipient::AGE_RANGES.keys, @recipient.age_range),
+      include_blank: "Select Age Group" %>
   </div>
 
-  <div style="margin-top: 0.75rem;">
-    <%= f.label :age, "Age" %><br>
-    <%= f.number_field :age %>
-  </div>
 
   <div style="margin-top: 0.75rem;">
     <%= f.label :gender, "Gender" %><br>
@@ -33,12 +46,27 @@
   </div>
 
   <div style="margin-top: 0.75rem;">
-    <%= f.label :likes, "Likes" %><br>
+    <%= f.label :occupation, "Occupation (optional)" %><br>
+    <%= f.text_field :occupation %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :hobbies, "Hobbies (optional)" %><br>
+    <%= f.text_area :hobbies, rows: 3 %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :extra_info, "Extra Information (optional)" %><br>
+    <%= f.text_area :extra_info, rows: 4 %>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :likes, "Likes (optional)" %><br>
     <%= f.collection_check_boxes :likes,["Reading", "Sports", "Music", "Cooking", "Traveling", "Art", "Technology","Gardening", "Photography", "Dancing", "Movies", "Video Games", "Pets","Fashion", "Fitness", "Writing", "Puzzles", "Board Games", "Hiking","Swimming", "Cycling", "Yoga", "Meditation", "Volunteering", "Theater","Concerts", "Camping", "Fishing", "Golf", "Tennis", "Basketball", "Soccer"], :to_s, :to_s %>
   </div>
 
   <div style="margin-top: 0.75rem;">
-    <%= f.label :dislikes, "Dislikes" %><br>
+    <%= f.label :dislikes, "Dislikes (optional)" %><br>
     <%= f.collection_check_boxes :dislikes, ["Spicy Food", "Loud Noises", "Crowds", "Heights", "Insects", "Cold Weather","Hot Weather", "Math", "Cleaning", "Driving", "Flying","Seafood", "Perfume", "Strong Smells", "Bright Lights", "Darkness"], :to_s, :to_s %>
   </div>
 

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-
+  helper_method :show_navbar?
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def show_navbar?
+    !(controller_name == "users" && action_name == "new") &&
+      !(controller_name == "sessions" && %w[new create].include?(action_name))
+  end
   # Calls this when someone deletes a record (gift or recipient) and they try to retrieve that route again (back button)
   def handle_missing_record
     attempted_url = request.original_url
