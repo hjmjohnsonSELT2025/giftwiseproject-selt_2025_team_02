@@ -44,7 +44,14 @@
                        value: number_with_precision(@event.budget, precision: 2) %>
   </div>
 
-  <div style="margin-top: 1rem;">
+  <div style="margin-top: 0.75rem;">
+    <%= f.label :extra_info, "Additional Event Information (optional)" %><br>
+    <%= f.text_area :extra_info,
+                    rows: 4,
+                    placeholder: "Describe anything special about this event (theme, significance, tone, constraints, etc.)" %>
+  </div>
+
+<div style="margin-top: 1rem;">
     <%= f.submit %>
   </div>
 <% end %>
