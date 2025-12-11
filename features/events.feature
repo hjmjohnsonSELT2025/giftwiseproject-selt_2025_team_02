@@ -15,18 +15,18 @@ Feature: Manage events for gift planning
     And I am on the events page
     When I follow "Add New Event"
     And I fill in "Event name" with "Beer oclock"
-    And I fill in "Event date" with "2025-11-28"
+    And I fill in "Event date" with "2030-11-28"
     And I fill in "Event time" with "22:00"
     And I fill in "Location" with "Downtown"
     And I fill in "Budget" with "50"
     And I press "Create Event"
     Then I should see "Event 'Beer oclock' successfully created." within the flash
     And I should see "Beer oclock"
-    And I should see "2025-11-28"
+    And I should see "2030-11-28"
     And I should see "Downtown"
     And I should see "$50.00"
     And the event "Beer oclock" should have:
-      | event_date | 2025-11-28 |
+      | event_date | 2030-11-28 |
       | event_time | 22:00      |
       | location   | Downtown   |
       | budget     | 50         |
@@ -37,17 +37,17 @@ Feature: Manage events for gift planning
     And there are no previous events for this user
     And the following events exist for this user:
       | name        | event_date | event_time | location | budget |
-      | Beer oclock | 2025-11-28 | 22:00      | Downtown | 50     |
+      | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
-    When I click "Edit"
-    And I fill in "Event date" with "2025-12-01"
+    When I edit the event "Beer oclock"
+    And I fill in the event date with "2030-12-01"
     And I fill in "Location" with "Rooftop Bar"
     And I press "Update Event"
     Then I should see "Event 'Beer oclock' successfully updated." within the flash
     And I should see "Beer oclock"
     And I should see "Rooftop Bar"
     And the event "Beer oclock" should have:
-      | event_date | 2025-12-01 |
+      | event_date | 2030-12-01 |
       | location   | Rooftop Bar |
 
   @happy_path
@@ -56,7 +56,7 @@ Feature: Manage events for gift planning
     And there are no previous events for this user
     And the following events exist for this user:
       | name        | event_date | event_time | location | budget |
-      | Beer oclock | 2025-11-28 | 22:00      | Downtown | 50     |
+      | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
     When I follow "Delete"
     Then I should be on the events page
@@ -73,10 +73,10 @@ Feature: Manage events for gift planning
       | Brad | 26  | male   | Bro      |
     And the following events exist for this user:
       | name        | event_date | event_time | location  | budget |
-      | Beer oclock | 2025-11-28 | 22:00      | Downtown | 50     |
+      | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
     When I follow "Beer oclock"
-    And I select "Thad" from "Choose a recipient"
+    And I select "Thad" from "Choose an existing recipient"
     And I press "Add to Event"
     Then I should see "Recipient 'Thad' successfully added to 'Beer oclock'." within the flash
     And I should see "Thad" in the recipients section
@@ -91,10 +91,10 @@ Feature: Manage events for gift planning
       | Brad | 26  | male   | Bro      |
     And the following events exist for this user:
       | name        | event_date | event_time | location  | budget |
-      | Beer oclock | 2025-11-28 | 22:00      | Downtown | 50     |
+      | Beer oclock | 2030-11-28 | 22:00      | Downtown | 50     |
     And I am on the events page
     When I follow "Beer oclock"
-    And I select "Thad" from "Choose a recipient"
+    And I select "Thad" from "Choose an existing recipient"
     And I press "Add to Event"
     And I follow "Remove" within the "Thad" row
     Then I should see "Recipient 'Thad' successfully removed from 'Beer oclock'." within the flash
@@ -111,6 +111,69 @@ Feature: Manage events for gift planning
       | Brad |
     And the recipient "Thad" should be associated with the event "Beer oclock"
     And the recipient "Brad" should be associated with the event "Beer oclock"
+
+  @happy_path
+  Scenario: Create an event with extra info
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And I am on the events page
+    When I follow "Add New Event"
+    And I fill in "Event name" with "Christmas with the bros"
+    And I fill in "Event date" with "2030-12-25"
+    And I fill in "Event time" with "18:00"
+    And I fill in "Location" with "Chad's pad"
+    And I fill in "Budget" with "200"
+    And I fill in the additional event info with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And I press "Create Event"
+    Then I should see "Event 'Christmas with the bros' successfully created." within the flash
+    And I should see the additional event info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And the event "Christmas with the bros" should have extra info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+
+  @happy_path
+  Scenario: Create an event without extra info (section stays hidden)
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And I am on the events page
+    When I follow "Add New Event"
+    And I fill in "Event name" with "Christmas with the bros"
+    And I fill in "Event date" with "2030-12-25"
+    And I fill in "Event time" with "18:00"
+    And I fill in "Location" with "Chad's pad"
+    And I fill in "Budget" with "200"
+    And I press "Create Event"
+    Then I should see "Event 'Christmas with the bros' successfully created." within the flash
+    And I should not see the additional event info section
+    And the event "Christmas with the bros" should have no extra info
+
+  @happy_path
+  Scenario: Edit an event to add extra info
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And the following events exist for this user:
+      | name                    | event_date  | event_time | location    | budget |
+      | Christmas with the bros | 2030-12-25  | 18:00      | Chad's pad  | 200    |
+    And I am on the events page
+    When I edit the event "Christmas with the bros"
+    And I fill in the additional event info with "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And I press "Update Event"
+    Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
+    And I should see the additional event info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+    And the event "Christmas with the bros" should have extra info "Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha."
+
+  @happy_path
+  Scenario: Edit an event to clear extra info (hide section again)
+    Given I am logged in as "chad_bro_chill@fakemail.com" with password "lowkeybussin"
+    And there are no previous events for this user
+    And the following events exist for this user:
+      | name                    | event_date  | event_time | location    | budget | extra_info                                                                 |
+      | Christmas with the bros | 2030-12-25  | 18:00      | Chad's pad  | 200    | Bro gift exchange, matching jammies, Mariah Carey tunes, peppermint mocha. |
+    And I am on the events page
+    When I edit the event "Christmas with the bros"
+    And I fill in the additional event info with ""
+    And I press "Update Event"
+    Then I should see "Event 'Christmas with the bros' successfully updated." within the flash
+    And I should not see the additional event info section
+    And the event "Christmas with the bros" should have no extra info
 
   @wip
   Scenario: View upcoming events for this week

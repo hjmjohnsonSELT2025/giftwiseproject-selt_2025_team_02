@@ -45,6 +45,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
     t.datetime "created_at", null: false
     t.date "event_date", null: false
     t.time "event_time"
+    t.text "extra_info"
     t.string "location"
     t.string "name", null: false
     t.datetime "updated_at", null: false

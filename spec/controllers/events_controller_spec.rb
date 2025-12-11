@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
+  render_views
   let(:user) do
     User.create!(
       name: 'Chad',
@@ -55,7 +56,8 @@ RSpec.describe EventsController, type: :controller do
           event_date: Date.today + 5,
           event_time: '18:00',
           location: 'Office',
-          budget: 100
+          budget: 100,
+          extra_info: 'White elephant gift exchange, ugly sweaters required'
         }
       end
 
@@ -63,6 +65,12 @@ RSpec.describe EventsController, type: :controller do
         expect do
           post :create, params: { event: valid_params }
         end.to change(user.events, :count).by(1)
+      end
+
+      it 'persists the extra_info field' do
+        post :create, params: { event: valid_params }
+        new_event = Event.find_by!(name: 'Work Christmas Party')
+        expect(new_event.extra_info).to eq('White elephant gift exchange, ugly sweaters required')
       end
 
       it "sets the flash notice with the event's name" do
@@ -112,16 +120,42 @@ RSpec.describe EventsController, type: :controller do
       expect(assigns(:event)).to eq(event)
       expect(response).to render_template(:show)
     end
+
+    context 'when extra_info is present' do
+      before do
+        event.update!(extra_info: 'Bro gift exchange, matching jammies')
+      end
+      it 'renders the Additional Event Info section with the text' do
+        get :show, params: { id: event.id }
+        expect(response.body).to include('Additional Event Info:')
+        expect(response.body).to include('Bro gift exchange, matching jammies')
+      end
+    end
+    context 'when extra_info is blank' do
+      before do
+        event.update!(extra_info: nil)
+      end
+      it 'does not render the Additional Event Info section' do
+        get :show, params: { id: event.id }
+        expect(response.body).not_to include('Additional Event Info:')
+      end
+    end
   end
 
   describe 'update' do
     context 'with valid params' do
-      let(:updated_params) { { name: 'Updated Event Name' } }
+      let(:updated_params) { { name: 'Updated Event Name', extra_info: 'Bro gift exchange, matching jammies, Mariah Carey tunes' } }
 
-      it 'updates the event' do
+      it 'updates the event name' do
         patch :update, params: { id: event.id, event: updated_params }
 
         expect(event.reload.name).to eq('Updated Event Name')
+      end
+
+      it 'updates the extra_info field' do
+        patch :update, params: { id: event.id, event: updated_params }
+
+        expect(event.reload.extra_info).to eq('Bro gift exchange, matching jammies, Mariah Carey tunes')
       end
 
       it "sets the flash notice with the updated event's name" do
@@ -134,6 +168,18 @@ RSpec.describe EventsController, type: :controller do
         patch :update, params: { id: event.id, event: updated_params }
 
         expect(response).to redirect_to(event_path(event))
+      end
+    end
+
+    context 'when clearing extra_info' do
+      before do
+        event.update!(extra_info: 'Some details to clear')
+      end
+
+      it 'sets extra_info to blank when an empty string is submitted' do
+        patch :update, params: { id: event.id, event: { extra_info: '' } }
+
+        expect(event.reload.extra_info).to be_blank
       end
     end
 
