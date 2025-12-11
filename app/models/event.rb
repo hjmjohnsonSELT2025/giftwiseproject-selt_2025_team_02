@@ -1,5 +1,9 @@
 class Event < ApplicationRecord
   belongs_to :user
+
+  has_many :event_users, dependent: :destroy
+  has_many :collaborators, through: :event_users, source: :user
+
   has_many :event_recipients, dependent: :destroy
   has_many :recipients, through: :event_recipients
   validates :name, presence: true
@@ -9,6 +13,14 @@ class Event < ApplicationRecord
   validate :budget_not_scientific_notation
   validate :event_date_cannot_be_in_the_past
   validate :event_date_must_have_four_digit_year
+
+  def add_collaborator(user)
+    collaborators << user unless collaborators.include?(user)
+  end
+
+  def remove_collaborator(user)
+    collaborators.destroy(user)
+  end
 
   private
 
