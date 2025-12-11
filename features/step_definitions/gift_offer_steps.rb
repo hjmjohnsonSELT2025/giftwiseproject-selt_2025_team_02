@@ -24,17 +24,18 @@ end
 Given('a gift list {string} exists for {string}') do |list_name, recipient_name|
   @recipient ||= @user.recipients.find_by!(name: recipient_name)
 
-  @gift_list = @recipient.gift_lists.create!(
-    name: list_name
-  )
+  @gift_list = @recipient.gift_lists.find_or_create_by!(name: list_name)
 end
 
 Given('a gift {string} exists on the {string} gift list') do |gift_name, list_name|
-  @gift_list ||= GiftList.find_by!(name: list_name, recipient: @recipient)
+  @gift_list = GiftList.find_or_create_by!(name: list_name, recipient: @recipient)
 
-  @gift = @gift_list.gifts.create!(
-    name:        gift_name
+  @gift = @gift_list.gifts.find_or_create_by!(
+    name: gift_name
   )
+
+  # Ensure the page reflects the newly created gift if we're already on the list page
+  visit recipient_gift_list_path(@gift_list.recipient, @gift_list)
 end
 
 Given('I am on the {string} gift list page') do |list_name|

@@ -1,3 +1,5 @@
+require 'date'
+
 # Given("I am logged in as {string} with password {string}") do |email, password|
 #   step %(a user exists with email "#{email}" and password "#{password}")
 #   @user = User.find_by(email: email)
@@ -64,11 +66,29 @@ Given("the following recipients exist for this user:") do |table|
   raise "@user is not set; make sure you logged in first" unless @user
 
   table.hashes.each do |row|
+    # use provided birthday string if present (MM/DD/YYYY)
+    # otherwise make an approximate birthday from provided age
+    birthday = nil
+    birthday_value = row["birthday"].to_s.strip
+    if !birthday_value.empty?
+      begin
+        birthday = Date.strptime(birthday_value, "%m/%d/%Y")
+      rescue ArgumentError
+        birthday = Date.parse(birthday_value) rescue nil
+      end
+    elsif row["age"].to_s.strip != ""
+      age_i = row["age"].to_i
+      today = Date.today
+      # approximate: birthday on Jan 1 of (current_year - age)
+      birthday = Date.new(today.year - age_i, 1, 1) rescue nil
+    end
+
     @user.recipients.create!(
       name: row["name"],
       age: row["age"],
       gender: row["gender"],
       relation: row["relation"],
+      birthday: birthday,
       likes: [],
       dislikes: []
     )
