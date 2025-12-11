@@ -1,6 +1,6 @@
 class GiftsController < ApplicationController
   before_action :set_nested_resources
-  before_action :set_gift, only: [ :edit, :update ]
+  before_action :set_gift, only: [ :update ]
 
   def index
     @gifts = Gift.all
@@ -21,10 +21,6 @@ class GiftsController < ApplicationController
   def new
     # do this to know the parent list of gift
     @gift = @gift_list.gifts.new
-  end
-
-  def edit
-    # @gift is set via before_action
   end
 
   # save changes to the database about gift status
