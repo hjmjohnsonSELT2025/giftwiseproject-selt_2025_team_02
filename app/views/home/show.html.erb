@@ -1,47 +1,8 @@
 <div class="homepage">
 
-<!--  <h1>Homepage</h1>-->
-
-<!--<p>Welcome, <%#= current_user.name.presence || current_user.email %></p>-->
-
-
-  <turbo-frame id="tab_content" >
-    <div class="tabs-bar">
-      <div class="tab-wrapper"><div class="tab-clip">
-        <%= link_to "Overview",
-                    homepage_path(tab: "overview"),
-                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
-                    class: "tab-selector #{'active' if @tab == 'overview'}" %>
-      </div></div>
-      <div class="tab-wrapper"><div class="tab-clip">
-        <%= link_to "Gift Recipients",
-                    homepage_path(tab: "recipients"),
-                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
-                    class: "tab-selector #{'active' if @tab == 'recipients'}" %>
-      </div></div>
-      <div class="tab-wrapper"><div class="tab-clip">
-        <%= link_to "Gift Lists",
-                    homepage_path(tab: "lists"),
-                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
-                    class: "tab-selector #{'active' if @tab == 'lists'}" %>
-      </div></div>
-      <div class="tab-wrapper"><div class="tab-clip">
-        <%= link_to "Events",
-                    homepage_path(tab: "events"),
-                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
-                    class: "tab-selector #{'active' if @tab == 'events'}" %>
-      </div></div>
-      <div class="tab-wrapper"><div class="tab-clip">
-        <%= link_to "Budgets",
-                    homepage_path(tab: "budgets"),
-                    data: {turbo_action: "advance", turbo_frame: "tab_content" },
-                    class: "tab-selector #{'active' if @tab == 'budgets'}" %>
-      </div></div>
-    </div>
 
     <div class="homepage-content">
-      <%= render @tab %>
+      TODO
     </div>
-  </turbo-frame>
 
 </div>
