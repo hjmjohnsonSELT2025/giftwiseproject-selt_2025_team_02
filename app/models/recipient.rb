@@ -43,7 +43,6 @@ class Recipient < ApplicationRecord
 
   validate :birthday_or_age_present
   validate :correct_age_range
-  validates :birthday, presence: true
   after_create :create_default_list
 
   serialize :likes, coder: JSON
