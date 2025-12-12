@@ -39,6 +39,8 @@ class Recipient < ApplicationRecord
 
   validate :birthday_or_age_present
   validate :correct_age_range
+  validates :birthday, presence: true
+  after_create :create_default_list
 
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON
@@ -46,6 +48,9 @@ class Recipient < ApplicationRecord
   before_validation :apply_age_range
   before_save :calculate_age, if: -> { birthday.present? }
   before_update :calculate_age, if: -> { birthday.present? || age.present? }
+  def general_list
+    gift_lists.find_by(name: "General ideas")
+  end
 
   private
 
@@ -97,6 +102,9 @@ class Recipient < ApplicationRecord
     self.dislikes = dislikes.reject(&:empty?) if dislikes.present?
   end
 
+  def create_default_list
+    gift_lists.create!(name: "General ideas")
+  end
 
   LIKES_OPTIONS = [
     "Reading", "Sports", "Music", "Cooking", "Traveling", "Art", "Technology",
