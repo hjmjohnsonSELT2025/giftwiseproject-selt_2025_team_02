@@ -19,7 +19,7 @@ RSpec.describe RecipientsController, type: :controller do
   let(:valid_params) do
     {
       name: "Thad",
-      birthday: Date.new(2000,1,1),
+      birthday: Date.new(2000, 1, 1),
       gender: "male",
       relation: "Bro",
       likes: [ "Reading", "Sports" ],
