@@ -14,10 +14,13 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :sessions, only: [ :new, :create, :destroy ]
+
   resources :recipients do
     member do
       post :generate_gift
       get :generate_gift, to: "recipients#show"
+      get :create_birthday_event
+      post :create_birthday_event
     end
     resources :gift_lists do
       resources :gifts do
