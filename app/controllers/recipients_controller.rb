@@ -83,6 +83,54 @@ class RecipientsController < ApplicationController
     render :show
   end
 
+
+  def create_birthday_event
+    @recipient = current_user.recipients.find(params[:id])
+    
+    if @recipient.has_birthday_event?
+      flash[:alert] = "A birthday event already exists for #{@recipient.name}."
+      redirect_to recipient_path(@recipient)
+      return
+    end
+
+    if @recipient.birthday.blank?
+      flash[:alert] = "Cannot create birthday event: #{@recipient.name} doesn't have an associated birthday."
+      redirect_to recipient_path(@recipient)
+      return
+    end
+
+    if request.post?
+      budget = params[:budget].to_f if params[:budget].present?
+      
+      # Calculate the next birthday date 
+      birthday_this_year = @recipient.birthday.change(year: Date.current.year)
+      if birthday_this_year >= Date.current
+        next_birthday = birthday_this_year
+      else
+        next_birthday = @recipient.birthday.change(year: Date.current.year + 1)
+      end
+      
+      event = current_user.events.new(
+        name: "Birthday - #{@recipient.name}",
+        event_date: next_birthday,
+        budget: budget,
+        extra_info: "Birthday celebration for #{@recipient.name}"
+      )
+      
+      if event.save
+        # Associate recipient with the event
+        event.recipients << @recipient
+        flash[:notice] = "Birthday event for #{@recipient.name} created successfully!"
+        redirect_to event_path(event)
+      else
+        flash[:alert] = "Could not create birthday event: #{event.errors.full_messages.join(', ')}"
+        render :create_birthday_event
+      end
+    else
+      render :create_birthday_event
+    end
+  end
+
   def destroy
     @recipient = current_user.recipients.find(params[:id])
     @recipient.destroy

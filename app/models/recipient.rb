@@ -48,8 +48,13 @@ class Recipient < ApplicationRecord
   before_validation :apply_age_range
   before_save :calculate_age, if: -> { birthday.present? }
   before_update :calculate_age, if: -> { birthday.present? || age.present? }
+
   def general_list
     gift_lists.find_by(name: "General ideas")
+  end
+
+  def has_birthday_event?
+    events.where("name LIKE ?", "%birthday%").any?
   end
 
   private
