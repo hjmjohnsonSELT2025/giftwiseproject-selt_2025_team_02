@@ -28,10 +28,14 @@ class Recipient < ApplicationRecord
     @age_range || AGE_RANGES.key([ min_age, max_age ])
   end
 
+  before_validation :apply_age_range
+  before_validation :calculate_age, if: -> { birthday.present? || age.present? }
+
+
   validates :name, presence: true
   validates :gender, presence: true
   validates :relation, presence: true
-  validates :age, :min_age, :max_age, numericality: { only_integer: true, greater_than: 0, less_than: 120 }, allow_nil: true
+  validates :age, :min_age, :max_age, numericality: { only_integer: true, greater_than: -1, less_than: 120 }, allow_nil: true
 
   validates :occupation, length: { maximum: 255 }, allow_blank: true
   validates :hobbies, length: { maximum: 2000 }, allow_blank: true
@@ -45,10 +49,6 @@ class Recipient < ApplicationRecord
   serialize :likes, coder: JSON
   serialize :dislikes, coder: JSON
 
-  before_validation :apply_age_range
-  before_save :calculate_age, if: -> { birthday.present? }
-  before_update :calculate_age, if: -> { birthday.present? || age.present? }
-
   def general_list
     gift_lists.find_by(name: "General ideas")
   end
@@ -60,7 +60,7 @@ class Recipient < ApplicationRecord
   private
 
   def birthday_or_age_present
-    if birthday.blank? && age.blank? && @age_range.blank?
+    if birthday.blank? && age.blank? && min_age.blank? && max_age.blank?
       errors.add(:recipient, "Please provide either a birthday or an age.")
     end
   end
@@ -79,11 +79,14 @@ class Recipient < ApplicationRecord
 
   def apply_age_range
     return if @age_range.blank?
+    return if birthday.present?
 
     range = AGE_RANGES[@age_range]
     return if range.nil?
 
     self.min_age, self.max_age = range
+    self.age = nil
+    self.birthday = nil
   end
 
   def calculate_age
@@ -100,6 +103,8 @@ class Recipient < ApplicationRecord
 
     years -= 1 if birthday.change(year: today.year) > today
     self.age = years
+    self.min_age = nil
+    self.max_age = nil
   end
 
   def clean_arrays
