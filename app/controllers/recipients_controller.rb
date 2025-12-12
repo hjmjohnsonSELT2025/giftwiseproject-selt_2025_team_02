@@ -86,7 +86,7 @@ class RecipientsController < ApplicationController
 
   def create_birthday_event
     @recipient = current_user.recipients.find(params[:id])
-    
+
     if @recipient.has_birthday_event?
       flash[:alert] = "A birthday event already exists for #{@recipient.name}."
       redirect_to recipient_path(@recipient)
@@ -101,22 +101,22 @@ class RecipientsController < ApplicationController
 
     if request.post?
       budget = params[:budget].to_f if params[:budget].present?
-      
-      # Calculate the next birthday date 
+
+      # Calculate the next birthday date
       birthday_this_year = @recipient.birthday.change(year: Date.current.year)
       if birthday_this_year >= Date.current
         next_birthday = birthday_this_year
       else
         next_birthday = @recipient.birthday.change(year: Date.current.year + 1)
       end
-      
+
       event = current_user.events.new(
         name: "Birthday - #{@recipient.name}",
         event_date: next_birthday,
         budget: budget,
         extra_info: "Birthday celebration for #{@recipient.name}"
       )
-      
+
       if event.save
         # Associate recipient with the event
         event.recipients << @recipient
