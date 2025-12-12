@@ -16,8 +16,7 @@ RSpec.describe Recipient, type: :model do
         user: user,
         name: "Billy Bob",
         gender: 0,
-        min_age: 20,
-        max_age: 20,
+        birthday: Date.new(2000, 1, 1),
         relation: "Brother",
         occupation: "Software Engineer",
         hobbies: "Coding, Technology, Reading",
@@ -50,17 +49,17 @@ RSpec.describe Recipient, type: :model do
     end
 
     it "accepts min age when birthday is unknown" do
-      recipient = build_recipient(age: nil, birthday: nil, min_age: 20)
+      recipient = build_recipient(birthday: nil, min_age: 25, max_age: 34)
       expect(recipient).to be_valid
     end
 
     it "does not allow negative ages" do
-      recipient = build_recipient(age: -1)
+      recipient = build_recipient(birthday: Date.new(2026, 1, 1))
       expect(recipient).not_to be_valid
     end
 
     it "does not allow ages >= 120" do
-      recipient = build_recipient(age: 121)
+      recipient = build_recipient(birthday: Date.new(1800, 1, 1))
       expect(recipient).not_to be_valid
     end
 
