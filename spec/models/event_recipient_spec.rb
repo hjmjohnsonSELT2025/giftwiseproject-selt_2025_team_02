@@ -14,7 +14,7 @@ RSpec.describe EventRecipient, type: :model do
     Recipient.create!(
       user: user,
       name: "Thaddeus Capcap",
-      age: 20,
+      birthday: Date.new(2000,1,1),
       gender: :male,
       relation: "Bro",
       likes: %w[Yoga Meditation],

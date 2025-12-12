@@ -56,7 +56,7 @@ class Recipient < ApplicationRecord
   private
 
   def birthday_or_age_present
-    if birthday.blank? && age.blank? && @age_range.blank?
+    if birthday.blank? && age.blank? && min_age.blank? && max_age.blank?
       errors.add(:recipient, "Please provide either a birthday or an age.")
     end
   end
@@ -82,6 +82,7 @@ class Recipient < ApplicationRecord
 
     self.min_age, self.max_age = range
     self.age = nil
+    self.birthday = nil
   end
 
   def calculate_age
@@ -98,6 +99,8 @@ class Recipient < ApplicationRecord
 
     years -= 1 if birthday.change(year: today.year) > today
     self.age = years
+    self.min_age = nil
+    self.max_age = nil
   end
 
   def clean_arrays
