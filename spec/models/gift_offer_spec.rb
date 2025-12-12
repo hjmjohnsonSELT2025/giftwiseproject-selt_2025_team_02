@@ -13,7 +13,7 @@ RSpec.describe GiftOffer, type: :model do
   let(:recipient) do
     user.recipients.create!(
       name:     "Thad",
-      min_age:      30,
+      birthday:      Date.new(1995, 1, 1),
       gender:   0,
       relation: "Friend",
       likes:    [],
