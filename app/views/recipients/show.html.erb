@@ -38,16 +38,42 @@
 <% else %>
     <p>No dislikes specified</p>
 <% end %>
-<%= link_to "View Gift Lists", recipient_gift_lists_path(@recipient)%>
 
 <br>
 <%= link_to "Edit", edit_recipient_path(@recipient) %>
 <%= link_to "Delete", recipient_path(@recipient), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
 
-<br>
-<br>
+<% if @recipient.birthday.present? && !@recipient.has_birthday_event? %>
+  <br><br>
+  <div>
+    <h3>Birthday Event</h3>
+    <p>Create a birthday event for <%= @recipient.name %></p>
+    <%= link_to "Create Birthday Event", create_birthday_event_recipient_path(@recipient) %>
+  </div>
+<% end %>
 
 <br>
+<br>
+<!--<h3>Gift List</h3>-->
+<!--<div style="display: flex; gap: 20px;">-->
+  <%# Gift.statuses.keys.each do |status| %>
+<!--    <div style="border: 1px solid black; padding: 10px; flex: 1;">-->
+
+<!--      <h3><%#= status %></h3>-->
+<!--      <ul>-->
+        <%# if @recipient_gift_lists[status] %>
+          <%# @recipient_gift_lists[status].each do |gift| %>
+<!--            <li>-->
+              <%#= link_to gift.name, gift_list_gift_path(gift.gift_list, gift) %>
+<!--              (<%#= number_to_currency(gift.price) %>)-->
+<!--            </li>-->
+          <%# end %>
+        <%# end %>
+<!--      </ul>-->
+
+<!--    </div>-->
+  <%# end %>
+<!--</div>-->
 <div class="d-flex gap-2">
 
   <% if @suggestions_exist %>
@@ -90,5 +116,25 @@
 <% end %>
 <br>
 <br>
+
+<!--AI assisted in the styling-->
+<h3>Create New List</h3>
+<!--lets partial build a form, passing in local variables -->
+<%= render partial: "gift_lists/form",
+           locals: { gift_list: GiftList.new, recipient: @recipient, events: @recipient.events } %>
+
+<hr>
+
+<div>
+
+
+  <% @recipient.gift_lists.each do |list| %>
+  <%= render partial: "gift_lists/gift_statuses",
+             locals: {list: list}
+  %>
+<% end %>
+
+</div>
+
 <%= link_to "Back to Recipients", recipients_path %>
 <%= link_to "Back to Home", homepage_path %>

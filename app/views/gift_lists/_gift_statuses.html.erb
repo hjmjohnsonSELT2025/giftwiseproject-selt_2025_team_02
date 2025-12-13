@@ -1,0 +1,49 @@
+<!--data-controller attribute tells Rails to find the sortable controller js file and run the connect method on this div-->
+<div class="gift-list-section" data-controller="sortable" data-sortable-group-value="gifts-list-<%= list.id %>" style="margin-bottom: 40px; border-top: 2px solid #333; padding-top: 10px;">
+
+  <div style="display: flex; justify-content: space-between;">
+    <h2><%= list.title %> <small><%= list.name || "General" %></small></h2>
+
+    <%= link_to "+ Add Gift to this list", new_gift_list_gift_path(list)%>
+  </div>
+
+  <div style="display: flex; gap: 20px;">
+
+<!--    ruby loop: iterate over each status defined in the gift model-->
+    <% Gift.statuses.keys.each do |status| %>
+      <div style="border: 1px solid #ccc; padding: 10px; flex: 1;">
+        <h3><%= status.humanize %></h3>
+
+        <div class="card-body p-2"
+             data-sortable-target="column"
+             data-status="<%= status %>"
+             style="min-height: 100px;">
+
+<!--          only show gifts belonging to this columns status-->
+          <% list.gifts.select { |g| g.status == status }.each do |gift| %>
+
+            <div class="card mb-2 shadow-sm cursor-grab"
+                 data-id="<%= gift.id %>"
+                 data-original-status="<%= gift.status %>"
+                 data-url="<%= gift_list_gift_path(list, gift) %>"
+                 style="cursor: grab;">
+
+              <div class="card-body p-2">
+                <%= link_to gift.name, gift_list_gift_path(list, gift) %>
+                <br>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
+
+  <div style="text-align: right; margin-top: 10px;">
+    <button data-action="click->sortable#save">
+      Save Changes
+    </button>
+  </div>
+
+</div>

@@ -18,5 +18,6 @@ class HomeController < ApplicationController
       .where(event_recipients: { event_id: current_user.events.pluck(:id) })
       .includes(:event_recipient, :event, :recipient)
       .order("events.event_date")
+      @global_gifts_status = current_user.active_gifts_grouping
   end
 end
