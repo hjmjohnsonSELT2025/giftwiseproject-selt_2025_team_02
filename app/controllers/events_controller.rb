@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy add_recipient remove_recipient]
+  before_action :find_optional_recipient, only: %i[new create]
 
   def index
     @events = current_user.events.order(event_date: :asc, event_time: :asc)
@@ -17,6 +18,7 @@ class EventsController < ApplicationController
     @event = current_user.events.new(event_params)
 
     if @event.save
+      handle_optional_recipient_logic
       redirect_to @event, notice: "Event '#{@event.name}' successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -55,6 +57,31 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def find_optional_recipient
+    target_id = params[:recipient_id]
+    if target_id.blank? && params[:event]
+      target_id = params[:event][:recipient_id]
+    end
+    if target_id.present?
+      @optional_recipient = current_user.recipients.find_by(id: target_id)
+    end
+  end
+
+  def handle_optional_recipient_logic
+    unless @optional_recipient
+      return
+    end
+    unless @event.recipients.exists?(@optional_recipient.id)
+      @event.recipients << @optional_recipient
+    end
+
+    # create the gift list
+    @optional_recipient.gift_lists.create!(
+      name: "#{@event.name} - Gift list",
+      event: @event
+    )
+  end
 
   def set_event
     @event = current_user.events.find(params[:id])
