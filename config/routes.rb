@@ -29,7 +29,11 @@ Rails.application.routes.draw do
     post :add_collaborator, on: :member
   end
 
-  resources :users, only: [ :new, :create, :show, :edit, :update, :destroy ]
+  resources :users, only: [ :new, :create, :show, :edit, :update, :destroy ] do
+    post :add_friend, on: :member
+    delete :remove_friend, on: :member
+  end
+
   resources :gifts
   resources :gift_lists do
     resources :gifts

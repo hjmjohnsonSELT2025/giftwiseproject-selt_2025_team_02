@@ -1,5 +1,8 @@
 class User < ApplicationRecord
 
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships, source: :friend
+
   has_many :event_users, dependent: :destroy
 
   has_many :collaborating_events, through: :event_users, source: :event
@@ -28,6 +31,18 @@ class User < ApplicationRecord
     new_token = create_session_token
     update_columns(session_token: new_token, updated_at: Time.current)
     new_token
+  end
+  def add_friend(other_user)
+    return if self == other_user
+    return if friends.include?(other_user)
+
+    Friendship.create!(user: self, friend: other_user)
+    Friendship.create!(user: other_user, friend: self)
+  end
+
+  def remove_friend(other_user)
+    Friendship.where(user: self, friend: other_user).destroy_all
+    Friendship.where(user: other_user, friend: self).destroy_all
   end
 
   private

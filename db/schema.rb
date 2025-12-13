@@ -54,6 +54,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "friendships", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "friend_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id"], name: "index_friendships_on_user_id"
+  end
+
   create_table "gift_lists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
