@@ -6,12 +6,18 @@ class GiftOfferLookupService
     @gift = gift
   end
 
-  def ensure_offers!
-    return if @gift.gift_offers.exists?
+  def ensure_offers!(force: false)
+    return if !force && @gift.gift_offers.exists?
 
     offers = lookup_offers_for(@gift.name)
-    offers.each do |attrs|
-      @gift.gift_offers.create!(attrs)
+    return if force && offers.blank?
+
+    GiftOffer.transaction do
+      @gift.gift_offers.destroy_all if force
+
+      offers.each do |attrs|
+        @gift.gift_offers.create!(attrs)
+      end
     end
   end
 
