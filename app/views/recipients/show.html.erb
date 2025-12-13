@@ -88,10 +88,8 @@
                   generate_gift_recipient_path(@recipient),
                   method: :post,
                   data: { turbo: false, disable_with: "thinking..." } %>
-
   <%end %>
 </div>
-<br>
 
 <% if @suggestions %>
   <div class="ai-results">
@@ -118,22 +116,29 @@
 <br>
 
 <!--AI assisted in the styling-->
-<h3>Create an Event Giftlist for this recipient</h3>
+<h3>Add Event Giftlists for this recipient</h3>
 <!--lets partial build a form, passing in local variables -->
 <%#= render partial: "gift_lists/form", locals: { gift_list: GiftList.new, recipient: @recipient, events: @recipient.events } %>
 <!--it should check for available events-->
 
-
+<% if @available_events.any? %>
+  <%= form_with url: add_event_recipient_path(@recipient), method: :post, local: true do |f| %>
+    <%= f.label :event_id, "Choose an existing event" %>
+    <%= f.collection_select :event_id,
+                            @available_events,
+                            :id, :name,
+                            include_blank: "Select an event" %>
+    <%= f.submit "Create an Event Giftlist for this recipient" %>
+  <% end %>
+<% else %>
+  <p>All of your events are already assigned to this recipient for giftlists.</p>
+<% end %>
+<br>
 <%= link_to "Create an event giftlist for this recipient",
             new_event_path(recipient_id: @recipient.id),
             class: "pretty-link" %>
-
-
-<hr>
-
-
 <div>
-
+<br>
 
   <% @recipient.gift_lists.each do |list| %>
   <%= render partial: "gift_lists/gift_statuses",

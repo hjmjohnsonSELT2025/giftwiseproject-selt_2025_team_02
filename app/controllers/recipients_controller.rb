@@ -57,6 +57,9 @@ class RecipientsController < ApplicationController
       @suggestions = ai_output.suggest_gift
     end
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
+
+    # gift list has event id
+    @available_events = current_user.events.where.not(id: @recipient.event_ids)
   end
 
   def generate_gift
@@ -129,6 +132,22 @@ class RecipientsController < ApplicationController
     else
       render :create_birthday_event
     end
+  end
+
+  def add_event
+    @recipient = current_user.recipients.find(params[:id])
+    @event = current_user.events.find(params[:event_id])
+    @recipient.events << @event
+
+    # create gift list for that event
+    @recipient.gift_lists.create!(
+      name: "#{@event.name} - Gift list",
+      event: @event
+    )
+    redirect_to recipient_path(@recipient), notice: "Added #{@recipient.name} to #{@event.name}"
+
+  rescue ActiveRecord::RecordInvalid
+    redirect_to recipient_path(@recipient), alert: "Could not add recipient to event"
   end
 
   def destroy
