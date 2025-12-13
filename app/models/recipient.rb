@@ -43,7 +43,6 @@ class Recipient < ApplicationRecord
 
   validate :birthday_or_age_present
   validate :correct_age_range
-  validates :birthday, presence: true
   after_create :create_default_list
 
   serialize :likes, coder: JSON
@@ -51,6 +50,10 @@ class Recipient < ApplicationRecord
 
   def general_list
     gift_lists.find_by(name: "General ideas")
+  end
+
+  def has_birthday_event?
+    events.where("name LIKE ?", "%birthday%").any?
   end
 
   private

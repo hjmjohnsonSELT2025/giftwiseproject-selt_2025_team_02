@@ -1,0 +1,48 @@
+<% if @recipient.errors.any? %>
+    <div class="error-messages" style="border: 1px solid #f00; padding: 0.75rem; margin-bottom: 1rem;">
+    <h2><%= pluralize(@recipient.errors.count, "error") %> prevented this recipient from being saved:</h2>
+        <ul>
+            <% @recipient.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<div>
+    <h2>Create Birthday Event</h2>
+    <div>
+        <h3>Event Details</h3>
+        <p><strong>Name:</strong> Birthday - <%= @recipient.name %></p>
+        <% birthday_this_year = @recipient.birthday.change(year: Date.current.year) %>
+        <% if birthday_this_year >= Date.current %>
+            <% next_birthday = birthday_this_year %>
+        <% else %>
+            <% next_birthday = @recipient.birthday.change(year: Date.current.year + 1) %>
+        <% end %>
+        <p><strong>Date:</strong> <%= next_birthday.strftime("%B %d, %Y") %></p>
+        <p><strong>Recipient:</strong> <%= @recipient.name %></p>
+    </div>
+
+    <div>
+        <h3>Budget Information</h3>
+        <p>Please set a budget for this birthday event:</p>
+        <%= form_tag create_birthday_event_recipient_path(@recipient), method: :post do %>
+        <div>
+            <%= label_tag :budget, "Budget ($)" %>
+            <%= number_field_tag :budget, nil, 
+                step: 0.01, 
+                min: 0, 
+                max: 1000000, 
+                class: "form-control", 
+                placeholder: "Enter budget amount",
+                required: true %>
+        </div>
+
+        <div>
+            <%= submit_tag "Create Birthday Event" %>
+            <%= link_to "Cancel", recipient_path(@recipient) %>
+        </div>
+        <% end %>
+    </div>
+</div>

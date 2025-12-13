@@ -43,6 +43,15 @@
 <%= link_to "Edit", edit_recipient_path(@recipient) %>
 <%= link_to "Delete", recipient_path(@recipient), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
 
+<% if @recipient.birthday.present? && !@recipient.has_birthday_event? %>
+  <br><br>
+  <div>
+    <h3>Birthday Event</h3>
+    <p>Create a birthday event for <%= @recipient.name %></p>
+    <%= link_to "Create Birthday Event", create_birthday_event_recipient_path(@recipient) %>
+  </div>
+<% end %>
+
 <br>
 <br>
 <!--<h3>Gift List</h3>-->
