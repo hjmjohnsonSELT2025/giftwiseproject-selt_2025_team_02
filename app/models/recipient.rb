@@ -112,7 +112,7 @@ class Recipient < ApplicationRecord
   end
 
   def create_default_list
-    gift_lists.create!(name: "General ideas")
+    gift_lists.create!(name: "General gift ideas for " + self.name)
   end
 
   LIKES_OPTIONS = [
