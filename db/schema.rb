@@ -139,6 +139,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
   add_foreign_key "event_users", "events"
   add_foreign_key "event_users", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "friendships", "friends"
+  add_foreign_key "friendships", "users"
   add_foreign_key "gift_lists", "recipients"
   add_foreign_key "gift_offers", "gifts"
   add_foreign_key "gifts", "gift_lists"
