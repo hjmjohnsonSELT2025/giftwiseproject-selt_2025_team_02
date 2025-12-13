@@ -52,7 +52,7 @@ class GiftsController < ApplicationController
   end
 
   def refresh_offers
-    #@gift is set in set_gift_for_member_actions
+    # @gift is set in set_gift_for_member_actions
 
     GiftOfferLookupService.new(@gift).ensure_offers!(force: true)
 
