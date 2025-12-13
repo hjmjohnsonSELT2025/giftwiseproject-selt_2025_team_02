@@ -48,6 +48,8 @@
 <% else %>
   <p>All of your recipients are already assigned to this event.</p>
 <% end %>
+
+<% if current_user.id == @event.user_id %>
 <h3>Collaborators</h3>
 <ul>
   <% @event.collaborators.each do |u| %>
@@ -62,7 +64,8 @@
   <%= label_tag :email, "User email" %>
   <%= text_field_tag :email, nil, required: true %>
   <%= submit_tag "Add" %>
-<% end %>
+<% end
+   end%>
 
 <%= link_to "Create recipient to add to event",
             new_recipient_path(from_event: true, event_id: @event&.id) %>

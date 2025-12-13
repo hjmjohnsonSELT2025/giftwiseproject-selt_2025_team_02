@@ -80,7 +80,11 @@ class EventsController < ApplicationController
   private
 
   def set_event
-    @event = current_user.events.find(params[:id])
+    @event =
+      current_user.events.find_by(id: params[:id]) ||
+      current_user.collaborating_events.find_by(id: params[:id])
+
+    raise ActiveRecord::RecordNotFound unless @event
   end
 
   def event_params
