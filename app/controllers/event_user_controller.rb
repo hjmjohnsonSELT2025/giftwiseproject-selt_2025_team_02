@@ -1,3 +1,3 @@
-class EventRecipientBudgetsController < ApplicationController
+class EventUserController < ApplicationController
 
 end
