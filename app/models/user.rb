@@ -45,6 +45,10 @@ class User < ApplicationRecord
     Friendship.where(user: other_user, friend: self).destroy_all
   end
 
+  def active_gifts_grouping
+    # get all gifts that aren't archived
+    gifts.joins(:gift_list).where(gift_lists: { archived: false }).group_by(&:status)
+  end
   private
   def confirm_session_token
     self.session_token ||= create_session_token

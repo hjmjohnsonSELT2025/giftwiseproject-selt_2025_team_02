@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_11_214629) do
   create_table "event_recipient_budgets", force: :cascade do |t|
     t.decimal "budget", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
@@ -64,10 +64,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
   end
 
   create_table "gift_lists", force: :cascade do |t|
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", null: false
+    t.integer "event_id"
     t.string "name"
     t.integer "recipient_id", null: false
+    t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_gift_lists_on_event_id"
     t.index ["recipient_id"], name: "index_gift_lists_on_recipient_id"
   end
 
@@ -88,8 +92,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
     t.datetime "created_at", null: false
     t.integer "gift_list_id"
     t.string "name"
+    t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.index ["gift_list_id"], name: "index_gifts_on_gift_list_id"
+    t.index ["status"], name: "index_gifts_on_status"
   end
 
   create_table "recipients", force: :cascade do |t|
@@ -141,6 +147,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_201502) do
   add_foreign_key "events", "users"
   add_foreign_key "friendships", "friends"
   add_foreign_key "friendships", "users"
+  add_foreign_key "gift_lists", "events"
   add_foreign_key "gift_lists", "recipients"
   add_foreign_key "gift_offers", "gifts"
   add_foreign_key "gifts", "gift_lists"

@@ -1,0 +1,5 @@
+<%= form_with(model: gift_list, local: true) do |form| %>
+
+  <%= form.hidden_field :recipient_id, value: recipient.id %>
+  <%= form.submit "Create New List" %>
+<% end %>
