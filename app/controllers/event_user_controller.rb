@@ -1,0 +1,3 @@
+class EventRecipientBudgetsController < ApplicationController
+
+end
