@@ -7,7 +7,7 @@
       <thead>
       <tr>
         <th>Name</th>
-
+        <th>Actions</th>
       </tr>
       </thead>
 
@@ -19,6 +19,10 @@
                           recipient_gift_list_path(gift_list.recipient.id, gift_list.id),
                           data: { turbo: false },
                           class: "pretty-link" %>
+          </td>
+          <td>
+            <%= link_to "Edit", recipient_gift_list_path(gift_list.recipient.id, gift_list.id) %>
+            <%= link_to "Delete", recipient_gift_list_path(gift_list.recipient.id, gift_list.id)%>
           </td>
         </tr>
       <% end %>

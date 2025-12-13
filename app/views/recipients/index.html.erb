@@ -1,8 +1,8 @@
 <h1>All Recipients</h1>
 
-<table>
+<table class="data-table">
   <thead>
-    <tr>
+    <tr style="background-color: #f5f5f5;">
       <th>Name</th>
       <th>Birthday</th>
       <th>Age</th>
@@ -27,26 +27,26 @@
         <td><%= recipient.hobbies.presence || "-" %></td>
         <td>
           <% if recipient.likes.present? %>
-            <ul style="margin: 0; padding-left: 1rem;">
+            <div style="margin: 0; padding-left: 1rem;">
               <% recipient.likes.each do |like| %>
                 <% if like.match(/^[a-zA-Z]/) %>
-                  <li style="margin: 0.2rem 0;"><%= like %></li>
+                  <div style="margin: 0.2rem 0;"><%= like %></div>
                 <% end %>
               <% end %>
-            </ul>
+            </div>
           <% else %>
             <em>No likes</em>
           <% end %>
         </td>
         <td>
           <% if recipient.dislikes.present? && !(recipient.dislikes == '') %>
-            <ul style="margin: 0; padding-left: 1rem;">
+            <div style="margin: 0; padding-left: 1rem;">
               <% recipient.dislikes.each do |dislike| %>
                 <% if dislike.match(/^[a-zA-Z]/) %>
-                  <li style="margin: 0.2rem 0;"><%= dislike %></li>
+                  <div style="margin: 0.2rem 0;"><%= dislike %></div>
                 <% end %>
               <% end %>
-            </ul>
+            </div>
           <% else %>
             <em>No dislikes</em>
           <% end %>
