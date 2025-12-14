@@ -137,5 +137,4 @@ class Recipient < ApplicationRecord
     "Hot Weather", "Math", "Cleaning", "Driving", "Flying", "Seafood",
     "Perfume", "Strong Smells", "Bright Lights", "Darkness"
   ]
-
 end

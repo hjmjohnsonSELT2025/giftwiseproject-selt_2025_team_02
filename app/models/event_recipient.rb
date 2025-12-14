@@ -15,5 +15,4 @@ class EventRecipient < ApplicationRecord
 
     recipient.update!(snapshot)
   end
-
 end

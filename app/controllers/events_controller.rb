@@ -60,7 +60,6 @@ class EventsController < ApplicationController
 
 
   def remove_recipient
-
     event_recipient = @event.event_recipients.find(params[:event_recipient_id])
     @event.event_recipients.delete(event_recipient)
     redirect_to event_path(@event),
