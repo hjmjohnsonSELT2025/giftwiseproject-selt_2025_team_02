@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :recipients do
     member do
       post :generate_gift
+      post :add_event
       get :generate_gift, to: "recipients#show"
       get :create_birthday_event
       post :create_birthday_event

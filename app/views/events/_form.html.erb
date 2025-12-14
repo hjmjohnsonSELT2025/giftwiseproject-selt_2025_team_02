@@ -15,6 +15,12 @@
 <%# Form details for new and edit event %>
 
 <%= form_with model: @event, local: true do |f| %>
+
+  <% if @optional_recipient %>
+    <p>Recipient: <strong><%= @optional_recipient.name %></strong></p>
+    <%= hidden_field_tag :recipient_id, @optional_recipient.id %>
+  <% end %>
+
   <div style="margin-top: 0.75rem;">
     <%= f.label :name, "Event name" %><br>
     <%= f.text_field :name %>

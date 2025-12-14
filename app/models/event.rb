@@ -6,7 +6,7 @@ class Event < ApplicationRecord
 
   has_many :event_recipients, dependent: :destroy
   has_many :recipients, through: :event_recipients
-  has_many :gift_lists # should this be a through-association through recipients?
+  has_many :gift_lists, dependent: :destroy # fix bug related to referential integrity
   validates :name, presence: true
   validates :event_date, presence: true
   validates :budget, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1_000_000, allow_nil: true }
