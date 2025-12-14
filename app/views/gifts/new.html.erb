@@ -4,12 +4,6 @@
   <div>
     <%= form.label :name %>
     <%= form.text_field :name %>
-    <%= form.collection_select :recipient_id,
-                               @user_recipients,
-                               :id,
-                               :name,
-                               prompt: "Select a recipient" %>
-
   </div>
 
   <div>
