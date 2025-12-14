@@ -15,4 +15,13 @@ class EventRecipient < ApplicationRecord
 
     recipient.update!(snapshot)
   end
+
+  def source_gift_list
+    return nil unless source_recipient_id
+
+    GiftList.find_by(
+      recipient_id: source_recipient_id,
+      event_id: event_id
+    )
+  end
 end
