@@ -123,6 +123,10 @@ class RecipientsController < ApplicationController
       if event.save
         # Associate recipient with the event
         event.recipients << @recipient
+        @recipient.gift_lists.create!(
+          name: "#{event.name} - Gift list",
+          event: event
+        )
         flash[:notice] = "Birthday event for #{@recipient.name} created successfully!"
         redirect_to event_path(event)
       else
