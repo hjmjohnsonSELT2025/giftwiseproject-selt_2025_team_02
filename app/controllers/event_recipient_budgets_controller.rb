@@ -3,32 +3,41 @@ class EventRecipientBudgetsController < ApplicationController
     before_action :load_events_and_recipients, only: %i[new create edit update]
 
     def index
-        @events = Event.where(user_id: current_user.id).order(:event_date)
-        if params[:event_id].present?
-            @selected_event = @events.find_by(id: params[:event_id])
-            if @selected_event
-                @recipients = current_user.recipients
-                @budgets_by_recipient = EventRecipientBudget
-                    .joins(:event_recipient)
-                    .where(event_recipients: { event_id: @selected_event.id })
-                    .includes(:recipient)
-                    .index_by { |b| b.recipient.id }
+      @events = Event.where(user_id: current_user.id).order(:event_date)
 
-                @event_total_budget = @selected_event.budget || 0
-                @event_planned_budget = @budgets_by_recipient.values.sum(&:budget)
-                @event_spent_budget = @budgets_by_recipient.values.sum(&:spent)
-                @event_remaining_budget = @event_total_budget - @event_planned_budget
-            else
-                @recipients = []
-                @budgets_by_recipient = {}
-                @event_total_budget = @event_planned_budget = @event_spent_budget = @event_remaining_budget = 0
-            end
+      if params[:event_id].present?
+        @selected_event = @events.find_by(id: params[:event_id])
+
+        if @selected_event
+          # 🔑 Event-scoped recipients (snapshots)
+          @event_recipients = @selected_event.event_recipients
+
+          # 🔑 Budgets keyed by event_recipient_id
+          @budgets_by_event_recipient =
+            EventRecipientBudget
+              .joins(:event_recipient)
+              .where(event_recipients: { event_id: @selected_event.id })
+              .index_by(&:event_recipient_id)
+
+          @event_total_budget     = @selected_event.budget || 0
+          @event_planned_budget   = @budgets_by_event_recipient.values.sum(&:budget)
+          @event_spent_budget     = @budgets_by_event_recipient.values.sum(&:spent)
+          @event_remaining_budget = @event_total_budget - @event_planned_budget
         else
-        @selected_event = nil
-        @recipients = []
-        @budgets_by_recipient = {}
-        @event_total_budget = @event_planned_budget = @event_spent_budget = @event_remaining_budget = 0
+          reset_budget_state
         end
+      else
+        reset_budget_state
+      end
+    end
+    def reset_budget_state
+      @selected_event = nil
+      @event_recipients = []
+      @budgets_by_event_recipient = {}
+      @event_total_budget =
+        @event_planned_budget =
+          @event_spent_budget =
+            @event_remaining_budget = 0
     end
 
     def show
@@ -39,9 +48,9 @@ class EventRecipientBudgetsController < ApplicationController
         if params[:event_id].present?
             @event_recipient_budget.event_id = params[:event_id].to_i
         end
-        if params[:recipient_id].present?
-            @event_recipient_budget.recipient_id = params[:recipient_id].to_i
-        end
+        # if params[:recipient_id].present?
+        #     @event_recipient_budget.recipient_id = params[:recipient_id].to_i
+        # end
     end
 
     def create
@@ -53,7 +62,7 @@ class EventRecipientBudgetsController < ApplicationController
             return render :new, status: :unprocessable_entity
         end
 
-        event_recipient = EventRecipient.find_or_create_by!(event: event, recipient: recipient)
+        event_recipient = EventRecipient.find_or_create_by!(event: event)
         @event_recipient_budget = EventRecipientBudget.new(event_recipient_budget_params)
         @event_recipient_budget.event_recipient = event_recipient
 
@@ -70,24 +79,21 @@ class EventRecipientBudgetsController < ApplicationController
         if @event_recipient_budget.event
             @event_recipient_budget.event_id = @event_recipient_budget.event.id
         end
-        if @event_recipient_budget.recipient
-            @event_recipient_budget.recipient_id = @event_recipient_budget.recipient.id
+        if @event_recipient_budget.event_recipient
+            @event_recipient_budget.event_recipient_id = @event_recipient_budget.event_recipient.id
         end
     end
 
     def update
-        event, recipient = find_event_and_recipient_from_params
-        if event && recipient
-            event_recipient = EventRecipient.find_or_create_by!(event: event, recipient: recipient)
-            @event_recipient_budget.event_recipient = event_recipient
-        end
-        if @event_recipient_budget.update(event_recipient_budget_params)
-            redirect_to event_recipient_budget_path(event_id: @event_recipient_budget.event.id), notice: "Budget successfully updated!"
-        else
-            flash[:warning] = "There was a problem updating the budget."
-            load_events_and_recipients
-            render :edit, status: :unprocessable_entity
-        end
+      if @event_recipient_budget.update(event_recipient_budget_params)
+        redirect_to(
+          event_path(@event_recipient_budget.event_recipient.event),
+          notice: "Budget successfully updated!"
+        )
+      else
+        flash.now[:warning] = "There was a problem updating the budget."
+        render :edit, status: :unprocessable_entity
+      end
     end
 
     def destroy
@@ -121,11 +127,11 @@ class EventRecipientBudgetsController < ApplicationController
     def find_event_and_recipient_from_params
         er_params = params[:event_recipient_budget] || {}
         event_id = er_params[:event_id]
-        recipient_id = er_params[:recipient_id]
+        event_recipient_id = er_params[:event_recipient_id]
 
         event = Event.where(user_id: current_user.id).find_by(id: event_id)
-        recipient = current_user.recipients.find_by(id: recipient_id)
+        event_recipient = event.event_recipients.find_by(id: event_recipient_id)
 
-        [ event, recipient ]
+        [ event, event_recipient ]
   end
 end

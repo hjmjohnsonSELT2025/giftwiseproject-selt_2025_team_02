@@ -1,7 +1,7 @@
 class EventRecipientBudget < ApplicationRecord
   belongs_to :event_recipient
   has_one :event, through: :event_recipient
-  has_one :recipient, through: :event_recipient
+  # has_one :recipient, through: :event_recipient
 
   attr_accessor :event_id, :recipient_id
 
