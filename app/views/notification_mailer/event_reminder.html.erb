@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>
+  Hi <strong><%= @user.name.presence || @user.email %></strong>,
+</p>
+
+<p>
+  This is a friendly reminder that your event
+  <strong><%= @event.name %></strong>
+  is coming up in <strong>14 days</strong>.
+</p>
+
+<p>
+  <strong>Event date:</strong><br>
+  <%= @event.event_date.strftime("%B %d, %Y") %>
+</p>
+
+<p>
+  Now is a great time to start planning or buying a gift 🎁
+</p>
+
+<hr>
+
+<p style="font-size: 0.9em; color: #666;">
+  Sent by GiftWise
+</p>
+</body>
+</html>

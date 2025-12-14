@@ -58,6 +58,9 @@ Rails.application.routes.draw do
 
 
   root "sessions#new"
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
   # catch all for wrong indexes
   match "*path", to: "application#handle_routing_error", via: :all
 end

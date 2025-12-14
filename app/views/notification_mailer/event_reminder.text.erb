@@ -1,0 +1,14 @@
+Hi <%= @user.name.presence || @user.email %>,
+
+This is a friendly reminder that your event:
+
+<%= @event.name %>
+
+is coming up within 14 days.
+
+Event date:
+<%= @event.event_date.strftime("%B %d, %Y") %>
+
+Now is a great time to start planning or buying a gift 🎁
+
+— GiftWise
