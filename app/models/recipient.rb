@@ -128,4 +128,13 @@ class Recipient < ApplicationRecord
     "Hot Weather", "Math", "Cleaning", "Driving", "Flying", "Seafood",
     "Perfume", "Strong Smells", "Bright Lights", "Darkness"
   ]
+
+  def snapshot_attributes
+    attributes.except(
+      "id",
+      "user_id",
+      "created_at",
+      "updated_at"
+    )
+  end
 end
