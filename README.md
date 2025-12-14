@@ -40,7 +40,7 @@ Or manually set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env on in your IDE
 \
 \
 **OpenAI**\
-Giftwise uses AiGiftService to talk to the OpenAI API. It expects an OPENAI_API_KEY to the environment\
+Giftwise uses AiGiftService to talk to the OpenAI API. It expects an OPENAI_API_KEY in the environment\
 To enable OpenAI locally, you must set the following environment variables:
 
 On macOS/Linux:
@@ -50,6 +50,18 @@ On Windows PowerShell:
 `$env:OPENAI_API_KEY="your-real-openai-api-key"`
 
 Or manually set OPENAI_API_KEY in .env on in your IDE
+
+**Google Search API**\
+Giftwise uses SerpAPI to integrate gift item search data as gift offers. It expects a SERPAPI_API_KEY in the environment\
+To enable SerpAPI locally, you must set the following environment variables:
+
+On macOS/Linux:
+`export SERPAPI_API_KEY="your-real-serpapi-api-key"`
+
+On Windows PowerShell:
+`$env:SERPAPI_API_KEY="your-real-serpapi-api-key"`
+
+Or manually set SERPAPI_API_KEY in .env on in your IDE
 
 ### Set Up the Database
 

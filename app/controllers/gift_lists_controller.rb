@@ -20,7 +20,6 @@ class GiftListsController < ApplicationController
       flash[:error] = "Could not create gift list"
       # if gift list creation fails then reload events
       @events = @gift_list.recipient&.events || []
-      render :new, status: :unprocessable_entity
     end
   end
 

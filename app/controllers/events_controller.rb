@@ -12,7 +12,6 @@ class EventsController < ApplicationController
     @available_recipients = current_user.recipients.where.not(id: used_recipient_ids)
   end
 
-
   def new
     @event = current_user.events.new
   end
@@ -21,7 +20,7 @@ class EventsController < ApplicationController
     @event = current_user.events.new(event_params)
 
     if @event.save
-      handle_optional_recipient_logic
+      connect_recipient_and_create_list(@optional_recipient)
       redirect_to @event, notice: "Event '#{@event.name}' successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -58,9 +57,14 @@ class EventsController < ApplicationController
                 notice: "Recipient '#{recipient.name}' successfully added to '#{@event.name}'."
   end
 
-
   def remove_recipient
     event_recipient = @event.event_recipients.find(params[:event_recipient_id])
+
+    GiftList.where(
+      recipient_id: event_recipient.source_recipient_id,
+      event_id: @event.id
+    ).destroy_all
+
     @event.event_recipients.delete(event_recipient)
     redirect_to event_path(@event),
                 notice: "Recipient '#{event_recipient.recipient_view.name}' successfully removed from '#{@event.name}'."
@@ -101,16 +105,16 @@ class EventsController < ApplicationController
     end
   end
 
-  def handle_optional_recipient_logic
-    unless @optional_recipient
+  def connect_recipient_and_create_list(recipient)
+    unless recipient
       return
     end
-    unless @event.recipients.exists?(@optional_recipient.id)
-      @event.recipients << @optional_recipient
+    unless @event.recipients.exists?(recipient.id)
+      @event.recipients << recipient
     end
 
     # create the gift list
-    @optional_recipient.gift_lists.create!(
+    recipient.gift_lists.create!(
       name: "#{@event.name} - Gift list",
       event: @event
     )

@@ -91,6 +91,7 @@ class RecipientsController < ApplicationController
       @suggestions_exist = false
     end
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
+    @available_events = current_user.events.where.not(id: @recipient.event_ids)
     render :show
   end
 
@@ -129,8 +130,20 @@ class RecipientsController < ApplicationController
       )
 
       if event.save
-        # Associate recipient with the event
-        event.recipients << @recipient
+
+        event_recipient = EventRecipient.create!(
+          event: event,
+          snapshot: @recipient.snapshot_attributes,
+          source_recipient_id: @recipient.id
+        )
+
+        GiftList.find_or_create_by!(
+          recipient_id: @recipient.id,
+          event_id: event.id
+        ) do |gl|
+          gl.name = "#{event.name} - Gift list"
+        end
+
         flash[:notice] = "Birthday event for #{@recipient.name} created successfully!"
         redirect_to event_path(event)
       else
