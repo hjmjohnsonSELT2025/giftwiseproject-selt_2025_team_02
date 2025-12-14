@@ -62,8 +62,6 @@ class RecipientsController < ApplicationController
     used_event_ids = event_ids_for_recipient(@recipient)
 
     @available_events = current_user.events.where.not(id: used_event_ids)
-
-
   end
 
   def event_ids_for_recipient(recipient)
