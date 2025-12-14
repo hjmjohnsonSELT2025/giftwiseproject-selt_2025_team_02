@@ -9,10 +9,7 @@ class EventRecipientBudgetsController < ApplicationController
         @selected_event = @events.find_by(id: params[:event_id])
 
         if @selected_event
-          # 🔑 Event-scoped recipients (snapshots)
           @event_recipients = @selected_event.event_recipients
-
-          # 🔑 Budgets keyed by event_recipient_id
           @budgets_by_event_recipient =
             EventRecipientBudget
               .joins(:event_recipient)
@@ -48,9 +45,6 @@ class EventRecipientBudgetsController < ApplicationController
         if params[:event_id].present?
             @event_recipient_budget.event_id = params[:event_id].to_i
         end
-        # if params[:recipient_id].present?
-        #     @event_recipient_budget.recipient_id = params[:recipient_id].to_i
-        # end
     end
 
     def create
