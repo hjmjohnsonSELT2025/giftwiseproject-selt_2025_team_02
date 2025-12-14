@@ -7,8 +7,13 @@ class EventsController < ApplicationController
   end
 
   def show
-    @available_recipients = current_user.recipients.where.not(id: @event.recipient_ids)
+    used_recipient_ids =
+      @event.event_recipients.pluck(:source_recipient_id)
+
+    @available_recipients =
+      current_user.recipients.where.not(id: used_recipient_ids)
   end
+
 
   def new
     @event = current_user.events.new
@@ -44,16 +49,24 @@ class EventsController < ApplicationController
 
   def add_recipient
     recipient = current_user.recipients.find(params[:recipient_id])
-    @event.recipients << recipient unless @event.recipients.exists?(recipient.id)
+
+    event_recipient = @event.event_recipients.new(
+      source_recipient_id: recipient.id,
+      snapshot: EventRecipient.snapshot_from(recipient)
+    )
+
+    event_recipient.save!
     redirect_to event_path(@event),
                 notice: "Recipient '#{recipient.name}' successfully added to '#{@event.name}'."
   end
 
+
   def remove_recipient
-    recipient = @event.recipients.find(params[:recipient_id])
-    @event.recipients.delete(recipient)
+
+    event_recipient = @event.event_recipients.find(params[:event_recipient_id])
+    @event.event_recipients.delete(event_recipient)
     redirect_to event_path(@event),
-                notice: "Recipient '#{recipient.name}' successfully removed from '#{@event.name}'."
+                notice: "Recipient '#{event_recipient.recipient_view.name}' successfully removed from '#{@event.name}'."
   end
 
   def add_collaborator

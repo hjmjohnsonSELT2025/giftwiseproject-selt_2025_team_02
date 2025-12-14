@@ -16,18 +16,21 @@
   </p>
 <% end %>
 
-<h2>Recipients for this event</h2>
 
-<% if @event.recipients.any? %>
+<h2>Recipients for this event (Proxies)</h2>
+
+<% if @event.event_recipients.any? %>
   <ul>
-    <% @event.recipients.each do |recipient| %>
+    <% @event.event_recipients.each do |event_recipient| %>
       <li>
-        <%= recipient.name %>
-        (<%= link_to "View", recipient_path(recipient) %>)
+
+        <%= recipient = event_recipient.recipient_view; recipient.name %>
+        (<%= link_to "View",  event_event_recipient_path(@event, event_recipient) %>)
         |
         <%= link_to "Remove",
-                    remove_recipient_event_path(@event, recipient.id),
+                    remove_recipient_event_path(@event, event_recipient.id),
                     data: { turbo_method: :delete, confirm: "Remove #{recipient.name} from this event?" } %>
+
       </li>
     <% end %>
   </ul>

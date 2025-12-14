@@ -30,6 +30,11 @@ Rails.application.routes.draw do
     end
   end
   resources :events do
+    resources :event_recipients, only: [] do
+      member do
+        get :show
+      end
+    end
     post :add_collaborator, on: :member
   end
 
@@ -45,7 +50,7 @@ Rails.application.routes.draw do
   resources :events do
     member do
       post :add_recipient
-      delete "remove_recipient/:recipient_id", action: :remove_recipient, as: :remove_recipient
+      delete "remove_recipient/:event_recipient_id", action: :remove_recipient, as: :remove_recipient
     end
   end
 
