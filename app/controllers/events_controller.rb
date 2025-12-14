@@ -51,6 +51,8 @@ class EventsController < ApplicationController
 
   def remove_recipient
     recipient = @event.recipients.find(params[:recipient_id])
+    gift_list_to_delete = recipient.gift_lists.find_by(event: @event)
+    gift_list_to_delete&.destroy
     @event.recipients.delete(recipient)
     redirect_to event_path(@event),
                 notice: "Recipient '#{recipient.name}' successfully removed from '#{@event.name}'."
