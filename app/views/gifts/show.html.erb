@@ -13,6 +13,11 @@
 
 <% if @gift.gift_offers.any? %>
   <h2>Purchase options</h2>
+  <p>
+    <%= button_to "Refresh purchase options",
+                  refresh_offers_gift_path(@gift),
+                  method: :post %>
+  </p>
   <table>
     <thead>
     <tr>
@@ -41,6 +46,11 @@
   </table>
 <% else %>
   <p>No purchase options have been added yet.</p>
+  <p>
+    <%= button_to "Refresh purchase options",
+                  refresh_offers_gift_path(@gift),
+                  method: :post %>
+  </p>
 <% end %>
 
 <p>
