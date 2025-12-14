@@ -42,8 +42,11 @@ Rails.application.routes.draw do
     post :add_friend, on: :member
     delete :remove_friend, on: :member
   end
-
-  resources :gifts
+  resources :gifts do
+    member do
+      post :refresh_offers
+    end
+  end
   resources :gift_lists do
     resources :gifts
   end
