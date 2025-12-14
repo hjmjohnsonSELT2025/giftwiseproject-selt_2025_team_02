@@ -1,0 +1,107 @@
+/* app/assets/tailwind/application.css */
+
+@source "../../../app/views";
+@source "../../../app/helpers";
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+
+@plugin "./daisyui.mjs" {
+    themes: nord --default, dark --prefersdark, lemonade;
+}
+
+@layer base {
+    :where(*, ::before, ::after) {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+    }
+
+    body {
+        @apply bg-base-100 text-base-content font-sans min-h-screen;
+    }
+
+    h1 {
+        @apply text-4xl font-extrabold text-primary mb-6;
+    }
+    h2 {
+        @apply text-2xl font-bold text-secondary mb-4;
+    }
+    a {
+        @apply link link-primary no-underline hover:underline font-semibold;
+    }
+
+    table, .data-table {
+        @apply table table-zebra w-full rounded-lg overflow-hidden shadow-sm border border-base-200;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    thead tr {
+        @apply bg-base-200 text-base-content uppercase text-sm font-bold tracking-wider;
+    }
+
+    th, td {
+        @apply p-4 border-b border-base-200 align-middle;
+    }
+
+    button,
+    input[type="submit"],
+    .btn,
+    .pretty-btn {
+        @apply btn btn-primary shadow-md border-none text-white font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
+
+    }
+
+    .a {
+        @apply btn btn-primary shadow-md border-none text-white font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+        @apply input bg-base-100 w-full max-w-md border border-base-300 rounded-md px-3 py-2 mb-4 mr-2 ml-2 mt-2;
+
+    }
+
+    nav, .navbar {
+        @apply navbar bg-primary text-primary-content shadow-lg mb-8 px-4 rounded-b-box;
+    }
+    nav a, .navbar a {
+        @apply btn text-primary-content normal-case text-lg;
+        text-decoration: none;
+    }
+}
+
+@layer components {
+
+    .centered-page {
+        @apply min-h-screen flex justify-center items-start pt-20 bg-base-200;
+    }
+    .centered-page-card {
+        @apply card bg-base-100 shadow-xl w-full max-w-md p-8 border border-base-300;
+    }
+
+    .login-entry {
+        @apply w-full mb-4;
+    }
+
+    .login-entry label {
+        @apply label font-bold;
+    }
+
+    .login-actions {
+        @apply mt-6 flex flex-col items-center gap-4;
+    }
+
+    .login-forgot-password {
+        @apply text-right text-sm mt-2;
+    }
+}
