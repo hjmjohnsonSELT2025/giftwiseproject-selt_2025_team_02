@@ -59,7 +59,17 @@ class RecipientsController < ApplicationController
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
 
     # gift list has event id
-    @available_events = current_user.events.where.not(id: @recipient.event_ids)
+    used_event_ids = event_ids_for_recipient(@recipient)
+
+    @available_events = current_user.events.where.not(id: used_event_ids)
+
+
+  end
+
+  def event_ids_for_recipient(recipient)
+    EventRecipient
+      .where(source_recipient_id: recipient.id)
+      .pluck(:event_id)
   end
 
   def generate_gift
@@ -137,7 +147,12 @@ class RecipientsController < ApplicationController
   def add_event
     @recipient = current_user.recipients.find(params[:id])
     @event = current_user.events.find(params[:event_id])
-    @recipient.events << @event
+    EventRecipient.create!(
+      event: @event,
+      snapshot: @recipient.snapshot_attributes,
+      source_recipient_id: @recipient.id
+    )
+
 
     # create gift list for that event
     @recipient.gift_lists.create!(
