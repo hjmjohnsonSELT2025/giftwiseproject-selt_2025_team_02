@@ -59,9 +59,7 @@ class RecipientsController < ApplicationController
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
 
     # gift list has event id
-    used_event_ids = event_ids_for_recipient(@recipient)
-
-    @available_events = current_user.events.where.not(id: used_event_ids)
+    set_available_events
   end
 
   def event_ids_for_recipient(recipient)
@@ -91,7 +89,7 @@ class RecipientsController < ApplicationController
       @suggestions_exist = false
     end
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
-    @available_events = current_user.events.where.not(id: @recipient.event_ids)
+    set_available_events
     render :show
   end
 
@@ -187,5 +185,11 @@ class RecipientsController < ApplicationController
 
   def recipient_params
     params.require(:recipient).permit(:name, :age, :age_range, :min_age, :max_age, :birthday, :gender, :relation, :occupation, :hobbies, :extra_info, likes: [], dislikes: [])
+  end
+
+  def set_available_events
+    used_event_ids = event_ids_for_recipient(@recipient)
+
+    @available_events = current_user.events.where.not(id: used_event_ids)
   end
 end
