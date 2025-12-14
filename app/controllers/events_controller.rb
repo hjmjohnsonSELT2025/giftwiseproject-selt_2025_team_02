@@ -46,7 +46,7 @@ class EventsController < ApplicationController
 
   def add_recipient
     recipient = current_user.recipients.find(params[:recipient_id])
-
+    connect_recipient_and_create_list(recipient)
     event_recipient = @event.event_recipients.new(
       source_recipient_id: recipient.id,
       snapshot: recipient.snapshot_attributes
@@ -106,19 +106,23 @@ class EventsController < ApplicationController
   end
 
   def connect_recipient_and_create_list(recipient)
-    unless recipient
-      return
-    end
-    unless @event.recipients.exists?(recipient.id)
-      @event.recipients << recipient
+    return unless recipient && @event
+
+    EventRecipient.find_or_create_by!(
+      event: @event,
+      source_recipient_id: recipient.id
+    ) do |er|
+      er.snapshot = recipient.snapshot_attributes
     end
 
-    # create the gift list
-    recipient.gift_lists.create!(
-      name: "#{@event.name} - Gift list",
-      event: @event
-    )
+    GiftList.find_or_create_by!(
+      recipient_id: recipient.id,
+      event_id: @event.id
+    ) do |gl|
+      gl.name = "#{@event.name} - Gift list"
+    end
   end
+
 
   def set_event
     @event =

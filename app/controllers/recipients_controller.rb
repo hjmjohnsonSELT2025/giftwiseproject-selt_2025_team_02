@@ -16,11 +16,24 @@ class RecipientsController < ApplicationController
 
     if @recipient.save
       if @from_event && @event_id.present?
-        # attach to the event and go back to that event
         event = current_user.events.find_by(id: @event_id)
 
-        if event && !event.recipients.include?(@recipient)
-          event.recipients << @recipient
+        if event
+          # create the event-recipient proxy (snapshot)
+          EventRecipient.find_or_create_by!(
+            event: event,
+            source_recipient_id: @recipient.id
+          ) do |er|
+            er.snapshot = @recipient.snapshot_attributes
+          end
+
+          # ensure the event-specific gift list exists
+          GiftList.find_or_create_by!(
+            recipient_id: @recipient.id,
+            event_id: event.id
+          ) do |gl|
+            gl.name = "#{event.name} - Gift list"
+          end
         end
 
         redirect_to event_path(event),
