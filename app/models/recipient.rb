@@ -56,6 +56,15 @@ class Recipient < ApplicationRecord
     events.where("name LIKE ?", "%birthday%").any?
   end
 
+  def snapshot_attributes
+    attributes.except(
+      "id",
+      "user_id",
+      "created_at",
+      "updated_at"
+    )
+  end
+
   private
 
   def birthday_or_age_present
@@ -129,12 +138,4 @@ class Recipient < ApplicationRecord
     "Perfume", "Strong Smells", "Bright Lights", "Darkness"
   ]
 
-  def snapshot_attributes
-    attributes.except(
-      "id",
-      "user_id",
-      "created_at",
-      "updated_at"
-    )
-  end
 end

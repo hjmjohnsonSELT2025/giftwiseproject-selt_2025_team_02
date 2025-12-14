@@ -5,7 +5,6 @@ class Event < ApplicationRecord
   has_many :collaborators, through: :event_users, source: :user
 
   has_many :event_recipients, dependent: :destroy
-  # has_many :recipients, through: :event_recipients
 
   has_many :gift_lists, dependent: :destroy # fix bug related to referential integrity
   validates :name, presence: true

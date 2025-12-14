@@ -7,11 +7,9 @@ class EventsController < ApplicationController
   end
 
   def show
-    used_recipient_ids =
-      @event.event_recipients.pluck(:source_recipient_id)
+    used_recipient_ids = @event.event_recipients.pluck(:source_recipient_id)
 
-    @available_recipients =
-      current_user.recipients.where.not(id: used_recipient_ids)
+    @available_recipients = current_user.recipients.where.not(id: used_recipient_ids)
   end
 
 
@@ -52,7 +50,7 @@ class EventsController < ApplicationController
 
     event_recipient = @event.event_recipients.new(
       source_recipient_id: recipient.id,
-      snapshot: EventRecipient.snapshot_from(recipient)
+      snapshot: recipient.snapshot_attributes
     )
 
     event_recipient.save!

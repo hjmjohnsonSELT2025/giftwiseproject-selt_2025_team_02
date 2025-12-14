@@ -4,23 +4,6 @@ class EventRecipient < ApplicationRecord
 
   validates :event_id, uniqueness: { scope: :source_recipient_id }
 
-
-  def self.snapshot_from(recipient)
-    recipient.attributes.except(
-      "id",
-      "user_id",
-      "created_at",
-      "updated_at"
-    )
-  end
-  # def self.create_from_recipient!(event:, recipient:)
-  #   create!(
-  #     event: event,
-  #     source_recipient_id: recipient.id,
-  #     snapshot: EventRecipient.snapshot_from(recipient)
-  #   )
-  # end
-
   def recipient_view
     RecipientProxy.new(snapshot)
   end
