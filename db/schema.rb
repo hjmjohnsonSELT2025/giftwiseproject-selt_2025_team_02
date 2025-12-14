@@ -27,7 +27,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_14_065211) do
     t.integer "source_recipient_id"
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_event_recipients_on_event_id"
-    t.index ["event_id"], name: "index_event_recipients_on_event_id_and_recipient_id", unique: true
   end
 
   create_table "event_users", force: :cascade do |t|
