@@ -83,6 +83,7 @@ class RecipientsController < ApplicationController
       @suggestions_exist = false
     end
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
+    @available_events = current_user.events.where.not(id: @recipient.event_ids)
     render :show
   end
 
