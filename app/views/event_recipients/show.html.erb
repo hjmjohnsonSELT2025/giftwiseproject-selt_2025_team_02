@@ -1,0 +1,4 @@
+<% r = @event_recipient.recipient_view %>
+<h1>Event Profile: <%= r.name %></h1>
+<%= render "recipients/show_traits", recipient: r %>
+<%= render "gift_lists/gift_statuses", list: @event_recipient.source_gift_list if @event_recipient.source_gift_list %>

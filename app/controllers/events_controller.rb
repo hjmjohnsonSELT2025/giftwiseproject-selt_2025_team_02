@@ -7,7 +7,9 @@ class EventsController < ApplicationController
   end
 
   def show
-    @available_recipients = current_user.recipients.where.not(id: @event.recipient_ids)
+    used_recipient_ids = @event.event_recipients.pluck(:source_recipient_id)
+
+    @available_recipients = current_user.recipients.where.not(id: used_recipient_ids)
   end
 
   def new
@@ -45,17 +47,50 @@ class EventsController < ApplicationController
   def add_recipient
     recipient = current_user.recipients.find(params[:recipient_id])
     connect_recipient_and_create_list(recipient)
+    event_recipient = @event.event_recipients.new(
+      source_recipient_id: recipient.id,
+      snapshot: recipient.snapshot_attributes
+    )
+
+    event_recipient.save!
     redirect_to event_path(@event),
                 notice: "Recipient '#{recipient.name}' successfully added to '#{@event.name}'."
   end
 
   def remove_recipient
-    recipient = @event.recipients.find(params[:recipient_id])
-    gift_list_to_delete = recipient.gift_lists.find_by(event: @event)
-    gift_list_to_delete&.destroy
-    @event.recipients.delete(recipient)
+    event_recipient = @event.event_recipients.find(params[:event_recipient_id])
+
+    GiftList.where(
+      recipient_id: event_recipient.source_recipient_id,
+      event_id: @event.id
+    ).destroy_all
+
+    @event.event_recipients.delete(event_recipient)
     redirect_to event_path(@event),
-                notice: "Recipient '#{recipient.name}' successfully removed from '#{@event.name}'."
+                notice: "Recipient '#{event_recipient.recipient_view.name}' successfully removed from '#{@event.name}'."
+  end
+
+  def add_collaborator
+    @event = Event.find(params[:id])
+
+    # Optional safety check
+    unless @event.user == current_user
+      flash[:warning] = "Only the event owner can add collaborators."
+      return redirect_to @event
+    end
+
+    user = User.find_by(email: params[:email])
+
+    if user.nil?
+      flash[:warning] = "No user found with that email."
+    elsif @event.collaborators.include?(user)
+      flash[:notice] = "That user is already a collaborator."
+    else
+      @event.collaborators << user
+      flash[:notice] = "#{user.email} added as collaborator."
+    end
+
+    redirect_to @event
   end
 
   private
@@ -71,22 +106,30 @@ class EventsController < ApplicationController
   end
 
   def connect_recipient_and_create_list(recipient)
-    unless recipient
-      return
-    end
-    unless @event.recipients.exists?(recipient.id)
-      @event.recipients << recipient
+    return unless recipient && @event
+
+    EventRecipient.find_or_create_by!(
+      event: @event,
+      source_recipient_id: recipient.id
+    ) do |er|
+      er.snapshot = recipient.snapshot_attributes
     end
 
-    # create the gift list
-    recipient.gift_lists.create!(
-      name: "#{@event.name} - Gift list",
-      event: @event
-    )
+    GiftList.find_or_create_by!(
+      recipient_id: recipient.id,
+      event_id: @event.id
+    ) do |gl|
+      gl.name = "#{@event.name} - Gift list"
+    end
   end
 
+
   def set_event
-    @event = current_user.events.find(params[:id])
+    @event =
+      current_user.events.find_by(id: params[:id]) ||
+      current_user.collaborating_events.find_by(id: params[:id])
+
+    raise ActiveRecord::RecordNotFound unless @event
   end
 
   def event_params

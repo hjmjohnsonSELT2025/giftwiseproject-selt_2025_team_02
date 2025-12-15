@@ -16,11 +16,24 @@ class RecipientsController < ApplicationController
 
     if @recipient.save
       if @from_event && @event_id.present?
-        # attach to the event and go back to that event
         event = current_user.events.find_by(id: @event_id)
 
-        if event && !event.recipients.include?(@recipient)
-          event.recipients << @recipient
+        if event
+          # create the event-recipient proxy (snapshot)
+          EventRecipient.find_or_create_by!(
+            event: event,
+            source_recipient_id: @recipient.id
+          ) do |er|
+            er.snapshot = @recipient.snapshot_attributes
+          end
+
+          # ensure the event-specific gift list exists
+          GiftList.find_or_create_by!(
+            recipient_id: @recipient.id,
+            event_id: event.id
+          ) do |gl|
+            gl.name = "#{event.name} - Gift list"
+          end
         end
 
         redirect_to event_path(event),
@@ -59,7 +72,13 @@ class RecipientsController < ApplicationController
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
 
     # gift list has event id
-    @available_events = current_user.events.where.not(id: @recipient.event_ids)
+    set_available_events
+  end
+
+  def event_ids_for_recipient(recipient)
+    EventRecipient
+      .where(source_recipient_id: recipient.id)
+      .pluck(:event_id)
   end
 
   def generate_gift
@@ -83,7 +102,7 @@ class RecipientsController < ApplicationController
       @suggestions_exist = false
     end
     @recipient_gift_lists = @recipient.gifts.group_by(&:status)
-    @available_events = current_user.events.where.not(id: @recipient.event_ids)
+    set_available_events
     render :show
   end
 
@@ -122,12 +141,20 @@ class RecipientsController < ApplicationController
       )
 
       if event.save
-        # Associate recipient with the event
-        event.recipients << @recipient
-        @recipient.gift_lists.create!(
-          name: "#{event.name} - Gift list",
-          event: event
+
+        event_recipient = EventRecipient.create!(
+          event: event,
+          snapshot: @recipient.snapshot_attributes,
+          source_recipient_id: @recipient.id
         )
+
+        GiftList.find_or_create_by!(
+          recipient_id: @recipient.id,
+          event_id: event.id
+        ) do |gl|
+          gl.name = "#{event.name} - Gift list"
+        end
+
         flash[:notice] = "Birthday event for #{@recipient.name} created successfully!"
         redirect_to event_path(event)
       else
@@ -142,7 +169,12 @@ class RecipientsController < ApplicationController
   def add_event
     @recipient = current_user.recipients.find(params[:id])
     @event = current_user.events.find(params[:event_id])
-    @recipient.events << @event
+    EventRecipient.create!(
+      event: @event,
+      snapshot: @recipient.snapshot_attributes,
+      source_recipient_id: @recipient.id
+    )
+
 
     # create gift list for that event
     @recipient.gift_lists.create!(
@@ -166,5 +198,11 @@ class RecipientsController < ApplicationController
 
   def recipient_params
     params.require(:recipient).permit(:name, :age, :age_range, :min_age, :max_age, :birthday, :gender, :relation, :occupation, :hobbies, :extra_info, likes: [], dislikes: [])
+  end
+
+  def set_available_events
+    used_event_ids = event_ids_for_recipient(@recipient)
+
+    @available_events = current_user.events.where.not(id: used_event_ids)
   end
 end
