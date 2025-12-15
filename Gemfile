@@ -69,7 +69,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "dotenv-rails"
   gem "redcarpet"
-  gem 'simplecov', require: false
+  gem "simplecov", require: false
 end
 
 group :development do
