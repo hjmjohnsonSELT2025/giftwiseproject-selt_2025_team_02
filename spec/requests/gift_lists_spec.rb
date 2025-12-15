@@ -51,7 +51,7 @@ RSpec.describe "GiftLists", type: :request do
 
       it "handles the failure response" do
         post gift_lists_path, params: { gift_list: invalid_attributes }
-        expect([422, 204, 406]).to include(response.status)
+        expect([ 422, 204, 406 ]).to include(response.status)
       end
     end
   end
