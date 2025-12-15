@@ -9,13 +9,12 @@
 <p><strong>Extra Information:</strong> <%= simple_format(recipient.extra_info) %></p>
 <p><strong>Likes:</strong></p>
 <% if recipient.likes.present? %>
-  <ul>
-    <% recipient.likes.each do |like| %>
-      <% if like.match(/^[a-zA-Z]/) %>
-        <li><%= like %></li>
-      <% end %>
+  <ul class="grid grid-cols-3 gap-x-4 gap-y-1">
+    <% recipient.likes.select { |like| like.match?(/\A[a-zA-Z]/) }.each do |like| %>
+      <li><%= like %></li>
     <% end %>
   </ul>
+
 <% else %>
   <p>No likes specified</p>
 <% end %>
