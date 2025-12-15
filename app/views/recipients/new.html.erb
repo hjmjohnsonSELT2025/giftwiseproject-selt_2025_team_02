@@ -72,9 +72,9 @@
 
   <div style="margin-top: 0.75rem;">
     <% if @from_event && @event_id.present? %>
-      <%= f.submit "Save recipient and continue" %>
+      <%= f.button "Save recipient and continue" %>
     <% else %>
-      <%= f.submit "Add Recipient" %>
+      <%= f.button "Add Recipient" %>
     <% end %>
   </div>
 <% end %>
