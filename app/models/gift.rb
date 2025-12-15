@@ -10,7 +10,7 @@ class Gift < ApplicationRecord
     idea: 0,
     planned: 1,
     ordered: 2,
-    received_or_finished: 3,
+    acquired: 3,
     wrapped: 4,
     given: 5
   }

@@ -1,5 +1,5 @@
 .navbar {
-    background-color: var(--bg);
+    /*background-color: var(--bg);*/
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -16,12 +16,3 @@
     margin-left: auto;
 }
 
-.navbar a {
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.navbar a:hover {
-    text-decoration: underline;
-}
