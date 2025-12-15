@@ -17,6 +17,7 @@ RSpec.describe EventRecipient, type: :model do
       birthday: Date.new(2000, 1, 1),
       gender: :male,
       relation: "Bro",
+      occupation: "Professional Guy",
       likes: %w[Yoga Meditation],
       dislikes: %w[Math]
     )
@@ -31,29 +32,37 @@ RSpec.describe EventRecipient, type: :model do
   end
 
   describe "validations and associations" do
-    it "is valid with an event and a recipient" do
-      event_recipient = EventRecipient.new(event: event, recipient: recipient)
+    it "is valid with an event and a source_recipient_id" do
+      event_recipient = EventRecipient.new(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: { name: recipient.name }
+      )
 
-      expect(event_recipient.valid?).to eq(true)
+      expect(event_recipient).to be_valid
     end
 
     it "is invalid without an event" do
-      event_recipient = EventRecipient.new(event: nil, recipient: recipient)
+      event_recipient = EventRecipient.new(
+        event: nil,
+        source_recipient_id: recipient.id
+      )
 
       expect(event_recipient).not_to be_valid
       expect(event_recipient.errors[:event]).to include("must exist")
     end
 
-    it "is invalid without a recipient" do
-      event_recipient = EventRecipient.new(event: event, recipient: nil)
-
-      expect(event_recipient).not_to be_valid
-      expect(event_recipient.errors[:recipient]).to include("must exist")
-    end
-
     it "does not allow the same recipient to be added to the same event twice" do
-      EventRecipient.create!(event: event, recipient: recipient)
-      duplicate = EventRecipient.new(event: event, recipient: recipient)
+      EventRecipient.create!(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: {}
+      )
+      duplicate = EventRecipient.new(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: {}
+      )
 
       expect(duplicate).not_to be_valid
       expect(duplicate.errors[:event_id]).to include("has already been taken")
