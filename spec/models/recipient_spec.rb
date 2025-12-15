@@ -129,13 +129,22 @@ RSpec.describe Recipient, type: :model do
         name: "Beer oclock",
         event_date: Date.today + 4
       )
-      recipient = build_recipient
-      recipient.save!
+      recipient = Recipient.create!(
+        user: user,
+        name: "Drinking Buddy",
+        gender: :male,
+        relation: "Friend",
+        age: 25
+      )
+      EventRecipient.create!(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: recipient.snapshot_attributes
+      )
+      join_record = EventRecipient.find_by(event: event, source_recipient_id: recipient.id)
 
-      event.recipients << recipient
-
-      expect(event.recipients).to include(recipient)
-      expect(recipient.events).to include(event)
+      expect(join_record).to be_present
+      expect(join_record.snapshot["name"]).to eq("Drinking Buddy")
     end
   end
 
