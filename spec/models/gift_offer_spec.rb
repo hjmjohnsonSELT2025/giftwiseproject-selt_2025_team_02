@@ -35,19 +35,21 @@ RSpec.describe GiftOffer, type: :model do
         gift:       gift,
         store_name: "Target",
         price:      12.99,
-        currency:   "USD"
+        currency:   "USD",
+        url:        "https://target.com"
       )
       expect(offer.gift).to eq(gift)
     end
   end
 
   describe "validations" do
-    it "is valid with a gift, store_name, price, and currency" do
+    it "is valid with a gift, store_name, price, currency, and url" do
       offer = GiftOffer.new(
         gift:       gift,
         store_name: "Target",
         price:      12.99,
-        currency:   "USD"
+        currency:   "USD",
+        url:        "https://target.com"
       )
       expect(offer).to be_valid
     end
@@ -56,7 +58,8 @@ RSpec.describe GiftOffer, type: :model do
       offer = GiftOffer.new(
         gift:     gift,
         price:    12.99,
-        currency: "USD"
+        currency: "USD",
+        url:      "https://target.com"
       )
       expect(offer).not_to be_valid
       expect(offer.errors[:store_name]).to be_present
@@ -66,7 +69,8 @@ RSpec.describe GiftOffer, type: :model do
       offer = GiftOffer.new(
         gift:       gift,
         store_name: "Target",
-        currency:   "USD"
+        currency:   "USD",
+        url:        "https://target.com"
       )
       expect(offer).not_to be_valid
       expect(offer.errors[:price]).to be_present
@@ -77,7 +81,8 @@ RSpec.describe GiftOffer, type: :model do
         gift:       gift,
         store_name: "Target",
         price:      -1,
-        currency:   "USD"
+        currency:   "USD",
+        url:        "https://target.com"
       )
       expect(offer).not_to be_valid
       expect(offer.errors[:price]).to be_present
@@ -89,6 +94,7 @@ RSpec.describe GiftOffer, type: :model do
         store_name: "Target",
         price:      12.99,
         currency:   "USD",
+        url:        "https://target.com",
         rating:     nil
       )
       expect(offer).to be_valid
@@ -100,6 +106,7 @@ RSpec.describe GiftOffer, type: :model do
         store_name: "Target",
         price:      12.99,
         currency:   "USD",
+        url:        "https://target.com",
         rating:     6.0
       )
       expect(offer).not_to be_valid
