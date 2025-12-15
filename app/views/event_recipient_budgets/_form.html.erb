@@ -1,14 +1,6 @@
 <%= form_with(model: @event_recipient_budget, local: true) do |form| %>
-
-    <div class="field">
-        <%= form.label :event_id, "Event" %><br>
-        <%= form.collection_select :event_id, @events, :id, :name, prompt: "Select an event" %>
-    </div>
-
-    <div class="field">
-        <%= form.label :recipient_id, "Recipient" %><br>
-        <%= form.collection_select :recipient_id, @recipients, :id, :name, prompt: "Select a recipient" %>
-    </div>
+      <%= form.hidden_field :event_id %>
+      <%= form.hidden_field :event_recipient_id %>
 
     <div class="field">
         <%= form.label :budget, "Total Budget" %><br>

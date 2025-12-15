@@ -2,8 +2,6 @@ class Recipient < ApplicationRecord
   belongs_to :user
   has_many :gift_lists, dependent: :destroy
   has_many :gifts, through: :gift_lists
-  has_many :event_recipients, dependent: :destroy
-  has_many :events, through: :event_recipients
   enum :gender, { male: 0, female: 1, other: 2 }
 
   AGE_RANGES = {
@@ -53,7 +51,24 @@ class Recipient < ApplicationRecord
   end
 
   def has_birthday_event?
-    events.where("name LIKE ?", "%birthday%").any?
+    Event
+      .where(
+        id: EventRecipient
+              .where(source_recipient_id: id)
+              .pluck(:event_id)
+      )
+      .where("events.name LIKE ?", "%birthday%")
+      .exists?
+  end
+
+
+  def snapshot_attributes
+    attributes.except(
+      "id",
+      "user_id",
+      "created_at",
+      "updated_at"
+    )
   end
 
   private

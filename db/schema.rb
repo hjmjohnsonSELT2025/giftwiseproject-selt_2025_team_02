@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_09_033958) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_14_065211) do
   create_table "event_recipient_budgets", force: :cascade do |t|
     t.decimal "budget", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
@@ -23,11 +23,20 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_033958) do
   create_table "event_recipients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
-    t.integer "recipient_id", null: false
+    t.json "snapshot", default: {}, null: false
+    t.integer "source_recipient_id"
     t.datetime "updated_at", null: false
-    t.index ["event_id", "recipient_id"], name: "index_event_recipients_on_event_id_and_recipient_id", unique: true
     t.index ["event_id"], name: "index_event_recipients_on_event_id"
-    t.index ["recipient_id"], name: "index_event_recipients_on_recipient_id"
+  end
+
+  create_table "event_users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "event_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["event_id", "user_id"], name: "index_event_users_on_event_id_and_user_id", unique: true
+    t.index ["event_id"], name: "index_event_users_on_event_id"
+    t.index ["user_id"], name: "index_event_users_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -122,7 +131,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_033958) do
 
   add_foreign_key "event_recipient_budgets", "event_recipients"
   add_foreign_key "event_recipients", "events"
-  add_foreign_key "event_recipients", "recipients"
+  add_foreign_key "event_users", "events"
+  add_foreign_key "event_users", "users"
   add_foreign_key "events", "users"
   add_foreign_key "gift_lists", "events"
   add_foreign_key "gift_lists", "recipients"
