@@ -30,9 +30,19 @@
     h2 {
         @apply text-2xl font-bold text-secondary mb-4;
     }
+
+
     a {
-        @apply link link-primary no-underline hover:underline font-semibold;
+        @apply inline-flex items-center px-3 py-1 rounded-md;
+        @apply bg-primary/10 text-primary font-semibold no-underline;
+        @apply transition-colors duration-150;
     }
+
+    a:hover {
+        @apply bg-primary/20;
+    }
+
+
 
     table, .data-table {
         @apply table table-zebra w-full rounded-lg overflow-hidden shadow-sm border border-base-200;
