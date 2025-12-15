@@ -1,26 +1,25 @@
 <div class="homepage">
     <div class="homepage-content">
-      <div style="display: flex; gap: 20px;">
+      <div class="grid grid-cols-1 lg:grid-flow-col lg:auto-cols-fr gap-6 w-full">
         <% Gift.statuses.keys.each do |status| %>
-          <div style="border: 1px solid black; padding: 10px; flex: 1;">
+          <div class="card bg-base-100 border border-base-300 shadow-md h-full p-4">
+            <h3 class="uppercase font-bold"><%= status %></h3>
 
-            <h3 style="text-transform: uppercase;"><%= status %></h3>
-
-            <ul>
+            <div>
               <% if @global_gifts_status[status] %>
                 <% @global_gifts_status[status].each do |gift| %>
-                  <li style="margin-bottom: 10px;">
+                  <div class="mb-3">
                     <strong><%= gift.name %></strong><br>
                     <small>For: <%= gift.recipient.name %></small><br>
                     <%= link_to "Edit", recipient_gift_list_path(gift.recipient, gift.gift_list),
                                 data: { turbo: false }
                     %>
-                  </li>
+                  </div>
                 <% end %>
               <% else %>
-                <li><em>No gifts in this stage</em></li>
+                <div><em>No gifts in this stage</em></div>
               <% end %>
-            </ul>
+            </div>
 
           </div>
         <% end %>

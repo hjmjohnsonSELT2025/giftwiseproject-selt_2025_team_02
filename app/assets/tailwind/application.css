@@ -52,6 +52,7 @@
     .btn,
     .pretty-btn {
         @apply btn btn-primary shadow-md border-none text-white font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
+        @apply h-12 min-h-[3rem] inline-flex items-center justify-center;
 
     }
 
@@ -72,10 +73,10 @@
     }
 
     nav, .navbar {
-        @apply navbar bg-primary text-primary-content shadow-lg mb-8 px-4 rounded-b-box;
+        @apply navbar btn-ghost bg-primary text-primary-content shadow-lg mb-8 px-4 rounded-b-box;
     }
     nav a, .navbar a {
-        @apply btn text-primary-content normal-case text-lg;
+        @apply btn btn-ghost text-primary-content normal-case text-lg;
         text-decoration: none;
     }
 }
