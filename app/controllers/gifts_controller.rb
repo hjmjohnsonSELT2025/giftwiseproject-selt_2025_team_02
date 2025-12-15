@@ -43,15 +43,13 @@ class GiftsController < ApplicationController
   def create
     @gift = @gift_list.gifts.new(gift_params)
     if @gift.save
-
-        if @gift.gift_list.event.present?
-          redirect_to event_path(@gift.gift_list.event),
-                      notice: "Gift added to #{@gift.gift_list.name}!"
-        else
-          redirect_to recipient_path(@gift.gift_list.recipient),
-                      notice: "Gift added to #{@gift.gift_list.name}!"
-        end
-# redirect_to recipient_gift_list_gift_path(@recipient, @gift_list, @gift)
+      if @gift.gift_list.event.present?
+        redirect_to event_path(@gift.gift_list.event),
+                    notice: "Gift added to #{@gift.gift_list.name}!"
+      else
+        redirect_to recipient_path(@gift.gift_list.recipient),
+                    notice: "Gift added to #{@gift.gift_list.name}!"
+      end
     else
       render :new, status: :unprocessable_entity
     end

@@ -129,9 +129,6 @@ class EventRecipientBudgetsController < ApplicationController
       event = Event.find(event_id)
       event_recipient = event.event_recipients.find(event_recipient_id)
 
-      [event, event_recipient]
+      [ event, event_recipient ]
     end
-
-
-
 end
