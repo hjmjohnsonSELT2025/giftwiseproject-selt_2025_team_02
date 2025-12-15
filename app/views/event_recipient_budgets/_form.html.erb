@@ -1,4 +1,6 @@
 <%= form_with(model: @event_recipient_budget, local: true) do |form| %>
+      <%= form.hidden_field :event_id %>
+      <%= form.hidden_field :event_recipient_id %>
 
     <div class="field">
         <%= form.label :budget, "Total Budget" %><br>

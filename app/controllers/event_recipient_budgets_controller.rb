@@ -41,33 +41,29 @@ class EventRecipientBudgetsController < ApplicationController
     end
 
     def new
-        @event_recipient_budget = EventRecipientBudget.new
-        if params[:event_id].present?
-            @event_recipient_budget.event_id = params[:event_id].to_i
-        end
+        @event_recipient_budget = EventRecipientBudget.new(
+          event_id: params[:event_id],
+          event_recipient_id: params[:event_recipient_id]
+        )
     end
 
     def create
-        event, recipient = find_event_and_recipient_from_params
-        if event.nil? || recipient.nil?
-            @event_recipient_budget = EventRecipientBudget.new(event_recipient_budget_params)
-            flash[:warning] = "You must select a valid event & recipient"
-            load_events_and_recipients
-            return render :new, status: :unprocessable_entity
-        end
+      event, event_recipient = find_event_and_recipient_from_params
 
-        event_recipient = EventRecipient.find_or_create_by!(event: event)
-        @event_recipient_budget = EventRecipientBudget.new(event_recipient_budget_params)
-        @event_recipient_budget.event_recipient = event_recipient
+      @event_recipient_budget =
+        EventRecipientBudget.new(event_recipient_budget_params)
 
-        if @event_recipient_budget.save
-            redirect_to event_recipient_budgets_path(event_id: event.id), notice: "Budget successfully created!"
-        else
-            flash[:warning] = "There was a problem creating the budget."
-            load_events_and_recipients
-            render :new, status: :unprocessable_entity
-        end
+      @event_recipient_budget.event_recipient = event_recipient
+
+      if @event_recipient_budget.save
+        redirect_to event_path(event),
+                    notice: "Budget successfully created!"
+      else
+        flash[:warning] = "There was a problem creating the budget."
+        render :new, status: :unprocessable_entity
+      end
     end
+
 
     def edit
         if @event_recipient_budget.event
@@ -119,13 +115,23 @@ class EventRecipientBudgetsController < ApplicationController
     end
 
     def find_event_and_recipient_from_params
-        er_params = params[:event_recipient_budget] || {}
-        event_id = er_params[:event_id]
-        event_recipient_id = er_params[:event_recipient_id]
+      event_id =
+        params[:event_id] ||
+        params.dig(:event_recipient_budget, :event_id)
 
-        event = Event.where(user_id: current_user.id).find_by(id: event_id)
-        event_recipient = event.event_recipients.find_by(id: event_recipient_id)
+      event_recipient_id =
+        params[:event_recipient_id] ||
+        params.dig(:event_recipient_budget, :event_recipient_id)
 
-        [ event, event_recipient ]
-  end
+      raise "event_id missing" if event_id.blank?
+      raise "event_recipient_id missing" if event_recipient_id.blank?
+
+      event = Event.find(event_id)
+      event_recipient = event.event_recipients.find(event_recipient_id)
+
+      [event, event_recipient]
+    end
+
+
+
 end
