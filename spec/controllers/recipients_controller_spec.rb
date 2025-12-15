@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe RecipientsController, type: :controller do
   let(:user) do
-      User.create!(
-        name: 'Test User',
-        email: 'chad_bro_chill@fakemail.com',
-        password: 'lowkeybussin',
-        password_confirmation: 'lowkeybussin')
+    User.create!(
+      name: 'Test User',
+      email: 'chad_bro_chill@fakemail.com',
+      password: 'lowkeybussin',
+      password_confirmation: 'lowkeybussin')
   end
 
   let!(:event) do
@@ -95,7 +95,12 @@ RSpec.describe RecipientsController, type: :controller do
         end.to change(user.recipients, :count).by(1)
 
         new_recipient = user.recipients.find_by!(name: "Thad")
-        expect(event.recipients).to include(new_recipient)
+        join_record = EventRecipient.find_by(
+          event_id: event.id,
+          source_recipient_id: new_recipient.id
+        )
+        expect(join_record).to be_present
+        expect(join_record.snapshot["name"]).to eq("Thad")
       end
 
       it "redirects back to the event page with a notice" do
