@@ -10,7 +10,7 @@
 @import "tailwindcss/utilities" layer(utilities);
 
 @plugin "./daisyui.mjs" {
-    themes: nord --default, dark --prefersdark, lemonade;
+    themes: nord --default, nord --prefersdark, nord;
 }
 
 @layer base {
@@ -48,17 +48,17 @@
         @apply p-4 border-b border-base-200 align-middle;
     }
 
-    button,
-    input[type="submit"],
-    .btn,
-    .pretty-btn {
-        @apply btn btn-primary shadow-md border-none text-white font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
-        @apply h-12 min-h-[3rem] inline-flex items-center justify-center;
-
+    @layer components {
+        .pretty-btn {
+            @apply btn shadow-md border-none font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
+            @apply h-12 min-h-[3rem] inline-flex items-center justify-center;
+        }
     }
 
+
     .a {
-        @apply btn btn-primary shadow-md border-none text-white font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
+        @apply btn btn-ghost text-primary-content normal-case text-lg;
+        text-decoration: none;
     }
 
     input[type="text"],
@@ -74,7 +74,7 @@
     }
 
     nav, .navbar {
-        @apply navbar btn-ghost bg-primary text-primary-content shadow-lg mb-8 px-4 rounded-b-box;
+        @apply navbar btn-ghost bg-primary text-primary-content shadow-lg mb-8 px-4;
     }
     nav a, .navbar a {
         @apply btn btn-ghost text-primary-content normal-case text-lg;
@@ -83,6 +83,12 @@
 }
 
 @layer components {
+
+    .pretty-btn {
+        @apply btn shadow-md border-none font-bold px-6 mb-4 mr-2 ml-2 mt-2 btn-md;
+        @apply h-12 min-h-[3rem] inline-flex items-center justify-center;
+    }
+
 
     .centered-page {
         @apply min-h-screen flex justify-center items-start pt-20 bg-base-200;
