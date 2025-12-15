@@ -30,33 +30,56 @@ RSpec.describe EventRecipient, type: :model do
     )
   end
 
-  describe "validations and associations" do
-    it "is valid with an event and a recipient" do
-      event_recipient = EventRecipient.new(event: event, recipient: recipient)
+  describe "validations and invariants" do
+    it "is valid with an event, source_recipient_id, and snapshot" do
+      event_recipient = EventRecipient.new(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: recipient.snapshot_attributes
+      )
 
-      expect(event_recipient.valid?).to eq(true)
+      expect(event_recipient).to be_valid
     end
 
     it "is invalid without an event" do
-      event_recipient = EventRecipient.new(event: nil, recipient: recipient)
+      event_recipient = EventRecipient.new(
+        event: nil,
+        source_recipient_id: recipient.id,
+        snapshot: {}
+      )
 
       expect(event_recipient).not_to be_valid
       expect(event_recipient.errors[:event]).to include("must exist")
     end
 
-    it "is invalid without a recipient" do
-      event_recipient = EventRecipient.new(event: event, recipient: nil)
 
-      expect(event_recipient).not_to be_valid
-      expect(event_recipient.errors[:recipient]).to include("must exist")
-    end
+    it "does not allow the same source recipient to be added to the same event twice" do
+      EventRecipient.create!(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: {}
+      )
 
-    it "does not allow the same recipient to be added to the same event twice" do
-      EventRecipient.create!(event: event, recipient: recipient)
-      duplicate = EventRecipient.new(event: event, recipient: recipient)
+      duplicate = EventRecipient.new(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: {}
+      )
 
       expect(duplicate).not_to be_valid
       expect(duplicate.errors[:event_id]).to include("has already been taken")
+    end
+
+    it "stores a snapshot independent of future recipient changes" do
+      event_recipient = EventRecipient.create!(
+        event: event,
+        source_recipient_id: recipient.id,
+        snapshot: recipient.snapshot_attributes
+      )
+
+      recipient.update!(name: "New Name")
+
+      expect(event_recipient.snapshot["name"]).to eq("Thaddeus Capcap")
     end
   end
 end
