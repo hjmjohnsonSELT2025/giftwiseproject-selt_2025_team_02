@@ -70,8 +70,16 @@
 
 
   <div>
-    <%= f.label :dislikes, "Dislikes" %><br>
-    <%= f.collection_check_boxes :dislikes, Recipient::DISLIKES_OPTIONS, :to_s, :to_s %>
+    <%= f.label :likes, "Dislikes", class: "block font-semibold mb-2" %>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-3">
+      <%= f.collection_check_boxes :likes, Recipient::DISLIKES_OPTIONS, :to_s, :to_s do |b| %>
+        <label class="inline-flex items-center space-x-2">
+          <%= b.check_box(class: "checkbox checkbox-primary") %>
+          <span><%= b.text %></span>
+        </label>
+      <% end %>
+    </div>
   </div>
 
   <div>
