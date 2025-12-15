@@ -85,7 +85,7 @@ RSpec.describe "GiftOffers", type: :request do
         post recipient_gift_list_gift_gift_offers_path(recipient, gift_list, gift),
              params: { gift_offer: invalid_attributes },
              headers: headers
-        expect([422, 204, 406]).to include(response.status)
+        expect([ 422, 204, 406 ]).to include(response.status)
       end
     end
   end
