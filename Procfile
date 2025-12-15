@@ -1,2 +1,2 @@
 release: bin/rails db:migrate
-web: ./bin/dev -p ${PORT:-3000}
+web: bin/rails server -p ${PORT:-3000}
