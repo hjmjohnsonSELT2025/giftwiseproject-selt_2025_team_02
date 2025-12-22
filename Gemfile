@@ -31,7 +31,7 @@ gem "solid_queue"
 gem "solid_cable"
 gem "rails-controller-testing"
 
-gem "openai", "~> 0.37.0"
+gem "openai", "~> 0.42.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

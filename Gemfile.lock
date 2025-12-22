@@ -292,7 +292,7 @@ GEM
     omniauth-rails_csrf_protection (2.0.0)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    openai (0.37.0)
+    openai (0.42.0)
       base64
       connection_pool
     ostruct (0.6.3)
@@ -482,7 +482,11 @@ GEM
     tailwindcss-rails (4.4.0)
       railties (>= 7.0.0)
       tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.16)
+    tailwindcss-ruby (4.1.16-aarch64-linux-gnu)
+    tailwindcss-ruby (4.1.16-aarch64-linux-musl)
     tailwindcss-ruby (4.1.16-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.16-x86_64-linux-musl)
     thor (1.4.0)
     thruster (0.1.16)
     thruster (0.1.16-aarch64-linux)
@@ -542,7 +546,7 @@ DEPENDENCIES
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
-  openai (~> 0.37.0)
+  openai (~> 0.42.0)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
